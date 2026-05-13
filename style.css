@@ -1,201 +1,1060 @@
-/* ===============================
-   Light theme — white / green / black (no gradients)
-   Dynamic spacing via clamp()
-   =============================== */
-:root{
-  /* Palette */
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --text: #0a0e11;
-  --muted: #3f4a57;
-  --accent: #0f9d58;        /* prominent green */
-  --accent-strong: #0b7a45; /* darker green */
-  --accent-tint: #ecfdf5;   /* green-50 */
-  --border: #e5e7eb;
-  --border-green: #bbf7d0;  /* green-200 */
-  --shadow: 0 2px 6px rgba(2,6,23,.06), 0 12px 28px rgba(2,6,23,.10);
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* Kraft paper palette */
+  --kraft:          #c9b99a;
+  --kraft-dark:     #b5a284;
 
-  /* Radii & fluid spacing */
-  --radius: 14px;
-  --space-2xs: clamp(.3rem, .25rem + .2vw, .45rem);
-  --space-xs:  clamp(.5rem, .45rem + .4vw, .8rem);
-  --space-sm:  clamp(.75rem, .6rem + .6vw, 1.05rem);
-  --space-md:  clamp(1rem, .9rem + .8vw, 1.5rem);
-  --space-lg:  clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-  --space-xl:  clamp(2rem, 1.6rem + 2vw, 3rem);
+  /* Card */
+  --card-bg:        #fffef9;
+  --card-border:    #e2d9c8;
+  --card-shadow:
+    0 2px 4px  rgba(40,28,12,.08),
+    0 10px 28px rgba(40,28,12,.14),
+    0 28px 60px rgba(40,28,12,.12);
 
-  --content-max: 72ch;
+  /* Accent — warm amber */
+  --accent:         #b45309;
+  --accent-hover:   #92400e;
+  --accent-tint:    #fef3e2;
+  --accent-border:  #f5d4a3;
+
+  /* Type */
+  --text:           #1a1510;
+  --text-2:         #4a4038;
+  --muted:          #7a6e5e;
+
+  /* Card dimensions */
+  --card-w:         min(680px, 92vw);
+  --card-h:         min(520px, 80vh);
+  --card-pad:       clamp(1.25rem, 3.5vw, 2rem);
+  --card-radius:    16px;
+
+  /* Transitions */
+  --t-deal:         400ms cubic-bezier(0.22, 1, 0.36, 1);
+  --t-exit:         360ms cubic-bezier(0.55, 0, 1, 0.45);
+  --t-flip:         520ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Base */
-* { box-sizing: border-box; }
-html, body { height: 100%; }
-body{
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
   margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
   color: var(--text);
-  background: var(--bg);
-  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  text-rendering: optimizeLegibility;
+  background: var(--kraft);
 }
 
-a { color: var(--accent-strong); text-decoration: none; }
-a:hover { text-decoration: underline; }
-p, ul, ol, dl { margin: 0; }
-ul { padding-left: 1.1rem; }
-small { font-size: .875rem; }
-.muted { color: var(--muted); }
-.small { font-size: .9rem; }
+p  { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+h1, h2, h3 { margin: 0; line-height: 1.15; }
 
-/* Typewriter (system monospace) for reflective titles in Musings */
-.typewriter{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  letter-spacing: .2px;
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
+a:hover { color: var(--accent-hover); }
 
-/* Focus */
-:focus-visible{
-  outline: 2px solid var(--accent-strong);
-  outline-offset: 3px;
-  border-radius: 8px;
+button {
+  font-family: inherit;
+  cursor: pointer;
 }
 
-/* Skip link */
-.skip-link{
-  position: absolute; left: -9999px;
-  background: var(--accent-strong); color: #fff;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: 8px;
-}
-.skip-link:focus{ left: var(--space-sm); top: var(--space-sm); }
-
-/* Layout */
-.wrap{ max-width: var(--content-max); margin-inline: auto; padding: 0 var(--space-md); }
-.section{ padding: var(--space-xl) 0; border-top: 2px solid var(--border); }
-
-/* Stacks & clusters */
-.stack-2xs > * + * { margin-top: var(--space-2xs); }
-.stack-xs  > * + * { margin-top: var(--space-xs); }
-.stack-sm  > * + * { margin-top: var(--space-sm); }
-.stack-md  > * + * { margin-top: var(--space-md); }
-.stack-lg  > * + * { margin-top: var(--space-lg); }
-.cluster{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); }
-
-/* Cards */
-.card{
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: clamp(1rem, .8rem + 1vw, 1.75rem);
-  transition: border-color .2s ease, box-shadow .2s ease;
-}
-.card:hover, .card:focus-within{
-  border-color: var(--border-green);
-  box-shadow: 0 3px 10px rgba(11,122,69,.08), 0 16px 36px rgba(2,6,23,.12);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
-/* Header/Nav */
-.site-header{
-  position: sticky; top: 0; z-index: 10;
-  background: rgba(255,255,255,.92);
-  backdrop-filter: saturate(140%) blur(6px);
-  border-bottom: 2px solid var(--border);
-}
-.brand{
-  font-weight: 800; letter-spacing: .3px; color: var(--text);
-  padding: var(--space-xs) 0; border-bottom: 3px solid transparent;
-}
-.brand:hover{ border-bottom-color: var(--accent); }
-
-.site-nav ul{ list-style: none; padding: 0; margin: 0; }
-.site-nav a{
-  padding: clamp(.45rem,.35rem + .4vw,.7rem) clamp(.6rem,.5rem + .6vw,1rem);
-  border-radius: 10px; color: var(--text);
-}
-.site-nav a:hover{
-  background: var(--accent-tint); color: var(--accent-strong); text-decoration: none;
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* Section labels with green underline */
-.section-label{
-  font-size: clamp(1.05rem,.9rem + .6vw,1.25rem);
-  font-weight: 800; letter-spacing: .3px;
-  display: inline-block; padding-bottom: .25rem;
-  border-bottom: 3px solid var(--accent);
+/* ============================================================
+   DECK VIEWPORT — the kraft-paper table
+   ============================================================ */
+.deck-viewport {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--kraft);
+  /* Subtle crosshatch texture */
+  background-image:
+    repeating-linear-gradient(45deg,  transparent 0 18px, rgba(0,0,0,.028) 18px 19px),
+    repeating-linear-gradient(-45deg, transparent 0 18px, rgba(0,0,0,.028) 18px 19px);
+  overflow: hidden;
 }
 
-/* Musings (text-only carousel) */
-.carousel{ padding: clamp(1rem,.8rem + 1vw,1.6rem); }
-.carousel-viewport{
-  overflow: hidden; border-radius: calc(var(--radius) - 4px);
-  border: 1px solid var(--border); background: #fff;
+/* Large faded KJ watermark */
+.bg-watermark {
+  position: absolute;
+  font-size: 54vmin;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: rgba(0,0,0,.038);
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -52%);
 }
-.carousel-track{
-  list-style: none; padding: 0; margin: 0;
-  display: grid; grid-auto-flow: column; grid-auto-columns: 100%;
-  transition: transform .5s ease;
-}
-.carousel li{ padding: 0; }
 
-.slide{
-   display: grid; grid-template-columns: 1fr;
-   gap: var(--space-sm);
-   padding: clamp(1rem,.9rem + 1vw,1.6rem);
-   min-height: clamp(160px, 120px + 6vw, 240px);
-   border-left: 4px solid var(--accent);
-   padding-left: 10px;
+/* ============================================================
+   DECK CARDS — base
+   ============================================================ */
+.deck-card {
+  position: absolute;
+  width: var(--card-w);
+  height: var(--card-h);
+  /* Perspective for 3D flip lives here */
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+  /* State transitions */
+  transition: transform var(--t-deal), opacity var(--t-deal);
+  will-change: transform, opacity;
 }
-.slide h3{ margin: 0; font-size: clamp(1.05rem,.9rem + .8vw,1.35rem); line-height: 1.3; }
-.slide h3 a{ color: var(--text); border-bottom: 2px solid transparent; }
-.slide h3 a:hover{ color: var(--accent-strong); border-bottom-color: var(--accent); }
-.slide p{ color: #1f2937; }
-.slide .subtitle{ color: var(--muted); }
 
-.carousel-controls{ justify-content: flex-end; margin-top: var(--space-sm); }
-.btn{
-  background: var(--text); color: #fff; border: 1px solid var(--text);
-  padding: clamp(.5rem,.45rem + .4vw,.8rem) clamp(.7rem,.6rem + .6vw,1.1rem);
-  border-radius: 12px; cursor: pointer; transition: background .15s ease, transform .05s ease;
+/* ── State transforms ── */
+.deck-card[data-state="active"] {
+  transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
 }
-.btn:hover{ background: #11151a; }
-.btn:active{ transform: translateY(1px); }
+.deck-card[data-state="next-1"] {
+  transform: translateY(13px) translateX(3px) rotate(1.1deg) scale(0.976);
+  opacity: 1;
+  z-index: 9;
+  pointer-events: none; /* click on this area to advance — handled in JS */
+}
+.deck-card[data-state="next-2"] {
+  transform: translateY(24px) translateX(5px) rotate(2deg) scale(0.953);
+  opacity: 0.88;
+  z-index: 8;
+  pointer-events: none;
+}
+.deck-card[data-state="next-3"] {
+  transform: translateY(34px) translateX(7px) rotate(2.8deg) scale(0.932);
+  opacity: 0.66;
+  z-index: 7;
+  pointer-events: none;
+}
+.deck-card[data-state="hidden"] {
+  transform: translateY(44px) translateX(9px) rotate(3.4deg) scale(0.913);
+  opacity: 0;
+  z-index: 4;
+  pointer-events: none;
+  transition: none; /* snap — don't animate */
+}
+/* Dealt card exits left */
+.deck-card[data-state="dealt"] {
+  transform: translateX(-120vw) rotate(-14deg) scale(0.88);
+  opacity: 0;
+  z-index: 5;
+  pointer-events: none;
+  transition: transform var(--t-exit), opacity var(--t-exit);
+}
 
-/* Projects */
-.projects-grid{ display: grid; gap: clamp(1rem,.9rem + 1vw,1.6rem); grid-template-columns: 1fr; }
-.project h3{ font-size: clamp(1rem,.9rem + .6vw,1.2rem); }
-.tags{ list-style: none; padding: 0; margin: 0; }
-.tags li{
+/* ============================================================
+   CARD CORNER CHROME (outside flip container)
+   Mimics playing-card corner indexing.
+   ============================================================ */
+.card-chrome {
+  position: absolute;
+  z-index: 20; /* above card-inner */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  user-select: none;
+}
+.card-chrome.tl { top: 11px; left: 14px; }
+.card-chrome.br { bottom: 11px; right: 14px; transform: rotate(180deg); }
+
+.chrome-num {
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  line-height: 1;
+}
+.chrome-kj {
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* ============================================================
+   CARD INNER — the flip container
+   ============================================================ */
+.card-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  transform-style: preserve-3d;
+  transition: transform var(--t-flip);
+  will-change: transform;
+}
+
+.deck-card.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* ============================================================
+   CARD FACES — front & back
+   ============================================================ */
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Padding accounts for corner chrome */
+  padding: 44px var(--card-pad) 40px;
+}
+
+.card-face.back {
+  transform: rotateY(180deg);
+  /* Slightly warmer tint for back face */
+  background: #fffcf4;
+}
+
+/* Section label (small amber caps at top of face) */
+.face-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  flex-shrink: 0;
+}
+
+/* Flip button — at the bottom of each face */
+.flip-btn {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  align-self: flex-end;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: none;
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.flip-btn:hover { color: var(--accent); }
+
+/* ============================================================
+   CARD 01 — IDENTITY (front)
+   ============================================================ */
+.hero-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.hero-name {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  color: var(--text);
+}
+
+.hero-tagline {
+  font-size: clamp(0.88rem, 1.6vw, 1.04rem);
+  color: var(--text-2);
+  line-height: 1.58;
+  max-width: 52ch;
+}
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  transition: background 0.15s, transform 0.1s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--accent-hover); color: #fff; transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--card-border);
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+  display: inline-block;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Card 01 BACK: Story ── */
+.story-heading {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+
+.story-beats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-border) transparent;
+  padding-right: 4px;
+}
+
+.story-beat {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.beat-year {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  flex-shrink: 0;
+  line-height: 1.55;
+  padding-top: 0.15rem;
+}
+
+.beat-text {
+  font-size: 0.86rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.story-coda {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--muted);
+  border-top: 1px solid var(--card-border);
+  padding-top: 0.6rem;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   CARD 02 — EDUCATION
+   ============================================================ */
+.edu-institution {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.edu-location {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.edu-badge {
+  display: inline-block;
   background: var(--accent-tint);
-  border: 1px solid var(--border-green);
-  padding: clamp(.25rem,.2rem + .3vw,.5rem) clamp(.5rem,.45rem + .4vw,.8rem);
-  border-radius: 999px; font-size: clamp(.78rem,.7rem + .3vw,.9rem); color: #065f46;
-}
-.actions a{ border-bottom: 2px solid var(--accent); color: var(--accent-strong); padding-bottom: 2px; }
-.project:hover{ border-color: var(--border-green); }
-
-/* About grid */
-.about-grid{ display: grid; gap: clamp(1rem,.9rem + 1vw,1.6rem); grid-template-columns: 1fr; }
-#resume-title, #edu-title, #skills-title, #lang-title, #contact-title{
-  border-left: 4px solid var(--accent); padding-left: var(--space-xs);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
 }
 
-/* Footer */
-.site-footer{ border-top: 2px solid var(--border); padding: var(--space-lg) 0; color: var(--muted); }
-
-/* Responsive */
-@media (min-width: 640px){
-  .projects-grid{ grid-template-columns: repeat(2, 1fr); }
-  .about-grid{ grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 960px){
-  .carousel-track{ grid-auto-columns: 100%; }
-  .projects-grid{ grid-template-columns: repeat(3, 1fr); }
+.edu-degrees {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1;
+  justify-content: center;
 }
 
-/* Reveal on scroll */
-.reveal{ opacity: 0; transform: translateY(8px); transition: opacity .3s ease, transform .3s ease; }
-.reveal.revealed{ opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce){
-  .carousel-track{ transition: none; }
-  .reveal{ opacity: 1; transform: none; transition: none; }
+.edu-degree-item {
+  padding: 0.6rem 0.75rem;
+  background: rgba(180, 83, 9, 0.04);
+  border-left: 3px solid var(--accent-border);
+  border-radius: 0 6px 6px 0;
+}
+
+.edu-degree-type {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.edu-degree-field {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.edu-minor-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.edu-minor-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Card 02 BACK: Coursework ── */
+.cw-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  flex: 1;
+  align-content: start;
+}
+
+@media (max-width: 520px) {
+  .cw-grid { grid-template-columns: 1fr; }
+}
+
+.cw-group-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.cw-list li {
+  font-size: 0.78rem;
+  color: var(--text-2);
+  padding: 0.18rem 0;
+  border-bottom: 1px solid var(--card-border);
+  line-height: 1.4;
+}
+.cw-list li:last-child { border-bottom: none; }
+
+/* ============================================================
+   CARD 03 — EXPERIENCE
+   ============================================================ */
+/* Inner scroll container for experience list */
+.exp-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-border) transparent;
+}
+
+.exp-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.exp-item {
+  padding: 0.6rem 0.75rem;
+  border-left: 3px solid transparent;
+  border-radius: 0 6px 6px 0;
+  background: rgba(0,0,0,0.018);
+  transition: border-color 0.15s, background 0.15s;
+}
+.exp-item:hover {
+  border-left-color: var(--accent);
+  background: var(--accent-tint);
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.2rem;
+}
+
+.exp-role  { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+.exp-org   { font-size: 0.76rem; color: var(--muted); }
+.exp-date  { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+
+.exp-bullet {
+  font-size: 0.78rem;
+  color: var(--text-2);
+  line-height: 1.5;
+  padding-left: 0.85rem;
+  position: relative;
+}
+.exp-bullet::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--accent-border);
+}
+
+/* Animated stat numbers */
+.stat-num { font-weight: 700; color: var(--accent); }
+
+/* ── Card 03 BACK: Skills ── */
+.skills-grid { flex: 1; display: flex; flex-direction: column; gap: 0.9rem; justify-content: center; }
+
+.skill-group-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.skill-tags li {
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   CARD 04 — PROJECTS (mini card deck inside)
+   ============================================================ */
+.proj-tab-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  margin-bottom: 0.75rem;
+}
+
+.proj-tabs {
+  display: flex;
+  background: rgba(0,0,0,0.06);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.proj-tab {
+  padding: 0.28rem 0.9rem;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: background 0.15s, color 0.15s;
+}
+.proj-tab.is-active {
+  background: var(--card-bg);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+.proj-tab[data-tab="play"].is-active { color: var(--accent); }
+
+.shuffle-btn {
+  padding: 0.28rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: color 0.15s, border-color 0.15s, transform 0.2s;
+}
+.shuffle-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+.shuffle-btn.is-shuffling { transform: rotate(180deg); }
+
+/* Mini deck stage */
+.mini-deck-wrap {
+  flex: 1;
+  position: relative;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.mini-deck-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Mini card */
+.mini-card {
+  position: absolute;
+  inset: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(40,28,12,.1), 0 8px 20px rgba(40,28,12,.1);
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.3s ease;
+}
+
+.mini-card[data-mini-state="active"] {
+  transform: translateY(0) rotate(0deg) scale(1);
+  opacity: 1;
+  z-index: 4;
+  pointer-events: auto;
+}
+.mini-card[data-mini-state="depth-1"] {
+  transform: translateY(5px) translateX(2px) rotate(0.7deg) scale(0.97);
+  opacity: 1;
+  z-index: 3;
+}
+.mini-card[data-mini-state="depth-2"] {
+  transform: translateY(9px) translateX(3px) rotate(1.3deg) scale(0.945);
+  opacity: 0.7;
+  z-index: 2;
+}
+.mini-card[data-mini-state="hidden"] {
+  transform: translateY(12px) translateX(4px) rotate(1.8deg) scale(0.92);
+  opacity: 0;
+  z-index: 1;
+  transition: none;
+}
+
+/* Fanning states for shuffle animation */
+.mini-card.fan-0 { transform: translateX(-120px) translateY(-6px) rotate(-9deg) !important; opacity: 1 !important; transition: transform 220ms ease-out, opacity 180ms ease !important; }
+.mini-card.fan-1 { transform: translateX(-40px)  translateY(-10px) rotate(-3deg) !important; opacity: 1 !important; transition: transform 220ms ease-out, opacity 180ms ease !important; }
+.mini-card.fan-2 { transform: translateX(40px)   translateY(-10px) rotate(3deg)  !important; opacity: 1 !important; transition: transform 220ms ease-out, opacity 180ms ease !important; }
+.mini-card.fan-3 { transform: translateX(120px)  translateY(-6px)  rotate(9deg)  !important; opacity: 1 !important; transition: transform 220ms ease-out, opacity 180ms ease !important; }
+/* 3-card fan */
+.mini-card.fan3-0 { transform: translateX(-80px)  translateY(-8px) rotate(-7deg) !important; opacity: 1 !important; transition: transform 220ms ease-out, opacity 180ms ease !important; }
+.mini-card.fan3-1 { transform: translateX(0)      translateY(-12px) rotate(0deg) !important; opacity: 1 !important; transition: transform 220ms ease-out, opacity 180ms ease !important; }
+.mini-card.fan3-2 { transform: translateX(80px)   translateY(-8px) rotate(7deg)  !important; opacity: 1 !important; transition: transform 220ms ease-out, opacity 180ms ease !important; }
+
+.mini-card-type {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.mini-card-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.mini-card-desc {
+  font-size: 0.78rem;
+  color: var(--text-2);
+  line-height: 1.55;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.mini-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.mini-card-tags li {
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+
+/* Mini deck nav */
+.mini-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.mini-btn {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 0.8rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.12s, border-color 0.12s, transform 0.1s;
+}
+.mini-btn:hover:not(:disabled) {
+  background: var(--accent-tint);
+  border-color: var(--accent-border);
+  color: var(--accent);
+  transform: scale(1.1);
+}
+.mini-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.mini-dots { display: flex; gap: 5px; }
+.mini-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--card-border);
+  border: 1px solid var(--muted);
+  transition: background 0.18s, transform 0.18s;
+  cursor: pointer;
+}
+.mini-dot.is-active { background: var(--accent); border-color: var(--accent); transform: scale(1.4); }
+
+/* ── Card 04 BACK: Philosophy ── */
+.phil-heading {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+
+.phil-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-border) transparent;
+}
+
+.phil-para { font-size: 0.85rem; color: var(--text-2); line-height: 1.68; }
+
+.phil-para strong { color: var(--text); font-weight: 700; }
+
+.phil-credo {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--muted);
+  border-top: 1px solid var(--card-border);
+  padding-top: 0.65rem;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+/* ============================================================
+   CARD 05 — CONNECT
+   ============================================================ */
+.connect-heading {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.connect-lede {
+  font-size: 0.92rem;
+  color: var(--text-2);
+  line-height: 1.65;
+  max-width: 46ch;
+}
+
+.connect-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.connect-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  background: rgba(0,0,0,0.018);
+}
+.connect-link:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+
+.connect-link-icon { font-size: 1rem; flex-shrink: 0; }
+.connect-link-label { flex: 1; }
+.connect-link-arrow { color: var(--muted); font-size: 0.75rem; transition: transform 0.15s; }
+.connect-link:hover .connect-link-arrow { transform: translateX(3px); color: var(--accent); }
+
+.connect-meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+/* ── Card 05 BACK: What I'm looking for ── */
+.looking-heading {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+
+.looking-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.looking-item {
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent-border);
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.looking-item strong { color: var(--text); font-weight: 700; display: block; font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.1rem; }
+
+.looking-cta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  border-top: 1px solid var(--card-border);
+  padding-top: 0.65rem;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   DECK NAVIGATION (kraft table, not on cards)
+   ============================================================ */
+.deck-nav {
+  position: absolute;
+  bottom: clamp(16px, 3vh, 28px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 30;
+  user-select: none;
+}
+
+.nav-section-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(26,21,16,0.55);
+  min-height: 1em;
+  transition: opacity 0.2s;
+}
+
+.nav-pips {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.nav-pip {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(26,21,16,0.2);
+  border: 1.5px solid rgba(26,21,16,0.3);
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+  padding: 0;
+}
+.nav-pip:hover:not(.is-active) {
+  background: rgba(26,21,16,0.35);
+  transform: scale(1.2);
+}
+.nav-pip.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.35);
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2px;
+}
+
+.nav-arrow {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(26,21,16,0.2);
+  background: rgba(255,254,249,0.6);
+  color: var(--text-2);
+  font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.12s, border-color 0.12s, transform 0.1s;
+}
+.nav-arrow:hover:not(:disabled) {
+  background: rgba(255,254,249,0.9);
+  border-color: var(--accent-border);
+  color: var(--accent);
+  transform: scale(1.1);
+}
+.nav-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.nav-hint {
+  font-size: 0.66rem;
+  color: rgba(26,21,16,0.38);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* Flip indicator — separate from nav pips */
+.flip-indicator {
+  position: absolute;
+  top: clamp(14px, 2.5vh, 22px);
+  right: clamp(14px, 3vw, 28px);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(26,21,16,0.4);
+  z-index: 30;
+  transition: color 0.2s, opacity 0.2s;
+  cursor: default;
+  user-select: none;
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.gap-xs { gap: 0.3rem; }
+.gap-sm { gap: 0.6rem; }
+.gap-md { gap: 1rem; }
+.flex   { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.items-baseline { align-items: baseline; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.flex-wrap { flex-wrap: wrap; }
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  z-index: 200;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0.5rem; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 460px) {
+  :root {
+    --card-w: 96vw;
+    --card-h: 82vh;
+    --card-pad: 1rem;
+  }
+  .chrome-kj { display: none; }
+  .cw-grid { grid-template-columns: 1fr; }
+  .story-beat { grid-template-columns: 3.8rem 1fr; }
+}
+
+@media (max-height: 520px) {
+  :root { --card-h: 90vh; }
+  .nav-hint { display: none; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .deck-card,
+  .card-inner,
+  .mini-card,
+  .mini-card.fan-0, .mini-card.fan-1, .mini-card.fan-2, .mini-card.fan-3,
+  .mini-card.fan3-0, .mini-card.fan3-1, .mini-card.fan3-2 {
+    transition: none !important;
+  }
 }
