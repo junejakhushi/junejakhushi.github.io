@@ -14,8 +14,8 @@ export const profile = {
   // Hero positioning (refinement §3). `positioning` is the lead sentence;
   // `throughline` is set in bold beneath it.
   positioning:
-    "Operations Research / Statistics + Human-Computer Interaction at Carnegie Mellon. I build and evaluate systems and experiences for people — ML/NLP pipelines, computer vision, game-based tools, and simulations — grounded in research and evidence.",
-  throughline: "Learning is my throughline, not my limit.",
+    "Operations Research / Statistics + Human-Computer Interaction at Carnegie Mellon. I build and evaluate systems and experiences for people: ML/NLP pipelines, computer vision, game-based tools, and simulations, grounded in research and evidence.",
+  throughline: "using data, design, and technology to understand how people think, make decisions, and interact with systems",
 
   // Short headline — used in meta description / OG (refinement §3).
   headline:
@@ -32,7 +32,7 @@ export const profile = {
     },
     {
       label: "Experience, game & social design.",
-      body: "Designing experiences, games, and social/interactive systems — entertainment, play, and human connection are a serious part of my work.",
+      body: "Designing experiences, games, and social/interactive systems: entertainment, play, and human connection are a serious part of my work.",
     },
     {
       label: "Learning engineering & ed-data.",
@@ -41,7 +41,7 @@ export const profile = {
   ],
   // Short closing line (refinement §4).
   lookingForCoda:
-    "Plus mentors & collaborators who build with rigor. Timing: Fall 2026 and Summer 2027 internships, research positions, and fellowships.",
+    "",
 
   email: "kjuneja@andrew.cmu.edu",
   links: {
