@@ -1,5 +1,6 @@
 // ============================================================
-// SKILLS  (brief §5.6) — four grouped, scannable lists.
+// SKILLS  (refinement §7) — five groups that lead with technical
+// and quantitative depth, with a distinct design/experience cluster.
 // ============================================================
 
 export interface SkillGroup {
@@ -9,58 +10,48 @@ export interface SkillGroup {
 
 export const skills: SkillGroup[] = [
   {
-    label: "Research & Analysis",
+    label: "Programming & Data",
+    items: ["Python", "R", "SQL", "JavaScript", "C", "pandas", "NumPy", "Git"],
+  },
+  {
+    label: "Machine Learning & Statistics",
     items: [
       "NLP",
       "Machine learning",
-      "Mixed methods",
-      "Qualitative coding",
-      "Thematic analysis",
-      "Statistical inference",
+      "LLM fine-tuning",
       "Regression",
+      "Statistical inference",
       "Hierarchical/mixed models",
+      "Probability",
       "A/B testing",
-      "Study design",
-      "Educational data mining",
-      "Automated scoring",
-      "Evaluation frameworks",
+      "Experimental design",
     ],
   },
   {
-    label: "Design & Instruction",
+    label: "Systems, Modeling & Tools",
     items: [
-      "Instructional design",
-      "Scaffolding",
-      "Curriculum design",
-      "Formative assessment",
-      "Cognitive task analysis",
-      "Learning analytics",
-      "Evidence-based design",
-      "UX research",
-      "Facilitation",
-    ],
-  },
-  {
-    label: "Tools & Tech",
-    items: [
-      "Python",
-      "R",
-      "SQL",
-      "JavaScript",
-      "C",
+      "OpenCV",
+      "AnyLogic (discrete-event simulation)",
+      "Optimization",
       "React",
       "Flask",
-      "OpenCV",
-      "Raspberry Pi",
-      "Git",
-      "Qualtrics",
-      "AnyLogic",
-      "DataShop",
-      "Figma",
-      "RMarkdown",
-      "ggplot2",
-      "pandas/NumPy",
       "Anthropic API",
+      "Qualtrics",
+      "DataShop",
+    ],
+  },
+  {
+    label: "Design & Research",
+    items: [
+      "Game design",
+      "Experience/interaction design",
+      "UX research",
+      "Study design",
+      "Mixed methods",
+      "Qualitative coding",
+      "Instructional design",
+      "Facilitation",
+      "Figma",
     ],
   },
   {

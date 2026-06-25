@@ -1,5 +1,8 @@
 // ============================================================
-// EDUCATION  (brief §5.3)
+// EDUCATION  (refinement §8)
+// Lead with the two B.S. degrees; the M.S. line is hidden by
+// default (toggle below). Coursework is grouped, quantitative
+// first, and uses only her real courses.
 // ============================================================
 
 export const education = {
@@ -19,25 +22,36 @@ export const education = {
     },
   ],
 
-  // ── EDITABLE: displayed minor ──
-  // Pick one of: "Design for Learning" | "Game Design" | "Physical Computing"
-  minor: "Design for Learning",
+  // ── EDITABLE: minors ──
+  minors: ["Game Design", "Physical Computing"],
 
-  // ── TOGGLE (default OFF): Accelerated M.S. line (brief §5.3) ──
-  // Set to true to surface the M.S. once it's official.
+  // ── TOGGLE (default OFF): Accelerated M.S. line ──
+  // Khushi isn't formally enrolled yet; leaving this off avoids
+  // pigeonholing her as education-only. Set true to surface it later.
   showMastersLine: false,
   mastersLine: "Accelerated M.S. in Learning Engineering (in progress)",
 
+  // Grouped coursework — quantitative/computational first (§8).
   coursework: [
-    "Introduction to Machine Learning",
-    "Modern Regression",
-    "Statistical Inference",
-    "Probability",
-    "Linear Algebra for Data Science",
-    "Principles of Imperative Computation",
-    "Evidence-Based Educational Design",
-    "E-Learning Design Principles and Methods",
-    "Experience Design",
-    "Systems Thinking and Discrete-Event Simulation",
+    {
+      group: "Quantitative & Computational",
+      items: [
+        "Introduction to Machine Learning",
+        "Modern Regression",
+        "Statistical Inference",
+        "Probability",
+        "Linear Algebra for Data Science",
+        "Principles of Imperative Computation",
+        "Systems Thinking and Discrete-Event Simulation",
+      ],
+    },
+    {
+      group: "Design & Learning",
+      items: [
+        "Evidence-Based Educational Design",
+        "E-Learning Design Principles and Methods",
+        "Experience Design",
+      ],
+    },
   ],
 } as const;
