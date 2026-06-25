@@ -1,0 +1,162 @@
+---
+// Hero (brief §7): name, pronouns, positioning line, looking-for
+// status chip, and primary CTAs. Calm and uncluttered.
+import { profile } from "../data/profile";
+import ResumeButton from "./ResumeButton.astro";
+---
+
+<section class="hero" id="top">
+  <div class="shell hero__inner">
+    <p class="hero__eyebrow">
+      Operations Research / Statistics + Human-Computer Interaction · Carnegie
+      Mellon University
+    </p>
+
+    <h1 class="hero__name">
+      {profile.name}
+      <span class="hero__pronouns">{profile.pronouns}</span>
+    </h1>
+
+    <p class="hero__positioning">{profile.positioning}</p>
+
+    <p class="hero__chip">
+      <span class="hero__chip-dot" aria-hidden="true"></span>
+      {profile.lookingForChip}
+    </p>
+
+    <div class="hero__ctas">
+      <a class="hero__primary" href="#projects">View Work</a>
+      <a class="hero__secondary" href={`mailto:${profile.email}`}>Email</a>
+      <ResumeButton variant="ghost" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(3.5rem, 11vh, 8rem) clamp(2.5rem, 6vh, 4.5rem);
+  }
+  .hero__inner {
+    max-width: 56rem;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero__name {
+    font-size: var(--text-hero);
+    font-weight: 480;
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+  }
+  .hero__pronouns {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--color-muted);
+    vertical-align: middle;
+    margin-left: 0.6rem;
+    transform: translateY(-0.35em);
+  }
+
+  .hero__positioning {
+    margin-top: 1.5rem;
+    font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+    line-height: 1.5;
+    color: var(--color-ink-2);
+    max-width: 44ch;
+    text-wrap: balance;
+  }
+
+  .hero__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 1.75rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    background: var(--color-accent-tint);
+    border: 1px solid var(--color-accent-border);
+    color: var(--color-accent-strong);
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+  .hero__chip-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 60%, transparent);
+    animation: pulse 2.4s var(--ease-out) infinite;
+  }
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 55%, transparent);
+    }
+    70% {
+      box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--color-accent) 0%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 0%, transparent);
+    }
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 2.25rem;
+  }
+  .hero__primary,
+  .hero__secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.7rem 1.4rem;
+    border-radius: 9px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1;
+    transition:
+      background 0.15s,
+      border-color 0.15s,
+      color 0.15s,
+      transform 0.1s;
+  }
+  .hero__primary {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    border: 1px solid var(--color-ink);
+  }
+  .hero__primary:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-ink);
+    transform: translateY(-1px);
+  }
+  .hero__secondary {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border: 1px solid var(--color-border-strong);
+  }
+  .hero__secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__chip-dot {
+      animation: none;
+    }
+  }
+</style>

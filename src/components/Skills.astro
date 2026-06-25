@@ -1,0 +1,99 @@
+---
+// Skills (brief §7): four labeled groups, clean chips. Scannable.
+import { skills } from "../data/skills";
+---
+
+<section class="section" id="skills" aria-labelledby="skills-heading">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Skills</p>
+      <h2 id="skills-heading" class="sec-title">The toolkit.</h2>
+    </div>
+
+    <div class="skill-groups">
+      {
+        skills.map((group) => (
+          <div class="skill-group" data-reveal>
+            <h3 class="skill-group__label">{group.label}</h3>
+            <ul class="chips">
+              {group.items.map((item) => (
+                <li class="chip">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .sec-head {
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+  .sec-title {
+    font-size: var(--text-h2);
+    margin-top: 0.5rem;
+  }
+
+  .skill-groups {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.75rem);
+  }
+  @media (min-width: 720px) {
+    .skill-groups {
+      grid-template-columns: 11rem 1fr;
+      row-gap: 2rem;
+      column-gap: 2.5rem;
+    }
+    .skill-group {
+      display: contents;
+    }
+  }
+
+  .skill-group__label {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    padding-top: 0.4rem;
+  }
+  @media (min-width: 720px) {
+    .skill-group {
+      border-top: 1px solid var(--color-border);
+      padding-top: 1.25rem;
+    }
+  }
+
+  .chips {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  @media (min-width: 720px) {
+    .chips {
+      margin-top: 0;
+    }
+  }
+  .chip {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--color-ink-2);
+    background: var(--color-paper);
+    border: 1px solid var(--color-border-strong);
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    transition:
+      border-color 0.15s,
+      color 0.15s;
+  }
+  .chip:hover {
+    border-color: var(--color-accent-border);
+    color: var(--color-accent);
+  }
+</style>

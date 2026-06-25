@@ -1,0 +1,186 @@
+---
+// Resume affordance (brief §5.9): primary button → default version,
+// plus a small switcher (native <details>, works without JS) for the
+// other two tailored versions.
+import { resumes, defaultResume } from "../data/resume";
+
+interface Props {
+  variant?: "primary" | "ghost";
+}
+const { variant = "primary" } = Astro.props;
+const others = resumes.filter((r) => r.id !== defaultResume.id);
+---
+
+<div class="resume" data-resume>
+  <a
+    class:list={["btn", variant === "primary" ? "btn--solid" : "btn--ghost"]}
+    href={defaultResume.file}
+    target="_blank"
+    rel="noopener"
+  >
+    Resume
+    <span class="resume__hint">— {defaultResume.label}</span>
+  </a>
+
+  <details class="resume__menu">
+    <summary
+      aria-label="Choose a different resume version"
+      title="Other versions"
+    >
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+        <path
+          d="M2 4l4 4 4-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </summary>
+    <ul role="list">
+      {
+        others.map((r) => (
+          <li>
+            <a href={r.file} target="_blank" rel="noopener">
+              {r.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</div>
+
+<style>
+  .resume {
+    display: inline-flex;
+    align-items: stretch;
+    position: relative;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 9px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1;
+    transition:
+      background 0.15s,
+      border-color 0.15s,
+      color 0.15s,
+      transform 0.1s;
+  }
+  .btn--solid {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    border: 1px solid var(--color-accent);
+    border-right-color: color-mix(in srgb, var(--color-accent) 80%, black);
+    border-radius: 9px 0 0 9px;
+  }
+  .btn--solid:hover {
+    background: var(--color-accent-strong);
+    color: var(--color-accent-ink);
+    transform: translateY(-1px);
+  }
+  .btn--ghost {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 9px 0 0 9px;
+  }
+  .btn--ghost:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .resume__hint {
+    font-weight: 500;
+    opacity: 0.85;
+    font-size: 0.82rem;
+  }
+
+  .resume__menu {
+    position: relative;
+  }
+  .resume__menu summary {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-inline: 0.6rem;
+    border-radius: 0 9px 9px 0;
+    cursor: pointer;
+    background: var(--color-accent-strong);
+    color: var(--color-accent-ink);
+    border: 1px solid var(--color-accent-strong);
+    border-left: none;
+  }
+  .btn--ghost ~ .resume__menu summary {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border: 1px solid var(--color-border-strong);
+    border-left: none;
+  }
+  .resume__menu summary::-webkit-details-marker {
+    display: none;
+  }
+  .resume__menu summary svg {
+    transition: transform 0.15s var(--ease-out);
+  }
+  .resume__menu[open] summary svg {
+    transform: rotate(180deg);
+  }
+
+  .resume__menu ul {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.4rem);
+    z-index: 60;
+    margin: 0;
+    padding: 0.35rem;
+    list-style: none;
+    min-width: 12rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(40, 28, 12, 0.16);
+  }
+  .resume__menu a {
+    display: block;
+    padding: 0.5rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .resume__menu a:hover {
+    background: var(--color-accent-tint);
+    color: var(--color-accent-strong);
+  }
+
+  @media (max-width: 420px) {
+    .resume__hint {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Close the resume menu on outside click or Escape (progressive enhancement).
+  document.querySelectorAll<HTMLDetailsElement>(".resume__menu").forEach(
+    (menu) => {
+      document.addEventListener("click", (e) => {
+        if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+      });
+      menu.addEventListener("keydown", (e) => {
+        if ((e as KeyboardEvent).key === "Escape") menu.open = false;
+      });
+    },
+  );
+</script>

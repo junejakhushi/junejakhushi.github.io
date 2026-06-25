@@ -1,0 +1,44 @@
+[
+  {
+    "title": "From notes to structured signals",
+    "date": "2025-08-22",
+    "excerpt": "How a redesigned observation protocol turned qualitative pedagogy notes into actionable data for faster course improvements.",
+    "image": "assets/spreadsheet.jpg",
+    "url": "#"
+  },
+  {
+    "title": "Building a bilingual workshop that actually raises funds",
+    "date": "2025-07-18",
+    "excerpt": "Design choices behind Unifly's student-facing fundraising program—peer accountability, capstones, and near-zero cost.",
+    "image": null,
+    "url": "#"
+  },
+  {
+    "title": "Onboarding that reduces questions by 45%",
+    "date": "2025-06-29",
+    "excerpt": "Mapping Vinsol’s new-hire pain points and sequencing tasks for clarity. What worked and what I’d try next.",
+    "image": "assets/analytics.jpg",
+    "url": "#"
+  },
+  {
+    "title": "Pacing and input for low-literacy learners",
+    "date": "2025-05-12",
+    "excerpt": "Combining interview codes with assessment data to shape content segmentation and keypad interactions.",
+    "image": null,
+    "url": "#"
+  },
+  {
+    "title": "Validating a scoring model beyond the game",
+    "date": "2024-11-05",
+    "excerpt": "Structured experiments on a free-throw simulator—physics tuning, feedback timing, and transfer.",
+    "image": "assets/puzzle.jpg",
+    "url": "#"
+  },
+  {
+    "title": "THISTHAT & TeachingTeachers",
+    "date": "2024-10-02",
+    "excerpt": "Notes from two education projects: redesigning learning moments and scaffolding teacher interventions.",
+    "image": null,
+    "url": "#"
+  }
+]

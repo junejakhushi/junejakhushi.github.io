@@ -1,0 +1,150 @@
+---
+// Contact / Footer (brief §7): email front-and-center, links,
+// languages, and the resume affordance.
+import { profile } from "../data/profile";
+import ResumeButton from "./ResumeButton.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" id="contact" aria-labelledby="contact-heading">
+  <div class="shell">
+    <div class="footer__top" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-heading" class="footer__title">Let’s talk.</h2>
+      <p class="footer__lede">
+        Open to research collaborations, fellowships, and roles at the
+        intersection of learning, data, and product. The fastest way to reach me
+        is email.
+      </p>
+
+      <a class="footer__email" href={`mailto:${profile.email}`}>
+        {profile.email}
+        <span aria-hidden="true">→</span>
+      </a>
+
+      <div class="footer__actions">
+        <ResumeButton variant="primary" />
+        <a
+          class="footer__link"
+          href={profile.links.linkedin}
+          target="_blank"
+          rel="noopener">LinkedIn</a
+        >
+        <a
+          class="footer__link"
+          href={profile.links.github}
+          target="_blank"
+          rel="noopener">GitHub</a
+        >
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__langs">
+        <span class="footer__langs-label">Languages</span>
+        {profile.languages.map((l) => `${l.name} (${l.level})`).join(" · ")}
+      </p>
+      <p class="footer__meta">
+        © {year} {profile.name} · {profile.location} · Built with Astro
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    padding-block: clamp(3.5rem, 8vw, 6rem) 2.5rem;
+    margin-top: clamp(3rem, 8vw, 6rem);
+  }
+  .footer .eyebrow {
+    color: var(--color-sand);
+  }
+
+  .footer__title {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 460;
+    line-height: 1;
+    margin-top: 0.6rem;
+    color: var(--color-cream);
+  }
+  .footer__lede {
+    margin-top: 1.25rem;
+    max-width: 42ch;
+    color: color-mix(in srgb, var(--color-cream) 78%, transparent);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .footer__email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 3.5vw, 1.9rem);
+    font-weight: 400;
+    color: var(--color-cream);
+    text-decoration: none;
+    border-bottom: 2px solid color-mix(in srgb, var(--color-sand) 60%, transparent);
+    padding-bottom: 0.15rem;
+    transition:
+      border-color 0.15s,
+      color 0.15s;
+  }
+  .footer__email span {
+    transition: transform 0.15s var(--ease-out);
+  }
+  .footer__email:hover {
+    color: var(--color-sand);
+    border-color: var(--color-sand);
+  }
+  .footer__email:hover span {
+    transform: translateX(4px);
+  }
+
+  .footer__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .footer__link {
+    color: var(--color-cream);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+  }
+  .footer__link:hover {
+    color: var(--color-sand);
+    border-bottom-color: var(--color-sand);
+  }
+
+  .footer__bottom {
+    margin-top: clamp(3rem, 7vw, 4.5rem);
+    padding-top: 1.75rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-cream) 16%, transparent);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .footer__langs,
+  .footer__meta {
+    font-size: 0.85rem;
+    color: color-mix(in srgb, var(--color-cream) 62%, transparent);
+  }
+  .footer__langs-label {
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: var(--color-sand);
+    margin-right: 0.6rem;
+  }
+</style>

@@ -1,0 +1,190 @@
+---
+// Experience (brief §7): reverse-chronological vertical timeline.
+// Subtle emphasis on current ("Present") roles.
+import { experience } from "../data/experience";
+---
+
+<section class="section" id="work" aria-labelledby="work-heading">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Experience</p>
+      <h2 id="work-heading" class="sec-title">
+        Where rigor meets practice.
+      </h2>
+    </div>
+
+    <ol class="timeline">
+      {
+        experience.map((job) => (
+          <li
+            class:list={["tl-item", { "tl-item--current": job.current }]}
+            data-reveal
+          >
+            <span class="tl-marker" aria-hidden="true" />
+            <div class="tl-body">
+              <div class="tl-top">
+                <h3 class="tl-role">{job.role}</h3>
+                {job.current && <span class="tl-now">Now</span>}
+              </div>
+              <p class="tl-org">
+                {job.orgUrl ? (
+                  <a href={job.orgUrl} target="_blank" rel="noopener">
+                    {job.org}
+                  </a>
+                ) : (
+                  job.org
+                )}
+              </p>
+              <p class="tl-meta">
+                <span>{job.dates}</span>
+                <span class="tl-dot" aria-hidden="true">·</span>
+                <span>{job.location}</span>
+              </p>
+              <ul class="tl-bullets">
+                {job.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .sec-head {
+    margin-bottom: clamp(2rem, 5vw, 3.25rem);
+  }
+  .sec-title {
+    font-size: var(--text-h2);
+    margin-top: 0.5rem;
+    max-width: 18ch;
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  /* the spine */
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 0.4rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      var(--color-border-strong),
+      var(--color-border) 85%,
+      transparent
+    );
+  }
+
+  .tl-item {
+    position: relative;
+    padding-left: 2.25rem;
+    padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  }
+  .tl-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .tl-marker {
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    background: var(--color-cream);
+    border: 2px solid var(--color-border-strong);
+  }
+  .tl-item--current .tl-marker {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px var(--color-accent-tint);
+  }
+
+  .tl-top {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .tl-role {
+    font-family: var(--font-sans);
+    font-size: 1.18rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+  .tl-now {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background: var(--color-accent-tint);
+    border: 1px solid var(--color-accent-border);
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+  }
+
+  .tl-org {
+    margin-top: 0.15rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-ink-2);
+  }
+  .tl-org a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .tl-org a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .tl-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+    font-size: 0.86rem;
+    color: var(--color-muted);
+  }
+  .tl-dot {
+    opacity: 0.6;
+  }
+
+  .tl-bullets {
+    margin: 0.85rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    max-width: 65ch;
+  }
+  .tl-bullets li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+  }
+  .tl-bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--color-accent-border);
+  }
+</style>
