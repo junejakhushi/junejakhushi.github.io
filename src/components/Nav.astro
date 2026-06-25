@@ -1,6 +1,6 @@
 ---
-// Sticky, auto-hiding top nav with anchor links + persistent
-// Email & Resume affordances (brief §4).
+// Sticky, auto-hiding top nav with anchor links + a persistent
+// Email affordance (refinement §9 removed the resume affordance).
 import { profile } from "../data/profile";
 
 const links = [
@@ -23,8 +23,13 @@ const links = [
     </nav>
 
     <div class="nav__cta">
+      <a
+        class="nav__link-out"
+        href={profile.links.linkedin}
+        target="_blank"
+        rel="noopener">LinkedIn</a
+      >
       <a class="nav__email" href={`mailto:${profile.email}`}>Email</a>
-      <a class="nav__resume" href="/resume/khushi-juneja-learning-engineering.pdf" target="_blank" rel="noopener">Resume</a>
     </div>
   </div>
 </header>
@@ -119,36 +124,34 @@ const links = [
   .nav__cta {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.85rem;
   }
-  .nav__email,
-  .nav__resume {
+  .nav__link-out {
+    color: var(--color-ink-2);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav__link-out:hover {
+    color: var(--color-accent);
+  }
+  .nav__email {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
     padding: 0.45rem 0.9rem;
     border-radius: 8px;
     line-height: 1;
-  }
-  .nav__email {
-    color: var(--color-ink);
-    border: 1px solid var(--color-border-strong);
-  }
-  .nav__email:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
-  .nav__resume {
     background: var(--color-accent);
     color: var(--color-accent-ink);
     border: 1px solid var(--color-accent);
   }
-  .nav__resume:hover {
+  .nav__email:hover {
     background: var(--color-accent-strong);
     color: var(--color-accent-ink);
   }
 
-  /* Hide section links on small screens; brand + Email/Resume remain */
+  /* Hide section links on small screens; brand + Email remain */
   @media (max-width: 760px) {
     .nav__links {
       display: none;
@@ -158,7 +161,7 @@ const links = [
     }
   }
   @media (max-width: 380px) {
-    .nav__email {
+    .nav__link-out {
       display: none;
     }
   }

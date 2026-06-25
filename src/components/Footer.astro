@@ -1,8 +1,8 @@
 ---
-// Contact / Footer (brief §7): email front-and-center, links,
-// languages, and the resume affordance.
+// Contact / Footer: email + LinkedIn as the primary ways to reach
+// her (refinement §9 removed the resume affordance), the role
+// families she's looking for (§4), languages, and links.
 import { profile } from "../data/profile";
-import ResumeButton from "./ResumeButton.astro";
 
 const year = new Date().getFullYear();
 ---
@@ -13,10 +13,21 @@ const year = new Date().getFullYear();
       <p class="eyebrow">Contact</p>
       <h2 id="contact-heading" class="footer__title">Let’s talk.</h2>
       <p class="footer__lede">
-        Open to research collaborations, fellowships, and roles at the
-        intersection of learning, data, and product. The fastest way to reach me
-        is email.
+        Open to research collaborations, fellowships, and roles across data,
+        design, and play. The fastest ways to reach me are email and LinkedIn —
+        and I'll send a tailored resume on request.
       </p>
+
+      <ul class="footer__looking">
+        {
+          profile.lookingFor.map((item) => (
+            <li>
+              <strong>{item.label}</strong> {item.body}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="footer__coda">{profile.lookingForCoda}</p>
 
       <a class="footer__email" href={`mailto:${profile.email}`}>
         {profile.email}
@@ -24,18 +35,17 @@ const year = new Date().getFullYear();
       </a>
 
       <div class="footer__actions">
-        <ResumeButton variant="primary" />
         <a
-          class="footer__link"
+          class="footer__link footer__link--strong"
           href={profile.links.linkedin}
           target="_blank"
-          rel="noopener">LinkedIn</a
+          rel="noopener">LinkedIn →</a
         >
         <a
           class="footer__link"
           href={profile.links.github}
           target="_blank"
-          rel="noopener">GitHub</a
+          rel="noopener">GitHub →</a
         >
       </div>
     </div>
@@ -76,6 +86,33 @@ const year = new Date().getFullYear();
     color: color-mix(in srgb, var(--color-cream) 78%, transparent);
     font-size: 1.05rem;
     line-height: 1.6;
+  }
+
+  .footer__looking {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+    max-width: 60ch;
+  }
+  .footer__looking li {
+    padding-left: 1rem;
+    border-left: 2px solid color-mix(in srgb, var(--color-sand) 55%, transparent);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--color-cream) 72%, transparent);
+  }
+  .footer__looking strong {
+    color: var(--color-sand);
+    font-weight: 700;
+  }
+  .footer__coda {
+    margin-top: 1.1rem;
+    max-width: 56ch;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: color-mix(in srgb, var(--color-cream) 60%, transparent);
   }
 
   .footer__email {
@@ -123,6 +160,10 @@ const year = new Date().getFullYear();
   .footer__link:hover {
     color: var(--color-sand);
     border-bottom-color: var(--color-sand);
+  }
+  .footer__link--strong {
+    color: var(--color-sand);
+    border-bottom-color: color-mix(in srgb, var(--color-sand) 50%, transparent);
   }
 
   .footer__bottom {

@@ -1,5 +1,8 @@
 // ============================================================
-// HOW I THINK — design philosophy  (brief §5.7)
+// HOW I THINK — design philosophy  (refinement §2A)
+// Reframed around designing systems & experiences for people
+// (games, social/experience design, and data work) — learning
+// is one domain among several, not the limit.
 // ============================================================
 
 export interface PhilosophyPoint {
@@ -10,17 +13,19 @@ export interface PhilosophyPoint {
 export const philosophy: PhilosophyPoint[] = [
   {
     title: "Play is a serious design tool.",
-    body: "Structured play lowers social stakes and raises genuine engagement; embodied feedback teaches better than a diagram. Use game mechanics where they earn their place, not as decoration.",
+    body: "Samvaad worked because structured play lowers social stakes and unlocks genuine connection; the Free-Throw Simulator worked because embodied feedback beats a diagram. I reach for game mechanics and play where they earn their place — to change how people engage with a system, not as decoration.",
   },
   {
-    title: "You can't design learning without measuring it.",
-    body: "The NLP pipeline, the CTA study, the Eberly observation protocol exist because intuition alone isn't enough. Good instructional design is testable — if you can't tell whether it worked, you haven't finished designing it.",
+    title: "You can't design for people without measuring it.",
+    body: "The NLP pipeline, the cognitive-task-analysis study, the observation protocols — they exist because intuition isn't enough. Good design is testable: if I can't tell whether an experience worked, I haven't finished designing it.",
   },
   {
-    title: "The best interventions work within constraints.",
-    body: "Real budgets, real time limits. Elegance means solving the actual problem with what actually exists.",
+    title: "The best systems work within real constraints.",
+    body: "Limited time, shoestring budgets, messy data. Elegance, for me, is solving the actual problem with what actually exists — not the ideal version of either.",
   },
 ];
 
+export const philosophyHeading = "Why I build the way I do.";
+
 export const pullQuote =
-  "Students deserve better systems, and building them is tractable.";
+  "People deserve better systems and spaces — and building them is tractable.";

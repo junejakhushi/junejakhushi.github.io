@@ -2,15 +2,11 @@
 // Hero (brief §7): name, pronouns, positioning line, looking-for
 // status chip, and primary CTAs. Calm and uncluttered.
 import { profile } from "../data/profile";
-import ResumeButton from "./ResumeButton.astro";
 ---
 
 <section class="hero" id="top">
   <div class="shell hero__inner">
-    <p class="hero__eyebrow">
-      Operations Research / Statistics + Human-Computer Interaction · Carnegie
-      Mellon University
-    </p>
+    <p class="hero__eyebrow">{profile.eyebrow}</p>
 
     <h1 class="hero__name">
       {profile.name}
@@ -18,6 +14,7 @@ import ResumeButton from "./ResumeButton.astro";
     </h1>
 
     <p class="hero__positioning">{profile.positioning}</p>
+    <p class="hero__throughline">{profile.throughline}</p>
 
     <p class="hero__chip">
       <span class="hero__chip-dot" aria-hidden="true"></span>
@@ -25,9 +22,8 @@ import ResumeButton from "./ResumeButton.astro";
     </p>
 
     <div class="hero__ctas">
-      <a class="hero__primary" href="#projects">View Work</a>
-      <a class="hero__secondary" href={`mailto:${profile.email}`}>Email</a>
-      <ResumeButton variant="ghost" />
+      <a class="hero__primary" href="#projects">View Projects</a>
+      <a class="hero__secondary" href={`mailto:${profile.email}`}>Say Hello</a>
     </div>
   </div>
 </section>
@@ -70,11 +66,21 @@ import ResumeButton from "./ResumeButton.astro";
 
   .hero__positioning {
     margin-top: 1.5rem;
-    font-size: clamp(1.15rem, 2.4vw, 1.55rem);
-    line-height: 1.5;
+    font-size: clamp(1.1rem, 2.1vw, 1.4rem);
+    line-height: 1.55;
     color: var(--color-ink-2);
-    max-width: 44ch;
-    text-wrap: balance;
+    max-width: 50ch;
+    text-wrap: pretty;
+  }
+  .hero__throughline {
+    margin-top: 0.9rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.2rem, 2.6vw, 1.65rem);
+    line-height: 1.3;
+    color: var(--color-accent);
+    max-width: 50ch;
   }
 
   .hero__chip {

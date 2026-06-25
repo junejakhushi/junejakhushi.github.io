@@ -35,8 +35,6 @@ the page updates. No component edits needed for routine content changes.
 | `src/data/skills.ts` | The four skill groups |
 | `src/data/education.ts` | Degrees, honors, **minor**, **M.S. toggle**, coursework |
 | `src/data/philosophy.ts` | "How I Think" points + pull quote |
-| `src/data/timeline.ts` | "How I Got Here" origin beats |
-| `src/data/resume.ts` | Resume PDF versions + which one is the default |
 
 ### Add a new project
 
@@ -45,23 +43,27 @@ Open `src/data/projects.ts` and copy one object in the `projects` array:
 ```ts
 {
   title: "My New Project",
+  eyebrow: "Machine Learning · NLP · Evaluation",  // method-first line on the card
   summary: "One line shown on the card.",
   description: "The longer write-up shown in the detail modal.",
-  tags: ["Research", "Data/ML"],   // drives the filter chips
-  tech: ["Python", "PyTorch"],      // optional — omit if not relevant
+  tags: ["Machine Learning", "NLP"],   // drives the filter chips
+  tech: ["Python", "PyTorch"],          // optional — omit if not relevant
 },
 ```
 
-It auto-appears in the grid and in any matching filters. Reuse existing tag
-strings (`Learning Design`, `Data/ML`, `Research`, `Hardware/CV`, `Games`,
-`Product`) so the filter row stays tidy; new tags appear automatically if used.
+It auto-appears in the grid and in any matching filters. Reuse existing
+method-first tag strings (`Machine Learning`, `NLP`, `Computer Vision`,
+`Simulation`, `Statistics`, `Game Design`, `UX`, `Study Design`, `Research`,
+`Learning Design`) so the filter row stays tidy; new tags appear automatically
+if used. Each project's `eyebrow` is the method-first line a recruiter reads
+first.
 
-### Swap the displayed minor
+### Change the minors
 
-In `src/data/education.ts`, change one line:
+In `src/data/education.ts`, edit the array:
 
 ```ts
-minor: "Design for Learning",   // or "Game Design" | "Physical Computing"
+minors: ["Game Design", "Physical Computing"],
 ```
 
 ### Enable the Accelerated M.S. line
@@ -72,19 +74,12 @@ In `src/data/education.ts`, flip the toggle (it's `false` by default):
 showMastersLine: true,
 ```
 
-### Resume PDFs
+### Resume
 
-The three tailored resumes live in `public/resume/`:
-
-- `khushi-juneja-learning-engineering.pdf` ← **primary / default button**
-- `khushi-juneja-ed-data-science.pdf`
-- `khushi-juneja-data-science.pdf`
-
-> ⚠️ These are **placeholders**. Replace each file with the real one-page PDF
-> (keep the same filename, or update the path in `src/data/resume.ts`).
-
-To change which version the main "Resume" button points to, edit
-`defaultResumeId` in `src/data/resume.ts`.
+There is **no resume on the site by design** — Khushi tailors a separate resume
+to each application and sends it directly. Email and LinkedIn are the primary
+contact paths. (If you ever want to add one back, that's a new affordance, not a
+toggle.)
 
 ---
 
@@ -151,7 +146,6 @@ npm run build   # outputs dist/
 
 ```
 public/
-  resume/            three resume PDFs (replace placeholders)
   robots.txt
   og.png             generated social image
 scripts/
@@ -159,7 +153,7 @@ scripts/
 src/
   data/              ← all editable content lives here
   components/        Nav, Hero, ExperienceTimeline, Projects, Philosophy,
-                     Skills, Education, Story, Footer, ResumeButton
+                     Skills, Education, Footer
   layouts/Base.astro head/meta/OG/JSON-LD + scroll-reveal script
   pages/index.astro  assembles the page in IA order
   styles/global.css  design tokens + base styles

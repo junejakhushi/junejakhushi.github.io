@@ -54,14 +54,14 @@ const svg = `
         letter-spacing="0.5" fill="${accent}">OR/Stats + HCI · Carnegie Mellon University</text>
 
   <!-- Tagline (two lines) -->
-  <text x="84" y="432" font-family="${sans}" font-size="27" fill="${ink2}">Building at the intersection of learning systems, educational</text>
-  <text x="84" y="470" font-family="${sans}" font-size="27" fill="${ink2}">design, and applied research.</text>
+  <text x="84" y="432" font-family="${sans}" font-size="27" fill="${ink2}">Builds &amp; evaluates systems and experiences for people — ML/NLP,</text>
+  <text x="84" y="470" font-family="${sans}" font-size="27" fill="${ink2}">computer vision, game-based tools, and simulation.</text>
 
   <!-- Looking-for chip -->
-  <rect x="84" y="520" width="640" height="56" rx="28" fill="${accentTint}" stroke="${accentBorder}" stroke-width="1.5"/>
+  <rect x="84" y="520" width="560" height="56" rx="28" fill="${accentTint}" stroke="${accentBorder}" stroke-width="1.5"/>
   <circle cx="120" cy="548" r="7" fill="${accent}"/>
   <text x="140" y="557" font-family="${sans}" font-size="23" font-weight="600"
-        fill="${accent}">Open to Fall 2026 &amp; Summer 2027 research &amp; product roles</text>
+        fill="${accent}">Data · Play · Learning  ·  Fall 2026 &amp; Summer 2027</text>
 
   <!-- Site URL -->
   <text x="1120" y="557" font-family="${sans}" font-size="22" font-weight="600"

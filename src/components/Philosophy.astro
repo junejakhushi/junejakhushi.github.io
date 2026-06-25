@@ -1,14 +1,14 @@
 ---
 // How I Think (brief §7): philosophy points as editorial blocks +
 // a large centered pull quote.
-import { philosophy, pullQuote } from "../data/philosophy";
+import { philosophy, pullQuote, philosophyHeading } from "../data/philosophy";
 ---
 
 <section class="section section--phil" id="about" aria-labelledby="phil-heading">
   <div class="shell">
     <div class="sec-head" data-reveal>
       <p class="eyebrow">How I Think</p>
-      <h2 id="phil-heading" class="sec-title">Three things I keep coming back to.</h2>
+      <h2 id="phil-heading" class="sec-title">{philosophyHeading}</h2>
     </div>
 
     <div class="phil-list">
