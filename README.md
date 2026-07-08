@@ -55,22 +55,6 @@ method-first tag strings (`Machine Learning`, `NLP`, `Computer Vision`,
 if used. Each project's `eyebrow` is the method-first line a recruiter reads
 first.
 
-### Change the minors
-
-In `src/data/education.ts`, edit the array:
-
-```ts
-minors: ["Game Design", "Physical Computing"],
-```
-
-### Enable the Accelerated M.S. line
-
-In `src/data/education.ts`, flip the toggle (it's `false` by default):
-
-```ts
-showMastersLine: true,
-```
-
 
 ## Design tokens (colors, fonts, spacing)
 
@@ -92,41 +76,6 @@ Re-generate after changing the name, tagline, or palette:
 ```bash
 node scripts/generate-og.mjs
 npm run build   # so dist/og.png is refreshed
-```
-
----
-
-## Deploy to GitHub Pages
-
-This is a **user site**: the repo must be named `junejakhushi.github.io`.
-
-### Option A — GitHub Actions (recommended)
-
-1. Push this project to `https://github.com/junejakhushi/junejakhushi.github.io`
-   (the workflow is already at `.github/workflows/deploy.yml`).
-2. In the repo: **Settings → Pages → Build and deployment → Source = GitHub
-   Actions**.
-3. Every push to `main` builds and deploys automatically. The site goes live at
-   <https://junejakhushi.github.io>.
-
-```bash
-git init
-git add -A
-git commit -m "Initial portfolio"
-git branch -M main
-git remote add origin https://github.com/junejakhushi/junejakhushi.github.io.git
-git push -u origin main
-```
-
-### Option B — build locally and push `dist/`
-
-If you'd rather not use Actions, build locally and serve `dist/` from the
-branch root (Settings → Pages → Source = Deploy from a branch). Astro's
-`site`/`base` are already set for the root domain, so no path changes are
-needed.
-
-```bash
-npm run build   # outputs dist/
 ```
 
 ---
