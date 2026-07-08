@@ -1,11 +1,8 @@
 # Khushi Juneja — Portfolio
 
 A fast, accessible, editorial single-page portfolio. Built with **Astro +
-TypeScript + Tailwind CSS v4**, deployed as a fully static site to **GitHub
+TypeScript + Tailwind CSS v4**, deployed to **GitHub
 Pages** at <https://junejakhushi.github.io>.
-
-All content lives in typed data files under `src/data/` — you can add a project
-or edit a bullet without touching markup.
 
 ---
 
@@ -74,14 +71,6 @@ In `src/data/education.ts`, flip the toggle (it's `false` by default):
 showMastersLine: true,
 ```
 
-### Resume
-
-There is **no resume on the site by design** — Khushi tailors a separate resume
-to each application and sends it directly. Email and LinkedIn are the primary
-contact paths. (If you ever want to add one back, that's a new affordance, not a
-toggle.)
-
----
 
 ## Design tokens (colors, fonts, spacing)
 
