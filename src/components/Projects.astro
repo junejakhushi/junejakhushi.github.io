@@ -1,27 +1,30 @@
 ---
-// Projects (brief §7): outcome-forward cards, tag filters, and a
-// lightweight modal detail view (native <dialog>, full keyboard +
-// screen-reader support). Auto-extensible: add to src/data/projects.ts.
-import { projects, tagOrder } from "../data/projects";
+// Projects gallery: data & research work first, then broader
+// creative/technical work. Cards for the featured case studies link
+// to their dedicated page; the rest open a lightweight modal
+// (native <dialog>, full keyboard + screen-reader support).
+// Data: src/data/projects.ts (which merges in src/data/caseStudies.ts)
+import { galleryItems } from "../data/projects";
+import { tagOrder } from "../data/tags";
 
 // Only show filters for tags actually in use.
 const usedTags = tagOrder.filter((t) =>
-  projects.some((p) => p.tags.includes(t)),
+  galleryItems.some((p) => p.tags.includes(t)),
 );
 ---
 
-<section class="section section--projects" id="projects" aria-labelledby="projects-heading">
+<section class="section" id="projects" aria-labelledby="projects-heading">
   <div class="shell">
     <div class="sec-head" data-reveal>
-      <p class="eyebrow">Projects</p>
-      <h2 id="projects-heading" class="sec-title">Things I’ve built and studied.</h2>
+      <p class="eyebrow">All Projects</p>
+      <h2 id="projects-heading" class="sec-title">Everything else I've built.</h2>
       <p class="sec-lede">
-        Tools, studies, and games across data, play, and learning — built to be
-        measured. Filter by method.
+        Data and research work first, then the simulation, game, and
+        computer-vision projects. Filter by method.
       </p>
     </div>
 
-    <div class="filters" role="group" aria-label="Filter projects by tag" data-reveal>
+    <div class="filters" role="group" aria-label="Filter projects by method" data-reveal>
       <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">
         All
       </button>
@@ -36,39 +39,47 @@ const usedTags = tagOrder.filter((t) =>
 
     <p class="sr-only" aria-live="polite" data-count></p>
 
-    <ul class="grid" data-grid>
+    <ul class="grid" data-grid role="list">
       {
-        projects.map((p, i) => (
+        galleryItems.map((p, i) => (
           <li class="grid__cell" data-tags={p.tags.join("|")}>
-            <button
-              class="card"
-              type="button"
-              data-card={i}
-              aria-haspopup="dialog"
-              data-title={p.title}
-              data-desc={p.description}
-              data-tags-list={p.tags.join("|")}
-              data-tech={p.tech ? p.tech.join("|") : ""}
-            >
-              <span class="card__eyebrow">{p.eyebrow}</span>
-              <h3 class="card__title">{p.title}</h3>
-              <p class="card__summary">{p.summary}</p>
-              {p.tech && (
-                <p class="card__tech">{p.tech.join(" · ")}</p>
-              )}
-              <span class="card__more" aria-hidden="true">
-                Read more →
-              </span>
-            </button>
+            {p.href ? (
+              <a class="card card--link" href={p.href}>
+                <span class="card__eyebrow">{p.eyebrow}</span>
+                <h3 class="card__title">{p.title}</h3>
+                <p class="card__summary">{p.summary}</p>
+                {p.tech && <p class="card__tech">{p.tech.join(" · ")}</p>}
+                <span class="card__more" aria-hidden="true">
+                  Read the case study →
+                </span>
+              </a>
+            ) : (
+              <button
+                class="card"
+                type="button"
+                data-card={i}
+                aria-haspopup="dialog"
+                data-title={p.title}
+                data-desc={p.description}
+                data-tags-list={p.tags.join("|")}
+                data-tech={p.tech ? p.tech.join("|") : ""}
+              >
+                <span class="card__eyebrow">{p.eyebrow}</span>
+                <h3 class="card__title">
+                  {p.title}
+                  {p.subtitle && <span class="card__subtitle">{p.subtitle}</span>}
+                </h3>
+                <p class="card__summary">{p.summary}</p>
+                {p.tech && <p class="card__tech">{p.tech.join(" · ")}</p>}
+                <span class="card__more" aria-hidden="true">
+                  Read more →
+                </span>
+              </button>
+            )}
           </li>
         ))
       }
     </ul>
-
-    <p class="more-soon" data-reveal>
-      More projects landing next semester.
-      <span aria-hidden="true">↗</span>
-    </p>
   </div>
 </section>
 
@@ -97,7 +108,7 @@ const usedTags = tagOrder.filter((t) =>
   }
   .sec-lede {
     margin-top: 0.9rem;
-    max-width: 48ch;
+    max-width: 50ch;
     color: var(--color-ink-2);
     font-size: 1.02rem;
   }
@@ -168,6 +179,7 @@ const usedTags = tagOrder.filter((t) =>
     border-radius: 14px;
     padding: 1.35rem 1.35rem 1.5rem;
     cursor: pointer;
+    text-decoration: none;
     transition:
       border-color 0.18s,
       box-shadow 0.18s,
@@ -178,6 +190,13 @@ const usedTags = tagOrder.filter((t) =>
     border-color: var(--color-accent-border);
     box-shadow: 0 10px 30px rgba(40, 28, 12, 0.1);
     transform: translateY(-3px);
+  }
+  /* Case-study cards read as the primary work */
+  .card--link {
+    border-left: 3px solid var(--color-accent-border);
+  }
+  .card--link:hover {
+    border-left-color: var(--color-accent);
   }
 
   .card__eyebrow {
@@ -195,6 +214,16 @@ const usedTags = tagOrder.filter((t) =>
     line-height: 1.12;
     color: var(--color-ink);
   }
+  .card__subtitle {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-top: 0.25rem;
+  }
   .card__summary {
     font-size: 0.95rem;
     line-height: 1.5;
@@ -203,7 +232,6 @@ const usedTags = tagOrder.filter((t) =>
   .card__tech {
     font-size: 0.8rem;
     color: var(--color-muted);
-    font-variant-numeric: tabular-nums;
   }
   .card__more {
     margin-top: auto;
@@ -215,13 +243,6 @@ const usedTags = tagOrder.filter((t) =>
   }
   .card:hover .card__more {
     transform: translateX(3px);
-  }
-
-  .more-soon {
-    margin-top: 2rem;
-    font-size: 0.92rem;
-    color: var(--color-muted);
-    font-style: italic;
   }
 
   /* ── Modal ── */
@@ -302,7 +323,6 @@ const usedTags = tagOrder.filter((t) =>
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--color-muted);
-    letter-spacing: 0.02em;
   }
   .modal__tech:empty {
     display: none;
@@ -319,8 +339,7 @@ const usedTags = tagOrder.filter((t) =>
 <script>
   // ---- Filtering ----
   const grid = document.querySelector<HTMLElement>("[data-grid]");
-  const filters =
-    document.querySelectorAll<HTMLButtonElement>(".filter");
+  const filters = document.querySelectorAll<HTMLButtonElement>(".filter");
   const count = document.querySelector<HTMLElement>("[data-count]");
   const cells = grid
     ? Array.from(grid.querySelectorAll<HTMLElement>(".grid__cell"))
@@ -354,7 +373,7 @@ const usedTags = tagOrder.filter((t) =>
     });
   });
 
-  // ---- Modal ----
+  // ---- Modal (only for cards without a dedicated page) ----
   const modal = document.querySelector<HTMLDialogElement>("[data-modal]");
   const mTags = modal?.querySelector<HTMLElement>("[data-modal-tags]");
   const mTitle = modal?.querySelector<HTMLElement>("[data-modal-title]");
@@ -387,11 +406,9 @@ const usedTags = tagOrder.filter((t) =>
   });
 
   closeBtn?.addEventListener("click", () => modal?.close());
-  // click on backdrop closes
   modal?.addEventListener("click", (e) => {
     if (e.target === modal) modal.close();
   });
-  // restore focus to the card that opened the modal
   modal?.addEventListener("close", () => {
     lastTrigger?.focus();
     lastTrigger = null;
