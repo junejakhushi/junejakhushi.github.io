@@ -1,9 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
+import Banner from "../components/Banner.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
+import FeaturedWork from "../components/FeaturedWork.astro";
+import Methods from "../components/Methods.astro";
 import ExperienceTimeline from "../components/ExperienceTimeline.astro";
 import Projects from "../components/Projects.astro";
+import Stakeholders from "../components/Stakeholders.astro";
 import Philosophy from "../components/Philosophy.astro";
 import Skills from "../components/Skills.astro";
 import Education from "../components/Education.astro";
@@ -11,11 +15,15 @@ import Footer from "../components/Footer.astro";
 ---
 
 <Base>
+  <Banner />
   <Nav />
-  <main>
+  <main id="main">
     <Hero />
+    <FeaturedWork />
+    <Methods />
     <ExperienceTimeline />
     <Projects />
+    <Stakeholders />
     <Philosophy />
     <Skills />
     <Education />

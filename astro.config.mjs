@@ -10,6 +10,9 @@ export default defineConfig({
   trailingSlash: "ignore",
   integrations: [sitemap()],
   vite: {
-    plugins: [tailwindcss()],
+    // Cast: @tailwindcss/vite resolves its own copy of Vite, so its Plugin
+    // type is structurally identical but nominally different from Astro's.
+    // Types-only mismatch; the plugin works correctly at build time.
+    plugins: [/** @type {any} */ (tailwindcss())],
   },
 });

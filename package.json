@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.0",
@@ -18,5 +19,8 @@
     "astro": "^5.7.0",
     "tailwindcss": "^4.1.0",
     "typescript": "^5.8.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9"
   }
 }

@@ -13,7 +13,7 @@ import { skills } from "../data/skills";
     <div class="skill-groups">
       {
         skills.map((group) => (
-          <div class="skill-group" data-reveal>
+          <div class:list={["skill-group", { "skill-group--secondary": group.secondary }]} data-reveal>
             <h3 class="skill-group__label">{group.label}</h3>
             <ul class="chips">
               {group.items.map((item) => (
@@ -95,5 +95,13 @@ import { skills } from "../data/skills";
   .chip:hover {
     border-color: var(--color-accent-border);
     color: var(--color-accent);
+  }
+
+  /* Secondary groups stay present but visually recede */
+  .skill-group--secondary .chip {
+    background: transparent;
+    color: var(--color-muted);
+    border-color: var(--color-border);
+    font-size: 0.84rem;
   }
 </style>

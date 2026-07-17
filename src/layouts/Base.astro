@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = `${profile.name} — OR/Stats + HCI at Carnegie Mellon`,
-  description = profile.headline,
+  title = "Khushi Juneja | Learning Data Scientist and Education Researcher",
+  description = "Carnegie Mellon learning data scientist working across LLM evaluation, learning analytics, statistical modeling, mixed-methods research, and AI-supported education.",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -22,8 +22,9 @@ const personSchema = {
   name: profile.name,
   url: profile.links.site,
   email: `mailto:${profile.email}`,
-  jobTitle: "Data Scientist · Researcher · Experience Designer",
-  description: profile.headline,
+  jobTitle: "Learning Data Scientist · Education Researcher",
+  description:
+    "Carnegie Mellon learning data scientist working across LLM evaluation, learning analytics, statistical modeling, mixed-methods research, and AI-supported education.",
   knowsAbout: profile.knowsAbout,
   address: {
     "@type": "PostalAddress",
@@ -82,6 +83,7 @@ const personSchema = {
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(personSchema)}
     />
@@ -92,7 +94,7 @@ const personSchema = {
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#work">Skip to content</a>
+    <a class="skip-link" href="#main">Skip to content</a>
     <slot />
 
     <!-- Gentle on-scroll reveals via IntersectionObserver (brief §8) -->

@@ -1,61 +1,98 @@
 // ============================================================
-// SKILLS  (refinement §7) — five groups that lead with technical
-// and quantitative depth, with a distinct design/experience cluster.
+// SKILLS — data science first, with design/game/facilitation kept
+// as a secondary group (not removed).
+//
+// ⚠️ CAUSAL-INFERENCE LANGUAGE: her evidence supports foundations —
+// experimentation, statistics, measurement, behavioral analysis,
+// study design. Use hedged phrasing only ("foundations",
+// "developing expertise"). Never claim expert/district-scale
+// quasi-experimental leadership.
 // ============================================================
 
 export interface SkillGroup {
   label: string;
   items: string[];
+  /** Rendered smaller/secondary. */
+  secondary?: boolean;
 }
 
 export const skills: SkillGroup[] = [
   {
-    label: "Programming & Data",
-    items: ["Python", "R", "SQL", "JavaScript", "C", "pandas", "NumPy", "Git"],
-  },
-  {
-    label: "Machine Learning & Statistics",
+    label: "Data Science & Statistics",
     items: [
-      "NLP",
-      "Machine learning",
-      "LLM fine-tuning",
+      "Python",
+      "R",
+      "SQL",
+      "pandas",
+      "NumPy",
       "Regression",
+      "Hierarchical models",
       "Statistical inference",
-      "Hierarchical/mixed models",
-      "Probability",
-      "A/B testing",
       "Experimental design",
+      "A/B testing",
+      "Causal-inference foundations",
     ],
   },
   {
-    label: "Systems, Modeling & Tools",
+    label: "ML & Evaluation",
     items: [
-      "OpenCV",
-      "AnyLogic (discrete-event simulation)",
-      "Optimization",
+      "LLM evaluation",
+      "NLP",
+      "Automated scoring",
+      "Golden datasets",
+      "Model-to-human benchmarking",
+      "Error analysis",
+      "Inter-rater reliability",
+      "Cohen's κ",
+      "Feature extraction",
+      "Multimodal pipelines",
+    ],
+  },
+  {
+    label: "Education & Behavioral Research",
+    items: [
+      "Learning analytics",
+      "Mixed methods",
+      "Classroom observation",
+      "Qualitative coding",
+      "Study design",
+      "Cognitive task analysis",
+      "Measurement design",
+      "Survey design",
+      "Impact evaluation",
+    ],
+  },
+  {
+    label: "Engineering & Tools",
+    items: [
+      "JavaScript",
       "React",
       "Flask",
-      "Anthropic API",
+      "Git",
+      "C",
+      "AnyLogic",
       "Qualtrics",
-      "DataShop",
+      "R Markdown",
+      "ggplot2",
+      "OpenCV",
+      "Anthropic API",
     ],
   },
   {
-    label: "Design & Research",
+    label: "Design & Facilitation",
+    secondary: true,
     items: [
       "Game design",
       "Experience/interaction design",
       "UX research",
-      "Study design",
-      "Mixed methods",
-      "Qualitative coding",
       "Instructional design",
-      "Facilitation",
       "Figma",
+      "Facilitation",
     ],
   },
   {
     label: "Languages",
+    secondary: true,
     items: ["English (fluent)", "Hindi (fluent)", "German (intermediate)"],
   },
 ];

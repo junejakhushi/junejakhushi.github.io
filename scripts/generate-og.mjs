@@ -12,9 +12,7 @@ const out = resolve(__dirname, "../public/og.png");
 
 // Palette mirrors src/styles/global.css
 const cream = "#faf6ee";
-const paper = "#fffdf7";
 const ink = "#1c1611";
-const ink2 = "#463c31";
 const muted = "#6f6354";
 const accent = "#a8402a";
 const accentTint = "#f7e9e2";
@@ -45,23 +43,23 @@ const svg = `
   <text x="188" y="138" font-family="${sans}" font-size="26" font-weight="600"
         letter-spacing="1" fill="${muted}">Khushi Juneja</text>
 
-  <!-- Name -->
-  <text x="80" y="300" font-family="${serif}" font-size="118" font-weight="600"
-        letter-spacing="-3" fill="${ink}">Khushi Juneja</text>
+  <!-- Headline (two lines) -->
+  <text x="80" y="270" font-family="${serif}" font-size="72" font-weight="600"
+        letter-spacing="-2" fill="${ink}">Learning data scientist</text>
+  <text x="80" y="348" font-family="${serif}" font-size="72" font-weight="600"
+        letter-spacing="-2" fill="${ink}">building evidence for AI-</text>
+  <text x="80" y="426" font-family="${serif}" font-size="72" font-weight="600"
+        letter-spacing="-2" fill="${ink}">powered education.</text>
 
   <!-- Role -->
-  <text x="84" y="372" font-family="${sans}" font-size="30" font-weight="600"
-        letter-spacing="0.5" fill="${accent}">OR/Stats + HCI · Carnegie Mellon University</text>
+  <text x="84" y="478" font-family="${sans}" font-size="26" font-weight="600"
+        letter-spacing="0.5" fill="${accent}">OR/Statistics + HCI · Carnegie Mellon University</text>
 
-  <!-- Tagline (two lines) -->
-  <text x="84" y="432" font-family="${sans}" font-size="27" fill="${ink2}">Builds &amp; evaluates systems and experiences for people — ML/NLP,</text>
-  <text x="84" y="470" font-family="${sans}" font-size="27" fill="${ink2}">computer vision, game-based tools, and simulation.</text>
-
-  <!-- Looking-for chip -->
-  <rect x="84" y="520" width="560" height="56" rx="28" fill="${accentTint}" stroke="${accentBorder}" stroke-width="1.5"/>
-  <circle cx="120" cy="548" r="7" fill="${accent}"/>
-  <text x="140" y="557" font-family="${sans}" font-size="23" font-weight="600"
-        fill="${accent}">Data · Play · Learning  ·  Fall 2026 &amp; Summer 2027</text>
+  <!-- Specialization chip -->
+  <rect x="84" y="516" width="700" height="56" rx="28" fill="${accentTint}" stroke="${accentBorder}" stroke-width="1.5"/>
+  <circle cx="120" cy="544" r="7" fill="${accent}"/>
+  <text x="140" y="553" font-family="${sans}" font-size="22" font-weight="600"
+        fill="${accent}">LLM evaluation · Learning analytics · Mixed-methods research</text>
 
   <!-- Site URL -->
   <text x="1120" y="557" font-family="${sans}" font-size="22" font-weight="600"

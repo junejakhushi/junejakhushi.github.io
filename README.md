@@ -1,11 +1,14 @@
 # Khushi Juneja — Portfolio
 
-A fast, accessible, editorial single-page portfolio. Built with **Astro +
-TypeScript + Tailwind CSS v4**, deployed as a fully static site to **GitHub
-Pages** at <https://junejakhushi.github.io>.
+A fast, accessible, editorial portfolio positioning Khushi as a **learning data
+scientist**: LLM evaluation, learning analytics, statistical and mixed-methods
+research, and AI-supported education.
 
-All content lives in typed data files under `src/data/` — you can add a project
-or edit a bullet without touching markup.
+Built with **Astro + TypeScript + Tailwind CSS v4**, fully static, deployed to
+**GitHub Pages** at <https://junejakhushi.github.io>.
+
+All content lives in typed data files under `src/data/` — you can add a project,
+edit a bullet, or change a date without touching markup.
 
 ---
 
@@ -13,160 +16,214 @@ or edit a bullet without touching markup.
 
 ```bash
 npm install      # one time
-npm run dev      # start dev server → http://localhost:4321
+npm run dev      # dev server → http://localhost:4321
+npm run check    # type check (astro check)
 npm run build    # production build → dist/
-npm run preview  # preview the production build locally
+npm run preview  # preview the production build
 ```
 
-Requires Node 18.20+ / 20+ (any current LTS works).
+> There is no lint/format/test script in this repo. `npm run check` +
+> `npm run build` are the quality gates.
 
 ---
 
-## Edit content
+## Where content lives
 
-Everything visible on the page comes from `src/data/`. Edit a file, save, and
-the page updates. No component edits needed for routine content changes.
+Everything visible on the site comes from `src/data/`. Edit a file, save, done.
 
 | File | Controls |
 | --- | --- |
-| `src/data/profile.ts` | Name, pronouns, positioning line, "looking for" chip, email, social links, languages |
-| `src/data/experience.ts` | The experience timeline |
-| `src/data/projects.ts` | The projects grid + filters + detail modals |
-| `src/data/skills.ts` | The four skill groups |
-| `src/data/education.ts` | Degrees, honors, **minor**, **M.S. toggle**, coursework |
+| `src/data/profile.ts` | Name, pronouns, eyebrow (**graduation date**), headline, positioning, credibility indicators, **availability**, email, links, languages, stakeholder audiences, JSON-LD topics |
+| `src/data/experience.ts` | **The experience timeline** — every role and bullet |
+| `src/data/caseStudies.ts` | **The four featured case studies** — powers both the homepage cards *and* the `/projects/<slug>` pages |
+| `src/data/projects.ts` | The remaining gallery projects + the merged `galleryItems` list |
+| `src/data/tags.ts` | The shared filter vocabulary (`ProjectTag`) |
+| `src/data/skills.ts` | Skill groups (`secondary: true` renders a group as secondary) |
+| `src/data/education.ts` | Degrees, honors, minor, **graduation date**, coursework |
+| `src/data/methods.ts` | The "How I evaluate learning systems" steps |
 | `src/data/philosophy.ts` | "How I Think" points + pull quote |
+| `src/data/site.ts` | **Feature flags** — application banner, resume button |
 
-### Add a new project
+### Where the experience data is stored
 
-Open `src/data/projects.ts` and copy one object in the `projects` array:
+`src/data/experience.ts`. It's an array of `ExperienceEntry`. Roles are ordered
+**by relevance, not strictly by date** — the evaluation/analysis work leads.
+To add a role, copy an object and place it where you want it to appear:
 
 ```ts
 {
-  title: "My New Project",
-  eyebrow: "Machine Learning · NLP · Evaluation",  // method-first line on the card
-  summary: "One line shown on the card.",
-  description: "The longer write-up shown in the detail modal.",
-  tags: ["Machine Learning", "NLP"],   // drives the filter chips
-  tech: ["Python", "PyTorch"],          // optional — omit if not relevant
+  role: "Data Scientist",
+  org: "Some Lab",
+  location: "Pittsburgh, PA",
+  dates: "Jan 2027 – Present",
+  current: true,          // adds the "Now" badge
+  bullets: ["Lead with the method or verb..."],
 },
 ```
 
-It auto-appears in the grid and in any matching filters. Reuse existing
-method-first tag strings (`Machine Learning`, `NLP`, `Computer Vision`,
-`Simulation`, `Statistics`, `Game Design`, `UX`, `Study Design`, `Research`,
-`Learning Design`) so the filter row stays tidy; new tags appear automatically
-if used. Each project's `eyebrow` is the method-first line a recruiter reads
-first.
+### Where the case-study content is stored
 
-### Change the minors
+`src/data/caseStudies.ts` — one object per case study. Each entry renders in
+**two** places automatically, so there's a single source of truth:
 
-In `src/data/education.ts`, edit the array:
+1. a card in "Selected Data and Research Work" on the homepage, and
+2. a full page at `/projects/<slug>` (statically generated).
+
+To add a case study, copy an object and fill every required field. The `slug`
+becomes the URL. `diagram` + `diagramAlt` render the accessible evidence-chain
+visual (HTML/CSS — no images).
+
+Optional fields (like `scale`) are **hidden when omitted** — that's deliberate.
+Only fill them with verified values. See "Content integrity" below.
+
+### Adding a regular (non-case-study) project
+
+`src/data/projects.ts` — these open in the modal rather than getting a page:
 
 ```ts
-minors: ["Game Design", "Physical Computing"],
+{
+  title: "My Project",
+  subtitle: "Internal name",           // optional
+  eyebrow: "Method · Method · Method", // the method-first line on the card
+  summary: "One line on the card.",
+  description: "Longer text in the modal.",
+  tags: ["Machine Learning", "Statistics"],  // must come from tags.ts
+  tech: ["Python"],                    // optional
+},
 ```
-
-### Enable the Accelerated M.S. line
-
-In `src/data/education.ts`, flip the toggle (it's `false` by default):
-
-```ts
-showMastersLine: true,
-```
-
-### Resume
-
-There is **no resume on the site by design** — Khushi tailors a separate resume
-to each application and sends it directly. Email and LinkedIn are the primary
-contact paths. (If you ever want to add one back, that's a new affordance, not a
-toggle.)
 
 ---
 
-## Design tokens (colors, fonts, spacing)
+## How to update the graduation date
 
-One place: the `@theme` block at the top of `src/styles/global.css`.
+It appears in **two** places — update both:
 
-- **Accent** — change `--color-accent` (and `--color-accent-strong` for hover).
-  Current accent is a deep terracotta.
-- **Fonts** — `--font-display` (Fraunces) and `--font-sans` (Inter), both
-  self-hosted via `@fontsource-variable` (no external requests).
-- **Type scale** — `--text-hero`, `--text-h2`, `--text-h3`.
+1. `src/data/profile.ts` → `eyebrow: "Carnegie Mellon University · Expected May 2027"`
+2. `src/data/education.ts` → `expected: "Expected May 2027"`
+
+Also check `availability` / `availabilityShort` in `profile.ts` and the contact
+copy in `src/components/Footer.astro`, which reference **May 2027**.
 
 ---
+
+## How to enable or disable the application banner
+
+`src/data/site.ts`:
+
+```ts
+banner: {
+  enabled: true,   // ← set to false to hide the banner site-wide
+  text: "Currently seeking a part-time learning data science or research role, …",
+},
+```
+
+It's a single flag read by `src/components/Banner.astro`. Nothing is hardcoded
+elsewhere — changing `enabled` removes it from every page.
+
+---
+
+## Resume
+
+⚠️ **The resume PDF is not in the repo yet, so the button currently 404s.**
+
+Place the file at exactly:
+
+```
+public/Khushi_Juneja_Data_Research_Resume.pdf
+```
+
+Once it's there, the existing "View targeted resume" buttons (hero + contact)
+will work with no code change — anything in `public/` is served from the site
+root.
+
+To change the filename or label, edit `src/data/site.ts`:
+
+```ts
+resume: {
+  enabled: true,   // ← set to false to hide every resume button
+  path: "/Khushi_Juneja_Data_Research_Resume.pdf",
+  label: "View targeted resume",
+},
+```
+
+**Until you add the PDF, either drop the file in or set `enabled: false`** —
+don't ship a broken resume link to recruiters.
+
+---
+
+## Content integrity
+
+This site deliberately does **not** claim: sample sizes, model names, accuracy
+or precision figures, district/publisher partnerships, publications, awards, or
+causal findings that aren't supported.
+
+- Unverified fields are left **undefined and conditionally hidden**, not filled
+  with guesses. Placeholder markers live in source comments only.
+- Causal-inference language is hedged on purpose ("foundations", "developing
+  expertise", "experience analyzing controlled studies"). See the warning
+  comment at the top of `src/data/skills.ts`.
+- Findings are phrased as within-study results, not universal claims.
+
+See `PORTFOLIO_AUDIT.md` for the full list of facts requiring verification.
+
+---
+
+## Design tokens
+
+One place: the `@theme` block at the top of `src/styles/global.css` — accent
+color, fonts, type scale, spacing.
 
 ## Social preview image
 
-`public/og.png` (1200×630) is generated from `scripts/generate-og.mjs`.
-Re-generate after changing the name, tagline, or palette:
+`public/og.png` (1200×630) is generated by `scripts/generate-og.mjs`:
 
 ```bash
-node scripts/generate-og.mjs
-npm run build   # so dist/og.png is refreshed
+node scripts/generate-og.mjs && npm run build
 ```
 
 ---
 
 ## Deploy to GitHub Pages
 
-This is a **user site**: the repo must be named `junejakhushi.github.io`.
+The repo is the user site `junejakhushi.github.io`, so it serves from the root.
 
-### Option A — GitHub Actions (recommended)
-
-1. Push this project to `https://github.com/junejakhushi/junejakhushi.github.io`
-   (the workflow is already at `.github/workflows/deploy.yml`).
-2. In the repo: **Settings → Pages → Build and deployment → Source = GitHub
-   Actions**.
-3. Every push to `main` builds and deploys automatically. The site goes live at
-   <https://junejakhushi.github.io>.
+Push to `main` and the included workflow (`.github/workflows/deploy.yml`) builds
+and deploys automatically:
 
 ```bash
-git init
-git add -A
-git commit -m "Initial portfolio"
-git branch -M main
-git remote add origin https://github.com/junejakhushi/junejakhushi.github.io.git
-git push -u origin main
+git add -A && git commit -m "Update content" && git push
 ```
 
-### Option B — build locally and push `dist/`
-
-If you'd rather not use Actions, build locally and serve `dist/` from the
-branch root (Settings → Pages → Source = Deploy from a branch). Astro's
-`site`/`base` are already set for the root domain, so no path changes are
-needed.
-
-```bash
-npm run build   # outputs dist/
-```
+Repo → **Settings → Pages → Source = GitHub Actions** must be set (one time).
 
 ---
 
 ## What's where
 
 ```
-public/
-  robots.txt
-  og.png             generated social image
-scripts/
-  generate-og.mjs    regenerates og.png
+public/            og.png, robots.txt   (+ resume PDF once added)
+scripts/           generate-og.mjs
 src/
-  data/              ← all editable content lives here
-  components/        Nav, Hero, ExperienceTimeline, Projects, Philosophy,
-                     Skills, Education, Footer
-  layouts/Base.astro head/meta/OG/JSON-LD + scroll-reveal script
-  pages/index.astro  assembles the page in IA order
-  styles/global.css  design tokens + base styles
-.github/workflows/deploy.yml
-legacy/              the previous card-deck site, kept for reference
+  data/            ← all editable content + site config
+  components/      Banner, Nav, Hero, FeaturedWork, Methods,
+                   ExperienceTimeline, Projects, EvidenceChain,
+                   Stakeholders, Philosophy, Skills, Education,
+                   Footer, ResumeButton
+  layouts/         Base.astro   (meta, OG, JSON-LD, scroll reveal)
+  pages/
+    index.astro           the homepage
+    projects/[slug].astro the four case-study pages
+  styles/global.css       design tokens + base styles
+PORTFOLIO_AUDIT.md  audit + facts needing verification
+legacy/             the previous card-deck site (reference only)
 ```
 
 ## Notes
 
-- **Accessibility:** semantic landmarks, full keyboard support (the project
-  modal uses a native `<dialog>`), visible focus rings, AA contrast, and
-  `prefers-reduced-motion` is respected (all reveals/animation disabled).
-- **Performance:** near-zero JS (small inline islands only), self-hosted fonts
-  with `font-display: swap`, no render-blocking external requests.
-- **SEO:** Open Graph + Twitter tags, JSON-LD `Person` schema, `sitemap.xml`,
-  `robots.txt`, and a canonical URL — all wired in `src/layouts/Base.astro`.
+- **Accessibility:** semantic landmarks, one `<h1>` per page, keyboard support
+  (the project modal is a native `<dialog>`), visible focus rings, AA contrast,
+  diagrams are real markup with text alternatives, and `prefers-reduced-motion`
+  disables all reveals/animation.
+- **Performance:** near-zero JS, self-hosted fonts with `font-display: swap`.
+- **SEO:** OG + Twitter tags, JSON-LD `Person`, sitemap, robots.txt, canonical
+  URLs; each case-study page sets its own title and description.

@@ -3,17 +3,19 @@
 // Email affordance (refinement §9 removed the resume affordance).
 import { profile } from "../data/profile";
 
+// Anchors resolve against the homepage, so case-study pages link back with "/".
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#projects", label: "Projects" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#featured", label: "Work" },
+  { href: "/#method", label: "Method" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#contact", label: "Contact" },
 ];
 ---
 
 <header class="nav" data-nav>
   <div class="shell nav__inner">
-    <a class="nav__brand" href="#top" aria-label={`${profile.name} — home`}>
+    <a class="nav__brand" href="/" aria-label={`${profile.name} — home`}>
       <span class="nav__mark" aria-hidden="true">KJ</span>
       <span class="nav__name">Khushi Juneja</span>
     </a>
@@ -152,10 +154,12 @@ const links = [
   }
 
   /* Hide section links on small screens; brand + Email remain */
-  @media (max-width: 760px) {
+  @media (max-width: 940px) {
     .nav__links {
       display: none;
     }
+  }
+  @media (max-width: 560px) {
     .nav__name {
       display: none;
     }
