@@ -10,7 +10,10 @@ export const site = {
    */
   banner: {
     enabled: true,
-    text: "Currently seeking a part-time learning data science or research role, with the possibility of transitioning full-time after May 2027.",
+    text: "Currently seeking a part-time learning data science or research role for Fall 2026, with the possibility of transitioning full-time after May 2028.",
+    // Shown instead of `text` on narrow screens, to keep the first
+    // screen compact. Keep the two consistent.
+    textShort: "Seeking a part-time data / research role · Fall 2026",
   },
 
   /**
@@ -20,7 +23,8 @@ export const site = {
    * every resume button until the PDF is added. See README → "Resume".
    */
   resume: {
-    enabled: true,
+    // OFF until the PDF exists — flip to true once the file is in place.
+    enabled: false,
     path: "/Khushi_Juneja_Data_Research_Resume.pdf",
     label: "View targeted resume",
   },

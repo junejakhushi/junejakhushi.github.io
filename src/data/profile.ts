@@ -13,7 +13,9 @@ export const profile = {
 
   // Shown above the name in the hero. Update the graduation date here
   // AND in src/data/education.ts (`expected`).
-  eyebrow: "Carnegie Mellon University · Expected May 2027",
+  eyebrow: "Carnegie Mellon University · Expected May 2028",
+  // Shown on narrow screens to keep the first screen compact.
+  eyebrowShort: "CMU · Expected May 2028",
 
   // Hero headline — specialization first.
   headline: "Learning data scientist building evidence for AI-powered education.",
@@ -33,9 +35,9 @@ export const profile = {
   // `availability` is the full sentence; `availabilityShort` is used on
   // narrow screens. Update both together.
   availability:
-    "Open to part-time and contract roles in learning data science, AI evaluation, and education research, with full-time availability beginning May 2027.",
+    "Open to part-time and contract roles in learning data science, AI evaluation, and education research from Fall 2026, with full-time availability beginning May 2028.",
   availabilityShort:
-    "Open to part-time data and research roles · Full-time May 2027",
+    "Part-time from Fall 2026 · Full-time May 2028",
 
   email: "kjuneja@andrew.cmu.edu",
   links: {

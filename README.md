@@ -98,11 +98,11 @@ Only fill them with verified values. See "Content integrity" below.
 
 It appears in **two** places — update both:
 
-1. `src/data/profile.ts` → `eyebrow: "Carnegie Mellon University · Expected May 2027"`
-2. `src/data/education.ts` → `expected: "Expected May 2027"`
+1. `src/data/profile.ts` → `eyebrow: "Carnegie Mellon University · Expected May 2028"`
+2. `src/data/education.ts` → `expected: "Expected May 2028"`
 
 Also check `availability` / `availabilityShort` in `profile.ts` and the contact
-copy in `src/components/Footer.astro`, which reference **May 2027**.
+copy in `src/components/Footer.astro`, which reference **Fall 2026** and **May 2028**.
 
 ---
 
@@ -124,30 +124,25 @@ elsewhere — changing `enabled` removes it from every page.
 
 ## Resume
 
-⚠️ **The resume PDF is not in the repo yet, so the button currently 404s.**
+The resume button is currently **turned off** (`enabled: false`) because no PDF
+exists yet — this avoids shipping a broken link to recruiters.
 
-Place the file at exactly:
+**To turn it on:**
 
-```
-public/Khushi_Juneja_Data_Research_Resume.pdf
-```
-
-Once it's there, the existing "View targeted resume" buttons (hero + contact)
-will work with no code change — anything in `public/` is served from the site
-root.
-
-To change the filename or label, edit `src/data/site.ts`:
+1. Place the file at exactly
+   `public/Khushi_Juneja_Data_Research_Resume.pdf`
+2. Set `enabled: true` in `src/data/site.ts`:
 
 ```ts
 resume: {
-  enabled: true,   // ← set to false to hide every resume button
+  enabled: false,  // ← true once the PDF is in public/
   path: "/Khushi_Juneja_Data_Research_Resume.pdf",
   label: "View targeted resume",
 },
 ```
 
-**Until you add the PDF, either drop the file in or set `enabled: false`** —
-don't ship a broken resume link to recruiters.
+That's it — the buttons (hero + contact) appear automatically. Anything in
+`public/` is served from the site root.
 
 ---
 

@@ -44,10 +44,10 @@ grid, and the filter + modal island in `Projects.astro`.
 
 | # | Issue | Location | Resolution |
 |---|---|---|---|
-| 1 | **Graduation date wrong** — shows `Expected May 2028` | `education.ts`, `profile.ts` eyebrow | → **May 2027** (confirmed) |
+| 1 | **Graduation date** | `education.ts`, `profile.ts` eyebrow | → **May 2028** (confirmed) |
 | 2 | **Minor wrong** — shows `Minors: Game Design · Physical Computing` (two minors, carried from the old card-deck site) | `education.ts` | → single **Design for Learning** (confirmed directly) |
 | 3 | **Accelerated M.S. toggle exists** but there are no plans to enroll | `education.ts` (`showMastersLine`) | → **removed entirely**, not just hidden |
-| 4 | **Availability language too generic/student-flavored** — "Open to Fall 2026 & Summer 2027 internships" | `profile.ts` | → part-time/contract now, full-time from May 2027 |
+| 4 | **Availability language too generic/student-flavored** — "Open to Fall 2026 & Summer 2027 internships" | `profile.ts` | → part-time from Fall 2026, full-time from May 2028 |
 | 5 | **Missing role** — Software Engineering Intern, Decimal Point | `experience.ts` | → added (June 2026–Present) |
 | 6 | **Experience ordered strictly by date**, so the most relevant evaluation work isn't guaranteed to lead | `experience.ts` | → reordered by relevance |
 | 7 | **Hero over-broad** — lists many technologies rather than a specialization | `Hero.astro`, `profile.ts` | → specialization-first headline |
@@ -94,7 +94,7 @@ query reduction** (Vinsol), and the newly supplied OAK finding (feedback time
 
 ## 5. Proposed changes
 
-1. **Facts** — graduation May 2027; single minor "Design for Learning"; delete
+1. **Facts** — graduation May 2028; single minor "Design for Learning"; delete
    the M.S. toggle; new availability copy (long + short variants).
 2. **Config** — new `src/data/site.ts` holding feature flags (application
    banner) and the resume path, so nothing is hardcoded across components.
@@ -129,7 +129,7 @@ the projects filter, the modal interaction, reveal behavior, and the
 | Fact | Status | Action |
 |---|---|---|
 | Minor: Design for Learning | ✅ confirmed directly | displayed |
-| Graduation: May 2027 | ✅ confirmed directly | displayed |
+| Graduation: May 2028 | ✅ confirmed directly | displayed |
 | No accelerated M.S. | ✅ confirmed directly | toggle deleted |
 | Decimal Point dates (June 2026–Present) | ✅ supplied | displayed, no invented metrics |
 | OAK reflection finding (≈2× feedback time, ≈−40% practice iterations, no perf gain) | ✅ supplied | phrased as a within-study finding, not causal/universal |

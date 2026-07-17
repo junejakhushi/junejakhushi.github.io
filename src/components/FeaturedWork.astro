@@ -33,38 +33,49 @@ import { caseStudies } from "../data/caseStudies";
               <a href={`/projects/${c.slug}`}>{c.cardTitle}</a>
             </h3>
 
+            {/* Compact by default: the question and the result. */}
             <dl class="case__chain">
               <div class="case__row">
                 <dt>Question</dt>
                 <dd>{c.question}</dd>
               </div>
-              <div class="case__row">
-                <dt>Evidence</dt>
-                <dd>{c.evidence}</dd>
-              </div>
-              <div class="case__row">
-                <dt>Methods</dt>
-                <dd>{c.methodsShort}</dd>
-              </div>
               <div class="case__row case__row--result">
                 <dt>Result</dt>
                 <dd>{c.result}</dd>
               </div>
-              <div class="case__row case__row--decision">
-                <dt>Decision enabled</dt>
-                <dd>{c.decision}</dd>
-              </div>
-              <div class="case__row">
-                <dt>My role</dt>
-                <dd>{c.role}</dd>
-              </div>
             </dl>
 
-            <ul class="case__tools" role="list">
-              {c.tools.map((t) => (
-                <li>{t}</li>
-              ))}
-            </ul>
+            {/* Everything else is one press away. */}
+            <details class="disc case__disc">
+              <summary>
+                <span class="disc__hint">Evidence · Methods · Decision</span>
+              </summary>
+              <div class="disc__body">
+                <dl class="case__chain">
+                  <div class="case__row">
+                    <dt>Evidence</dt>
+                    <dd>{c.evidence}</dd>
+                  </div>
+                  <div class="case__row">
+                    <dt>Methods</dt>
+                    <dd>{c.methodsShort}</dd>
+                  </div>
+                  <div class="case__row case__row--decision">
+                    <dt>Decision enabled</dt>
+                    <dd>{c.decision}</dd>
+                  </div>
+                  <div class="case__row">
+                    <dt>My role</dt>
+                    <dd>{c.role}</dd>
+                  </div>
+                </dl>
+                <ul class="case__tools" role="list">
+                  {c.tools.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+              </div>
+            </details>
 
             <a class="case__more" href={`/projects/${c.slug}`}>
               Read the case study
@@ -190,6 +201,17 @@ import { caseStudies } from "../data/caseStudies";
   .case__row--result dt,
   .case__row--decision dt {
     color: var(--color-accent);
+  }
+
+  .case__disc {
+    border-top: 1px solid var(--color-border);
+    margin-top: -0.2rem;
+  }
+  .case__disc > summary {
+    padding-block: 0.6rem;
+  }
+  .case__disc .case__chain {
+    padding-bottom: 0.8rem;
   }
 
   .case__tools {

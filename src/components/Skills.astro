@@ -10,17 +10,29 @@ import { skills } from "../data/skills";
       <h2 id="skills-heading" class="sec-title">The toolkit.</h2>
     </div>
 
-    <div class="skill-groups">
+    <div class="skill-groups" data-reveal>
       {
-        skills.map((group) => (
-          <div class:list={["skill-group", { "skill-group--secondary": group.secondary }]} data-reveal>
-            <h3 class="skill-group__label">{group.label}</h3>
-            <ul class="chips">
-              {group.items.map((item) => (
-                <li class="chip">{item}</li>
-              ))}
-            </ul>
-          </div>
+        skills.map((group, i) => (
+          <details
+            class:list={[
+              "disc",
+              "skill-group",
+              { "skill-group--secondary": group.secondary },
+            ]}
+            open={i === 0}
+          >
+            <summary>
+              <h3 class="skill-group__label">{group.label}</h3>
+              <span class="skill-group__count">{group.items.length}</span>
+            </summary>
+            <div class="disc__body">
+              <ul class="chips">
+                {group.items.map((item) => (
+                  <li class="chip">{item}</li>
+                ))}
+              </ul>
+            </div>
+          </details>
         ))
       }
     </div>
@@ -37,48 +49,42 @@ import { skills } from "../data/skills";
   }
 
   .skill-groups {
-    display: grid;
-    gap: clamp(1.75rem, 4vw, 2.75rem);
+    display: block;
   }
-  @media (min-width: 720px) {
-    .skill-groups {
-      grid-template-columns: 11rem 1fr;
-      row-gap: 2rem;
-      column-gap: 2.5rem;
-    }
-    .skill-group {
-      display: contents;
-    }
+  .skill-group:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .skill-group > summary:hover .skill-group__label {
+    color: var(--color-accent);
   }
 
   .skill-group__label {
+    flex: 1;
     font-family: var(--font-sans);
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-muted);
-    padding-top: 0.4rem;
+    color: var(--color-ink);
+    transition: color 0.15s;
   }
-  @media (min-width: 720px) {
-    .skill-group {
-      border-top: 1px solid var(--color-border);
-      padding-top: 1.25rem;
-    }
+  .skill-group--secondary .skill-group__label {
+    color: var(--color-muted);
+  }
+  .skill-group__count {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
   }
 
   .chips {
     list-style: none;
-    margin: 0.6rem 0 0;
+    margin: 0;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
-  }
-  @media (min-width: 720px) {
-    .chips {
-      margin-top: 0;
-    }
   }
   .chip {
     font-size: 0.88rem;

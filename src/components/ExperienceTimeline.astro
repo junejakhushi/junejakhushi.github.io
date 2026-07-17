@@ -1,6 +1,7 @@
 ---
-// Experience (brief §7): reverse-chronological vertical timeline.
-// Subtle emphasis on current ("Present") roles.
+// Experience — compact by default: each role is one scannable row
+// (role · org · dates). Press to expand for the bullets.
+// Ordered by relevance, not strictly by date.
 import { experience } from "../data/experience";
 ---
 
@@ -8,44 +9,39 @@ import { experience } from "../data/experience";
   <div class="shell">
     <div class="sec-head" data-reveal>
       <p class="eyebrow">Experience</p>
-      <h2 id="work-heading" class="sec-title">
-        Where the evidence gets built.
-      </h2>
+      <h2 id="work-heading" class="sec-title">Where the evidence gets built.</h2>
+      <p class="sec-lede">
+        Ordered by relevance, not date. Expand any role for detail.
+      </p>
     </div>
 
-    <ol class="timeline">
+    <ol class="roles" role="list" data-reveal>
       {
         experience.map((job) => (
-          <li
-            class:list={["tl-item", { "tl-item--current": job.current }]}
-            data-reveal
-          >
-            <span class="tl-marker" aria-hidden="true" />
-            <div class="tl-body">
-              <div class="tl-top">
-                <h3 class="tl-role">{job.role}</h3>
-                {job.current && <span class="tl-now">Now</span>}
+          <li>
+            <details class="disc role">
+              <summary>
+                <span class="role__marker" aria-hidden="true" />
+                <span class="role__main">
+                  <span class="role__title">
+                    {job.role}
+                    {job.current && <span class="role__now">Now</span>}
+                  </span>
+                  <span class="role__org">{job.org}</span>
+                </span>
+                <span class="role__meta">
+                  <span class="role__dates">{job.dates}</span>
+                  <span class="role__loc">{job.location}</span>
+                </span>
+              </summary>
+              <div class="disc__body">
+                <ul class="role__bullets">
+                  {job.bullets.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
               </div>
-              <p class="tl-org">
-                {job.orgUrl ? (
-                  <a href={job.orgUrl} target="_blank" rel="noopener">
-                    {job.org}
-                  </a>
-                ) : (
-                  job.org
-                )}
-              </p>
-              <p class="tl-meta">
-                <span>{job.dates}</span>
-                <span class="tl-dot" aria-hidden="true">·</span>
-                <span>{job.location}</span>
-              </p>
-              <ul class="tl-bullets">
-                {job.bullets.map((b) => (
-                  <li>{b}</li>
-                ))}
-              </ul>
-            </div>
+            </details>
           </li>
         ))
       }
@@ -55,135 +51,174 @@ import { experience } from "../data/experience";
 
 <style>
   .sec-head {
-    margin-bottom: clamp(2rem, 5vw, 3.25rem);
+    margin-bottom: clamp(1.5rem, 3.5vw, 2.25rem);
   }
   .sec-title {
     font-size: var(--text-h2);
     margin-top: 0.5rem;
     max-width: 18ch;
   }
+  .sec-lede {
+    margin-top: 0.8rem;
+    max-width: 46ch;
+    color: var(--color-ink-2);
+    font-size: 1rem;
+  }
 
-  .timeline {
+  .roles {
     list-style: none;
     margin: 0;
     padding: 0;
-    position: relative;
   }
-  /* the spine */
-  .timeline::before {
-    content: "";
-    position: absolute;
-    left: 0.4rem;
-    top: 0.4rem;
-    bottom: 0.4rem;
-    width: 2px;
-    background: linear-gradient(
-      to bottom,
-      var(--color-border-strong),
-      var(--color-border) 85%,
-      transparent
-    );
+  .roles > li:last-child .role {
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .tl-item {
-    position: relative;
-    padding-left: 2.25rem;
-    padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  .role > summary {
+    align-items: baseline;
+    gap: 0.9rem;
   }
-  .tl-item:last-child {
-    padding-bottom: 0;
+  .role > summary:hover .role__title {
+    color: var(--color-accent);
   }
 
-  .tl-marker {
-    position: absolute;
-    left: 0;
-    top: 0.45rem;
-    width: 0.85rem;
-    height: 0.85rem;
+  .role__marker {
+    flex-shrink: 0;
+    width: 0.5rem;
+    height: 0.5rem;
     border-radius: 50%;
+    border: 1.5px solid var(--color-border-strong);
     background: var(--color-cream);
-    border: 2px solid var(--color-border-strong);
+    align-self: center;
   }
-  .tl-item--current .tl-marker {
+  .role:has(.role__now) .role__marker {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 4px var(--color-accent-tint);
   }
 
-  .tl-top {
+  .role__main {
+    flex: 1;
     display: flex;
-    align-items: center;
-    gap: 0.6rem;
     flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.6rem;
+    min-width: 0;
   }
-  .tl-role {
-    font-family: var(--font-sans);
-    font-size: 1.18rem;
+  .role__title {
+    font-size: 1.02rem;
     font-weight: 700;
-    letter-spacing: -0.01em;
     color: var(--color-ink);
+    letter-spacing: -0.01em;
+    transition: color 0.15s;
   }
-  .tl-now {
-    font-size: 0.68rem;
+  .role__now {
+    display: inline-block;
+    margin-left: 0.45rem;
+    font-size: 0.6rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-accent);
     background: var(--color-accent-tint);
     border: 1px solid var(--color-accent-border);
-    padding: 0.1rem 0.5rem;
+    padding: 0.05rem 0.4rem;
     border-radius: 999px;
+    vertical-align: 0.1em;
   }
-
-  .tl-org {
-    margin-top: 0.15rem;
-    font-size: 1rem;
-    font-weight: 600;
+  .role__org {
+    font-size: 0.9rem;
     color: var(--color-ink-2);
   }
-  .tl-org a {
-    color: inherit;
-    text-decoration: none;
-  }
-  .tl-org a:hover {
-    color: var(--color-accent);
-    text-decoration: underline;
-  }
 
-  .tl-meta {
+  .role__meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.3rem;
-    font-size: 0.86rem;
-    color: var(--color-muted);
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    text-align: right;
   }
-  .tl-dot {
-    opacity: 0.6;
+  .role__dates {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .role__loc {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+  /* ── Phones: stack the row instead of squeezing three columns ──
+     marker | role (+Now)
+            | org
+            | dates                                        */
+  @media (max-width: 700px) {
+    .role > summary {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: start;
+      gap: 0.15rem 0.6rem;
+      padding-block: 0.75rem;
+    }
+    .role__marker {
+      grid-column: 1;
+      grid-row: 1;
+      margin-top: 0.4rem;
+      align-self: start;
+    }
+    .role__main {
+      grid-column: 2;
+      grid-row: 1;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.1rem;
+    }
+    .role__meta {
+      grid-column: 2;
+      grid-row: 2;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0.4rem;
+      text-align: left;
+    }
+    .role__title {
+      font-size: 0.98rem;
+    }
+    .role__org {
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+    .role__loc {
+      display: none;
+    }
+    .role__bullets {
+      padding-left: 1.1rem;
+    }
   }
 
-  .tl-bullets {
-    margin: 0.85rem 0 0;
-    padding: 0;
+  .role__bullets {
     list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.4rem;
     display: grid;
-    gap: 0.55rem;
-    max-width: 65ch;
+    gap: 0.5rem;
+    max-width: 68ch;
   }
-  .tl-bullets li {
+  .role__bullets li {
     position: relative;
-    padding-left: 1.1rem;
-    font-size: 0.96rem;
+    padding-left: 1rem;
+    font-size: 0.93rem;
     line-height: 1.6;
     color: var(--color-ink-2);
   }
-  .tl-bullets li::before {
+  .role__bullets li::before {
     content: "";
     position: absolute;
     left: 0;
     top: 0.62em;
-    width: 0.4rem;
-    height: 0.4rem;
+    width: 0.35rem;
+    height: 0.35rem;
     border-radius: 50%;
     background: var(--color-accent-border);
   }

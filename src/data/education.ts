@@ -8,7 +8,7 @@
 export const education = {
   school: "Carnegie Mellon University",
   location: "Pittsburgh, PA",
-  expected: "Expected May 2027",
+  expected: "Expected May 2028",
   honors: "Dean's List with High Honors",
 
   degrees: [

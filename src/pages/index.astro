@@ -3,6 +3,8 @@ import Base from "../layouts/Base.astro";
 import Banner from "../components/Banner.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
+import StatTiles from "../components/StatTiles.astro";
+import FindingChart from "../components/FindingChart.astro";
 import FeaturedWork from "../components/FeaturedWork.astro";
 import Methods from "../components/Methods.astro";
 import ExperienceTimeline from "../components/ExperienceTimeline.astro";
@@ -19,6 +21,12 @@ import Footer from "../components/Footer.astro";
   <Nav />
   <main id="main">
     <Hero />
+    <StatTiles />
+    <section class="section finding-section" aria-label="Headline finding">
+      <div class="shell" data-reveal>
+        <FindingChart />
+      </div>
+    </section>
     <FeaturedWork />
     <Methods />
     <ExperienceTimeline />
@@ -30,3 +38,11 @@ import Footer from "../components/Footer.astro";
   </main>
   <Footer />
 </Base>
+
+<style>
+  /* The finding sits tight under the stat tiles — part of the
+     dashboard-style first screen, not its own tall section. */
+  .finding-section {
+    padding-block: 0 clamp(2rem, 5vw, 3.5rem);
+  }
+</style>

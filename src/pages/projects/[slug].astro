@@ -7,6 +7,7 @@ import Nav from "../../components/Nav.astro";
 import Banner from "../../components/Banner.astro";
 import Footer from "../../components/Footer.astro";
 import EvidenceChain from "../../components/EvidenceChain.astro";
+import FindingChart from "../../components/FindingChart.astro";
 import { caseStudies } from "../../data/caseStudies";
 
 export function getStaticPaths() {
@@ -18,6 +19,8 @@ export function getStaticPaths() {
 
 const { study } = Astro.props;
 const isLoop = study.slug === "llm-evaluation-educational-feedback";
+// The reflection finding belongs to this study only.
+const showFinding = study.slug === "learning-analytics-ai-tutoring";
 ---
 
 <Base title={`${study.title} — Khushi Juneja`} description={study.summary}>
@@ -90,6 +93,14 @@ const isLoop = study.slug === "llm-evaluation-educational-feedback";
             loop={isLoop}
           />
         </section>
+
+        {
+          showFinding && (
+            <section class="cs__section" aria-label="Headline finding">
+              <FindingChart />
+            </section>
+          )
+        }
 
         <section class="cs__section" aria-labelledby="cs-outcome">
           <h2 id="cs-outcome" class="cs__h2">Outcome</h2>

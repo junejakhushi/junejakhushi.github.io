@@ -16,12 +16,18 @@ import { profile } from "../data/profile";
       </p>
     </div>
 
-    <ul class="aud" role="list">
+    <ul class="aud" role="list" data-reveal>
       {
         profile.stakeholders.map((s) => (
-          <li class="aud__item" data-reveal>
-            <h3 class="aud__who">{s.audience}</h3>
-            <p class="aud__what">{s.context}</p>
+          <li>
+            <details class="disc aud__item">
+              <summary>
+                <span class="aud__who">{s.audience}</span>
+              </summary>
+              <div class="disc__body">
+                <p class="aud__what">{s.context}</p>
+              </div>
+            </details>
           </li>
         ))
       }
@@ -50,27 +56,32 @@ import { profile } from "../data/profile";
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.9rem;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: 0 2.5rem;
   }
-  .aud__item {
-    padding: 1.1rem 1.2rem;
-    background: var(--color-paper);
-    border: 1px solid var(--color-border);
-    border-left: 3px solid var(--color-accent-border);
-    border-radius: 0 10px 10px 0;
+  @media (min-width: 780px) {
+    .aud {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .aud > li:last-child .aud__item,
+  .aud > li:nth-last-child(2) .aud__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .aud__item > summary:hover .aud__who {
+    color: var(--color-accent);
   }
   .aud__who {
-    font-family: var(--font-sans);
-    font-size: 0.98rem;
-    font-weight: 700;
+    flex: 1;
+    font-size: 0.96rem;
+    font-weight: 600;
     color: var(--color-ink);
     line-height: 1.3;
+    transition: color 0.15s;
   }
   .aud__what {
-    margin-top: 0.4rem;
     font-size: 0.9rem;
     line-height: 1.55;
     color: var(--color-ink-2);
+    max-width: 52ch;
   }
 </style>

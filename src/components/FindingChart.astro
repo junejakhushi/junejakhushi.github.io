@@ -1,0 +1,318 @@
+---
+// The OAK reflection finding, as a diverging bar chart built from
+// HTML + CSS (no chart library, no raster image).
+//
+// Encoding: bars extend RIGHT for an increase and LEFT for a
+// decrease from a zero baseline — direction is carried by position,
+// not by hue, so one accent is enough. Every bar is directly
+// labeled (secondary encoding), and the "no measurable gain" case
+// is a neutral marker at zero rather than a fabricated 0.0% bar.
+//
+// The same numbers are also exposed as a plain table for screen
+// readers and anyone who'd rather read the values.
+import { reflectionFinding as f } from "../data/metrics";
+
+const MAX = 100; // scale: |change| max is the ≈100% increase
+const half = (v: number) => (Math.abs(v) / MAX) * 50; // % of full width
+---
+
+<figure class="fc">
+  <figcaption class="fc__head">
+    <p class="fc__eyebrow">{f.eyebrow}</p>
+    <h3 class="fc__title">{f.title}</h3>
+  </figcaption>
+
+  <div class="fc__plot">
+    {
+      f.measures.map((m) => (
+        <div class="fc__row">
+          <span class="fc__label">{m.label}</span>
+          <div class="fc__track">
+            <span class="fc__zero" aria-hidden="true" />
+            {m.kind === "none" ? (
+              <span class="fc__dot" aria-hidden="true" />
+            ) : (
+              <span
+                class:list={["fc__bar", `fc__bar--${m.kind}`]}
+                aria-hidden="true"
+                style={`width:${half(m.change)}%; ${
+                  m.change > 0 ? "left:50%" : `left:${50 - half(m.change)}%`
+                }`}
+              />
+            )}
+          </div>
+          <span class:list={["fc__val", `fc__val--${m.kind}`]}>
+            {m.display}
+          </span>
+        </div>
+      ))
+    }
+    <p class="fc__axis" aria-hidden="true">
+      <span>← decrease</span>
+      <span class="fc__axis-zero">0</span>
+      <span>increase →</span>
+    </p>
+  </div>
+
+  <p class="fc__caption">{f.caption}</p>
+
+  <p class="fc__takeaway">{f.takeaway}</p>
+  <p class="fc__note">{f.note}</p>
+
+  <!-- Text alternative: the same values, readable without the visual -->
+  <details class="fc__table-d">
+    <summary>View as table</summary>
+    <table class="fc__table">
+      <caption class="sr-only">
+        Change under the reflection condition versus comparison
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Measure</th>
+          <th scope="col">Change vs. comparison</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          f.measures.map((m) => (
+            <tr>
+              <th scope="row">{m.label}</th>
+              <td>{m.display}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </details>
+</figure>
+
+<style>
+  .fc {
+    margin: 0;
+    background: var(--color-paper);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: clamp(1.2rem, 3vw, 1.75rem);
+  }
+
+  .fc__head {
+    margin-bottom: 1.4rem;
+  }
+  .fc__eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .fc__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 0.4rem;
+    color: var(--color-ink);
+    max-width: 34ch;
+  }
+
+  .fc__plot {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  /* label · plot · value — the value gets its own column so a
+     full-length bar can never collide with its own number.
+     On phones the label and value share one line, bar beneath. */
+  .fc__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.2rem 0.6rem;
+  }
+  .fc__label {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .fc__val {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .fc__track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  @media (min-width: 620px) {
+    .fc__row {
+      grid-template-columns: 9.5rem 1fr 8.5rem;
+      gap: 0.9rem;
+    }
+    .fc__track {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .fc__val {
+      grid-column: 3;
+      grid-row: 1;
+    }
+  }
+
+  .fc__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .fc__track {
+    position: relative;
+    height: 1.6rem;
+  }
+  /* the zero baseline */
+  .fc__zero {
+    position: absolute;
+    left: 50%;
+    top: -0.15rem;
+    bottom: -0.15rem;
+    width: 1px;
+    background: var(--color-border-strong);
+  }
+
+  .fc__bar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 0.65rem;
+    background: var(--color-accent);
+  }
+  /* 4px rounded data-end, square against the zero baseline */
+  .fc__bar--increase {
+    border-radius: 0 4px 4px 0;
+  }
+  .fc__bar--decrease {
+    border-radius: 4px 0 0 4px;
+  }
+
+  /* "no measurable gain" — a neutral marker at zero, not a fake bar */
+  .fc__dot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--color-muted);
+    transform: translate(-50%, -50%);
+  }
+
+  .fc__val {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+    text-align: right;
+  }
+  .fc__val--none {
+    color: var(--color-muted);
+    font-weight: 600;
+  }
+
+  .fc__axis {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.35rem;
+    font-size: 0.68rem;
+    color: var(--color-muted);
+  }
+  @media (min-width: 620px) {
+    .fc__axis {
+      margin-left: 10.4rem;
+      margin-right: 9.1rem;
+    }
+  }
+  .fc__axis-zero {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fc__caption {
+    margin-top: 1.1rem;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+    max-width: 62ch;
+  }
+
+  .fc__takeaway {
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: var(--color-ink);
+    max-width: 62ch;
+  }
+  .fc__note {
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--color-muted);
+    max-width: 62ch;
+  }
+
+  .fc__table-d {
+    margin-top: 0.9rem;
+  }
+  .fc__table-d > summary {
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    width: fit-content;
+  }
+  .fc__table-d > summary:focus-visible {
+    outline: 2.5px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .fc__table {
+    margin-top: 0.7rem;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    width: 100%;
+    max-width: 30rem;
+  }
+  .fc__table th,
+  .fc__table td {
+    text-align: left;
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .fc__table thead th {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .fc__table tbody th {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .fc__table td {
+    color: var(--color-ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

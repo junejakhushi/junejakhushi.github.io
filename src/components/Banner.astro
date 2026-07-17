@@ -9,7 +9,8 @@ import { site } from "../data/site";
     <aside class="banner" aria-label="Availability">
       <div class="shell banner__inner">
         <span class="banner__dot" aria-hidden="true" />
-        <p class="banner__text">{site.banner.text}</p>
+        <p class="banner__text banner__text--long">{site.banner.text}</p>
+        <p class="banner__text banner__text--short">{site.banner.textShort}</p>
       </div>
     </aside>
   )
@@ -38,5 +39,18 @@ import { site } from "../data/site";
     font-weight: 500;
     line-height: 1.45;
     color: color-mix(in srgb, var(--color-cream) 88%, transparent);
+  }
+  .banner__text--short {
+    display: none;
+  }
+  /* Swap to the concise line so the banner stays one row on phones */
+  @media (max-width: 760px) {
+    .banner__text--long {
+      display: none;
+    }
+    .banner__text--short {
+      display: block;
+      font-size: 0.78rem;
+    }
   }
 </style>
