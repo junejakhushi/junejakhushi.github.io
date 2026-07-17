@@ -15,15 +15,6 @@ import { education } from "../data/education";
     <div class="edu__body" data-reveal>
       <ul class="degrees">
         {
-          /* M.S. line is toggled in src/data/education.ts (default OFF) */
-          education.showMastersLine && (
-            <li class="degree degree--ms">
-              <span class="degree__type">Accelerated M.S.</span>
-              <span class="degree__field">{education.mastersLine}</span>
-            </li>
-          )
-        }
-        {
           education.degrees.map((d) => (
             <li class="degree">
               <span class="degree__type">{d.type}</span>
@@ -34,8 +25,8 @@ import { education } from "../data/education";
       </ul>
 
       <p class="minor">
-        <span class="minor__label">Minors</span>
-        {education.minors.join(" · ")}
+        <span class="minor__label">Minor</span>
+        {education.minor}
       </p>
 
       <div class="coursework">
@@ -104,9 +95,6 @@ import { education } from "../data/education";
     border: 1px solid var(--color-border);
     border-left: 3px solid var(--color-accent-border);
     border-radius: 0 10px 10px 0;
-  }
-  .degree--ms {
-    border-left-color: var(--color-accent);
   }
   .degree__type {
     display: block;

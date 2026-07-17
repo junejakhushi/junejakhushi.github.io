@@ -1,14 +1,14 @@
 // ============================================================
-// EDUCATION  (refinement §8)
-// Lead with the two B.S. degrees; the M.S. line is hidden by
-// default (toggle below). Coursework is grouped, quantitative
-// first, and uses only her real courses.
+// EDUCATION
+// Coursework is grouped, quantitative first.
+// To change the graduation date, update `expected` here AND
+// `eyebrow` in src/data/profile.ts.
 // ============================================================
 
 export const education = {
   school: "Carnegie Mellon University",
   location: "Pittsburgh, PA",
-  expected: "Expected May 2028",
+  expected: "Expected May 2027",
   honors: "Dean's List with High Honors",
 
   degrees: [
@@ -22,16 +22,10 @@ export const education = {
     },
   ],
 
-  // ── EDITABLE: minors ──
-  minors: ["Game Design", "Physical Computing"],
+  // Single confirmed minor.
+  minor: "Design for Learning",
 
-  // ── TOGGLE (default OFF): Accelerated M.S. line ──
-  // Khushi isn't formally enrolled yet; leaving this off avoids
-  // pigeonholing her as education-only. Set true to surface it later.
-  showMastersLine: false,
-  mastersLine: "Accelerated M.S. in Learning Engineering (in progress)",
-
-  // Grouped coursework — quantitative/computational first (§8).
+  // Grouped coursework — quantitative/computational first.
   coursework: [
     {
       group: "Quantitative & Computational",

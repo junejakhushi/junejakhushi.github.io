@@ -1,0 +1,42 @@
+---
+// Application banner. Enable/disable via `site.banner.enabled`
+// in src/data/site.ts — never hardcode this text elsewhere.
+import { site } from "../data/site";
+---
+
+{
+  site.banner.enabled && (
+    <aside class="banner" aria-label="Availability">
+      <div class="shell banner__inner">
+        <span class="banner__dot" aria-hidden="true" />
+        <p class="banner__text">{site.banner.text}</p>
+      </div>
+    </aside>
+  )
+}
+
+<style>
+  .banner {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+  .banner__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-block: 0.6rem;
+  }
+  .banner__dot {
+    flex-shrink: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-sand);
+  }
+  .banner__text {
+    font-size: 0.84rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: color-mix(in srgb, var(--color-cream) 88%, transparent);
+  }
+</style>

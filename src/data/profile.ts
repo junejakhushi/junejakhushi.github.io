@@ -1,47 +1,41 @@
 // ============================================================
-// IDENTITY & CONTACT  (refinement §3 / §4)
-// Repositioned for three audiences: data/ML/research,
-// experience/game/social design, and learning engineering.
-// Learning is the throughline, not the limit.
+// IDENTITY & CONTACT
+// Positioning: learning data scientist working across LLM
+// evaluation, learning analytics, statistical/mixed-methods
+// research, and AI-supported education.
 // ============================================================
 
 export const profile = {
   name: "Khushi Juneja",
   pronouns: "she/her",
   location: "Pittsburgh, PA",
-  eyebrow: "Carnegie Mellon University · Expected May 2028",
+  locationLong: "Pittsburgh, PA — open to remote and international work",
 
-  // Hero positioning (refinement §3). `positioning` is the lead sentence;
-  // `throughline` is set in bold beneath it.
+  // Shown above the name in the hero. Update the graduation date here
+  // AND in src/data/education.ts (`expected`).
+  eyebrow: "Carnegie Mellon University · Expected May 2027",
+
+  // Hero headline — specialization first.
+  headline: "Learning data scientist building evidence for AI-powered education.",
+
+  // Hero supporting copy.
   positioning:
-    "Operations Research / Statistics + Human-Computer Interaction at Carnegie Mellon. I build and evaluate systems and experiences for people — ML/NLP pipelines, computer vision, game-based tools, and simulations — grounded in research and evidence.",
-  throughline: "Learning is my throughline, not my limit.",
+    "I build and evaluate learning systems using LLM evals, interaction data, statistical modeling, and mixed-methods research. My work turns teacher and learner behavior into evidence that improves products, curriculum, and instruction.",
 
-  // Short headline — used in meta description / OG (refinement §3).
-  headline:
-    "OR/Statistics + HCI at Carnegie Mellon. Builds and evaluates systems and experiences for people: ML/NLP pipelines, computer vision, game-based tools, and simulation, grounded in research.",
-
-  // Status chip in the hero.
-  lookingForChip: "Open to Fall 2026 & Summer 2027 internships, research & fellowships",
-
-  // "What I'm looking for" role families (refinement §4).
-  lookingFor: [
-    {
-      label: "Data, ML & research.",
-      body: "Data science, machine learning/AI, and quantitative research where I can build real systems and back them with evidence.",
-    },
-    {
-      label: "Experience, game & social design.",
-      body: "Designing experiences, games, and social/interactive systems — entertainment, play, and human connection are a serious part of my work.",
-    },
-    {
-      label: "Learning engineering & ed-data.",
-      body: "Teams building learning systems, analytics, and evidence-based tools.",
-    },
+  // Three compact credibility indicators shown near the hero.
+  credibility: [
+    "LLM evaluation and human benchmarking",
+    "Interaction and learning analytics",
+    "Experimental and mixed-methods research",
   ],
-  // Short closing line (refinement §4).
-  lookingForCoda:
-    "Plus mentors & collaborators who build with rigor. Timing: Fall 2026 and Summer 2027 internships, research positions, and fellowships.",
+
+  // ── AVAILABILITY ──
+  // `availability` is the full sentence; `availabilityShort` is used on
+  // narrow screens. Update both together.
+  availability:
+    "Open to part-time and contract roles in learning data science, AI evaluation, and education research, with full-time availability beginning May 2027.",
+  availabilityShort:
+    "Open to part-time data and research roles · Full-time May 2027",
 
   email: "kjuneja@andrew.cmu.edu",
   links: {
@@ -56,17 +50,46 @@ export const profile = {
     { name: "German", level: "intermediate" },
   ],
 
-  // Broad topic list for JSON-LD knowsAbout (refinement §3).
+  // Audiences she has actually communicated findings to.
+  // Do NOT add superintendents / publishers / policymakers / funders —
+  // those are not supported by her current work.
+  stakeholders: [
+    {
+      audience: "Faculty and instructors",
+      context: "Classroom observation findings and course-design recommendations (Eberly Center).",
+    },
+    {
+      audience: "Learning scientists",
+      context: "Evaluation results, scoring criteria, and scaffold redesign proposals (OAK Lab).",
+    },
+    {
+      audience: "Product and engineering collaborators",
+      context: "Model failure modes and annotation-protocol changes translated into build decisions.",
+    },
+    {
+      audience: "Education nonprofit leaders",
+      context: "Diagnostic instrument design and program rollout evidence (The Unifly Collective).",
+    },
+    {
+      audience: "Donors and CSR partners",
+      context: "Impact and operations reporting for a fundraising fellowship.",
+    },
+    {
+      audience: "Curriculum and instructional stakeholders",
+      context: "Content segmentation, pacing, and input-design changes from learner evidence (OH! Lab).",
+    },
+  ],
+
+  // Topic list for JSON-LD knowsAbout.
   knowsAbout: [
+    "LLM Evaluation",
+    "Learning Analytics",
     "Data Science",
-    "Machine Learning",
     "Natural Language Processing",
-    "Computer Vision",
-    "Discrete-Event Simulation",
-    "Operations Research",
-    "Statistics",
-    "Game Design",
-    "Experience Design",
+    "Statistical Modeling",
+    "Mixed-Methods Research",
+    "Experimental Design",
+    "Educational Data Mining",
     "Human-Computer Interaction",
     "Learning Engineering",
   ],

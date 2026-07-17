@@ -1,0 +1,67 @@
+---
+// Targeted resume link. Path + enable flag live in src/data/site.ts.
+// ⚠️ Requires public/Khushi_Juneja_Data_Research_Resume.pdf to exist.
+import { site } from "../data/site";
+
+interface Props {
+  variant?: "solid" | "ghost";
+}
+const { variant = "solid" } = Astro.props;
+---
+
+{
+  site.resume.enabled && (
+    <a
+      class:list={["resume-btn", `resume-btn--${variant}`]}
+      href={site.resume.path}
+      target="_blank"
+      rel="noopener"
+    >
+      {site.resume.label}
+      <span aria-hidden="true">↗</span>
+    </a>
+  )
+}
+
+<style>
+  .resume-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 9px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      background 0.15s,
+      border-color 0.15s,
+      color 0.15s,
+      transform 0.1s;
+  }
+  .resume-btn--solid {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    border: 1px solid var(--color-accent);
+  }
+  .resume-btn--solid:hover {
+    background: var(--color-accent-strong);
+    color: var(--color-accent-ink);
+    transform: translateY(-1px);
+  }
+  .resume-btn--ghost {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border: 1px solid var(--color-border-strong);
+  }
+  .resume-btn--ghost:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .resume-btn--solid:hover {
+      transform: none;
+    }
+  }
+</style>

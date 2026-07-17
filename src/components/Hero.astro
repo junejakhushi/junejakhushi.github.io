@@ -1,89 +1,137 @@
 ---
-// Hero (brief §7): name, pronouns, positioning line, looking-for
-// status chip, and primary CTAs. Calm and uncluttered.
+// Hero: specialization-first headline, supporting copy, three
+// credibility indicators, availability, and primary links.
 import { profile } from "../data/profile";
+import ResumeButton from "./ResumeButton.astro";
 ---
 
 <section class="hero" id="top">
   <div class="shell hero__inner">
     <p class="hero__eyebrow">{profile.eyebrow}</p>
 
-    <h1 class="hero__name">
+    <p class="hero__name">
       {profile.name}
       <span class="hero__pronouns">{profile.pronouns}</span>
-    </h1>
+    </p>
+
+    <h1 class="hero__headline">{profile.headline}</h1>
 
     <p class="hero__positioning">{profile.positioning}</p>
-    <p class="hero__throughline">{profile.throughline}</p>
 
-    <p class="hero__chip">
-      <span class="hero__chip-dot" aria-hidden="true"></span>
-      {profile.lookingForChip}
+    <ul class="hero__credibility">
+      {
+        profile.credibility.map((item) => (
+          <li>
+            <span class="hero__cred-mark" aria-hidden="true" />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="hero__availability">
+      <span class="hero__avail-dot" aria-hidden="true"></span>
+      <span class="hero__avail-long">{profile.availability}</span>
+      <span class="hero__avail-short">{profile.availabilityShort}</span>
     </p>
 
     <div class="hero__ctas">
-      <a class="hero__primary" href="#projects">View Projects</a>
-      <a class="hero__secondary" href={`mailto:${profile.email}`}>Say Hello</a>
+      <a class="hero__primary" href="#featured">View Work</a>
+      <ResumeButton variant="ghost" />
+      <a class="hero__secondary" href={`mailto:${profile.email}`}>Email</a>
+      <a
+        class="hero__secondary"
+        href={profile.links.linkedin}
+        target="_blank"
+        rel="noopener">LinkedIn</a
+      >
+      <a
+        class="hero__secondary"
+        href={profile.links.github}
+        target="_blank"
+        rel="noopener">GitHub</a
+      >
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    padding-block: clamp(3.5rem, 11vh, 8rem) clamp(2.5rem, 6vh, 4.5rem);
+    padding-block: clamp(3rem, 9vh, 6rem) clamp(2.5rem, 6vh, 4rem);
   }
   .hero__inner {
-    max-width: 56rem;
+    max-width: 58rem;
   }
 
   .hero__eyebrow {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-muted);
-    margin-bottom: 1.25rem;
   }
 
+  /* Name is secondary to the headline — the H1 carries the specialization. */
   .hero__name {
-    font-size: var(--text-hero);
-    font-weight: 480;
-    line-height: 0.98;
-    letter-spacing: -0.025em;
+    margin-top: 0.9rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.2vw, 2.1rem);
+    font-weight: 500;
+    letter-spacing: -0.015em;
     color: var(--color-ink);
+    line-height: 1.1;
   }
   .hero__pronouns {
-    display: inline-block;
     font-family: var(--font-sans);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    letter-spacing: 0;
     color: var(--color-muted);
-    vertical-align: middle;
-    margin-left: 0.6rem;
-    transform: translateY(-0.35em);
+    margin-left: 0.5rem;
+  }
+
+  .hero__headline {
+    margin-top: 0.85rem;
+    font-size: clamp(2.1rem, 5.4vw, 3.9rem);
+    font-weight: 480;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+    max-width: 20ch;
   }
 
   .hero__positioning {
-    margin-top: 1.5rem;
-    font-size: clamp(1.1rem, 2.1vw, 1.4rem);
-    line-height: 1.55;
+    margin-top: 1.35rem;
+    font-size: clamp(1.02rem, 1.9vw, 1.22rem);
+    line-height: 1.6;
     color: var(--color-ink-2);
-    max-width: 50ch;
-    text-wrap: pretty;
-  }
-  .hero__throughline {
-    margin-top: 0.9rem;
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 500;
-    font-size: clamp(1.2rem, 2.6vw, 1.65rem);
-    line-height: 1.3;
-    color: var(--color-accent);
-    max-width: 50ch;
+    max-width: 56ch;
   }
 
-  .hero__chip {
+  .hero__credibility {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+  .hero__credibility li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .hero__cred-mark {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .hero__availability {
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
@@ -93,26 +141,27 @@ import { profile } from "../data/profile";
     background: var(--color-accent-tint);
     border: 1px solid var(--color-accent-border);
     color: var(--color-accent-strong);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 600;
+    line-height: 1.4;
   }
-  .hero__chip-dot {
-    width: 0.55rem;
-    height: 0.55rem;
+  .hero__avail-dot {
+    width: 0.5rem;
+    height: 0.5rem;
     border-radius: 50%;
     background: var(--color-accent);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 60%, transparent);
-    animation: pulse 2.4s var(--ease-out) infinite;
+    flex-shrink: 0;
   }
-  @keyframes pulse {
-    0% {
-      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 55%, transparent);
+  .hero__avail-short {
+    display: none;
+  }
+  /* Swap to the concise availability line on smaller screens */
+  @media (max-width: 700px) {
+    .hero__avail-long {
+      display: none;
     }
-    70% {
-      box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--color-accent) 0%, transparent);
-    }
-    100% {
-      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 0%, transparent);
+    .hero__avail-short {
+      display: inline;
     }
   }
 
@@ -121,7 +170,7 @@ import { profile } from "../data/profile";
     flex-wrap: wrap;
     align-items: center;
     gap: 0.7rem;
-    margin-top: 2.25rem;
+    margin-top: 2rem;
   }
   .hero__primary,
   .hero__secondary {
@@ -151,7 +200,7 @@ import { profile } from "../data/profile";
     transform: translateY(-1px);
   }
   .hero__secondary {
-    background: var(--color-paper);
+    background: transparent;
     color: var(--color-ink);
     border: 1px solid var(--color-border-strong);
   }
@@ -161,8 +210,8 @@ import { profile } from "../data/profile";
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__chip-dot {
-      animation: none;
+    .hero__primary:hover {
+      transform: none;
     }
   }
 </style>
