@@ -96,6 +96,6 @@ export const reflectionFinding = {
   caption:
     "Change under the reflection condition versus comparison, in an AI-assisted Python tutoring study. Bars extend right for an increase and left for a decrease; values are approximate.",
   takeaway:
-    "Practice iterations predicted final performance better than time spent on feedback — so reflection scaffolds should drive further practice, not just attention.",
+    "Practice iterations predicted final performance better than time spent on feedback, so reflection scaffolds should drive further practice, not just attention.",
   note: "A finding within this study and population, not a general causal claim about reflection.",
 };

@@ -107,7 +107,7 @@ export const experience: ExperienceEntry[] = [
     dates: "Jan 2026 – Present",
     current: true,
     bullets: [
-      "Redesigning instruction and assessment for a 30-student course — scaffolding, retrieval practice, and misconception diagnosis.",
+      "Redesigning instruction and assessment for a 30-student course: scaffolding, retrieval practice, and misconception diagnosis.",
       "Instrumenting student progression across office hours and small-group sessions to drive iterative course redesign.",
     ],
   },

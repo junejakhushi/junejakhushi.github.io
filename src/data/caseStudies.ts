@@ -74,7 +74,7 @@ export const caseStudies: CaseStudy[] = [
     tags: ["LLM Evaluation", "Machine Learning", "Study Design"],
 
     question:
-      "Does AI-generated feedback actually match expert judgment — and where does it systematically fail?",
+      "Does AI-generated feedback actually match expert judgment, and where does it systematically fail?",
     evidence:
       "Labeled educational interaction records, expert annotations, model-generated labels, and text plus video-derived signals.",
     methodsShort:
@@ -83,12 +83,12 @@ export const caseStudies: CaseStudy[] = [
       "A continuous evaluation harness that surfaces category-level failure modes rather than a single aggregate score.",
     decision:
       "Failure modes feed directly into feedback-system design, prompt/model iteration, and annotation-protocol redesign.",
-    role: "AI Engineering Intern — evaluation design, dataset construction, and analysis.",
+    role: "AI Engineering Intern: evaluation design, dataset construction, and analysis.",
     tools: ["Python", "Anthropic API", "pandas", "NumPy"],
     // scale: "[ADD VERIFIED SAMPLE SIZE]" — omitted until verified.
 
     problem:
-      "LLM-powered feedback can sound plausible without being instructionally correct, specific, or useful. Product teams need continuous evaluation that goes beyond generic language-model benchmarks — evaluation grounded in what expert educators would actually judge as good feedback.",
+      "LLM-powered feedback can sound plausible without being instructionally correct, specific, or useful. Product teams need continuous evaluation that goes beyond generic language-model benchmarks: evaluation grounded in what expert educators would actually judge as good feedback.",
     researchQuestions: [
       "How consistently do model judgments align with expert human annotations?",
       "Which categories of teacher or learner interactions produce systematic model failures?",
@@ -113,7 +113,7 @@ export const caseStudies: CaseStudy[] = [
     outcome: [
       "The evaluation system supports continuous assessment of feedback quality as models and prompts change, rather than a one-off benchmark run.",
       "Category-level error analysis identifies where the model fails systematically, which is more actionable for a product team than an aggregate agreement score.",
-      "Findings inform redesign of both the feedback system and the annotation criteria used to judge it — evaluation and product improve together.",
+      "Findings inform redesign of both the feedback system and the annotation criteria used to judge it: evaluation and product improve together.",
       "This work is ongoing; agreement statistics and failure-mode results are not reported here.",
     ],
     diagram: [
@@ -145,17 +145,17 @@ export const caseStudies: CaseStudy[] = [
     methodsShort:
       "NLP-based automated scoring, human-labeled benchmarking, behavioral trace analysis, experimental comparison.",
     result:
-      "In this study, a reflection condition roughly doubled feedback engagement time and reduced practice iterations by about 40% — without a corresponding performance gain. Practice iterations were more predictive of final performance.",
+      "In this study, a reflection condition roughly doubled feedback engagement time and reduced practice iterations by about 40%, without a corresponding performance gain. Practice iterations were more predictive of final performance.",
     decision:
       "Reflection prompts are not automatically beneficial: scaffolds should be designed around productive action and additional practice, not attention alone.",
-    role: "Research Assistant — pipeline development, trace analysis, and redesign recommendations.",
+    role: "Research Assistant: pipeline development, trace analysis, and redesign recommendations.",
     tools: ["Python", "NLP", "pandas", "R"],
 
     problem:
-      "Reflection is widely assumed to help learners. But in an AI-assisted tutoring system, an intervention that increases attention to feedback is only valuable if it changes what learners do next — and ultimately what they can do. That requires connecting process measures to outcomes rather than trusting the assumption.",
+      "Reflection is widely assumed to help learners. But in an AI-assisted tutoring system, an intervention that increases attention to feedback is only valuable if it changes what learners do next, and ultimately what they can do. That requires connecting process measures to outcomes rather than trusting the assumption.",
     researchQuestions: [
       "How do feedback engagement, reflection, and repeated practice relate to learning performance?",
-      "Does a reflection intervention change learner behavior — and does that change translate into performance?",
+      "Does a reflection intervention change learner behavior, and does that change translate into performance?",
       "Which process measures actually predict final performance?",
     ],
     data: [
@@ -178,7 +178,7 @@ export const caseStudies: CaseStudy[] = [
       "Within the analyzed study, the reflection condition approximately doubled time spent engaging with feedback and reduced practice iterations by roughly 40%, but did not produce a corresponding performance improvement.",
       "Practice iterations were more predictive of final performance than feedback engagement time.",
       "The implication for design: adding reflection prompts is not automatically beneficial. Reflection scaffolds should be built around productive action, error correction, and opportunities for additional practice rather than attention alone.",
-      "These are findings within this study and this population — not a general causal claim about reflection.",
+      "These are findings within this study and this population, not a general causal claim about reflection.",
     ],
     diagram: [
       { label: "Experimental condition" },
@@ -188,7 +188,7 @@ export const caseStudies: CaseStudy[] = [
       { label: "Scaffold redesign" },
     ],
     diagramAlt:
-      "An evidence chain: experimental condition affects feedback engagement, which affects practice behavior, which relates to performance — and the result informs scaffold redesign.",
+      "An evidence chain: experimental condition affects feedback engagement, which affects practice behavior, which relates to performance, and the result informs scaffold redesign.",
   },
 
   {
@@ -196,7 +196,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Mixed-Methods Evaluation of Multilingual STEM Learning",
     cardTitle: "Mixed-Methods Analysis of Multilingual STEM Learning",
     summary:
-      "Finding where multilingual learners hit friction in low-literacy, low-technology STEM settings — and what content design should change.",
+      "Finding where multilingual learners hit friction in low-literacy, low-technology STEM settings, and what content design should change.",
     status: "Completed",
     eyebrow: "Mixed Methods · Hierarchical Modeling · Evaluation",
     tags: ["Mixed Methods", "Statistics", "Learning Analytics"],
@@ -211,7 +211,7 @@ export const caseStudies: CaseStudy[] = [
       "Identified friction points for low-literacy, low-tech learners by combining qualitative codes with assessment data.",
     decision:
       "Evidence for changes to content segmentation, pacing, language use, and input design in subsequent pilots.",
-    role: "Data Analysis Research Assistant — analysis and synthesis.",
+    role: "Data Analysis Research Assistant: analysis and synthesis.",
     tools: ["R", "hierarchical models", "thematic analysis"],
 
     problem:
@@ -254,7 +254,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Turning Classroom Observation Into Actionable Instructional Data",
     cardTitle: "Classroom Observation and Instructional Analytics",
     summary:
-      "Converting qualitative classroom evidence into structured, analyzable instructional data — without erasing the context that made it meaningful.",
+      "Converting qualitative classroom evidence into structured, analyzable instructional data, without erasing the context that made it meaningful.",
     status: "Completed",
     scale: "200+ students observed",
     eyebrow: "Observation Analytics · Coding Schemes · Reliability",
@@ -270,11 +270,11 @@ export const caseStudies: CaseStudy[] = [
       "A coding scheme that converts open-ended observation into quantitative instructional data with improved inter-rater reliability.",
     decision:
       "Faculty recommendations on active learning, participation equity, and alignment with learning objectives.",
-    role: "Student Partner — protocol redesign, coding scheme, and faculty reporting.",
+    role: "Student Partner: protocol redesign, coding scheme, and faculty reporting.",
     tools: ["Qualitative coding", "inter-rater reliability", "observation protocols"],
 
     problem:
-      "Classroom observation produces rich evidence that is hard to aggregate: narrative notes don't compare across courses or observers. The usual fix — reducing observation to a checklist — throws away the context that made the evidence useful in the first place.",
+      "Classroom observation produces rich evidence that is hard to aggregate: narrative notes don't compare across courses or observers. The usual fix, reducing observation to a checklist, throws away the context that made the evidence useful in the first place.",
     researchQuestions: [
       "How can open-ended classroom observation be structured without erasing context?",
       "Can pedagogy codes be standardized well enough to compare across observers and courses?",

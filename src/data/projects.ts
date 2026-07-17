@@ -50,7 +50,7 @@ export const projects: Project[] = [
     title: "Discrete-Event Simulation of School Funding",
     eyebrow: "Simulation · Operations Research · Modeling",
     summary:
-      "Modeling how funding allocation drives outcomes — and where to intervene.",
+      "Modeling how funding allocation drives outcomes, and where to intervene.",
     description:
       "Modeled how funding allocation drives student outcomes and tested interventions to identify high-leverage levers for reducing inequity.",
     tags: ["Simulation", "Statistics"],
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     eyebrow: "Game Design · Social Systems · Facilitation",
     summary: "A card game that builds real social ties among strangers.",
     description:
-      "A card game designed to facilitate structured dialogue among strangers. Tested at CMU — participants consistently formed stronger social ties through a single session than through standard interaction.",
+      "A card game designed to facilitate structured dialogue among strangers. Tested at CMU: participants consistently formed stronger social ties through a single session than through standard interaction.",
     tags: ["Game Design"],
   },
   {

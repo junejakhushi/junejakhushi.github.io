@@ -9,7 +9,7 @@ export const profile = {
   name: "Khushi Juneja",
   pronouns: "she/her",
   location: "Pittsburgh, PA",
-  locationLong: "Pittsburgh, PA — open to remote and international work",
+  locationLong: "Pittsburgh, PA · open to remote and international work",
 
   // Shown above the name in the hero. Update the graduation date here
   // AND in src/data/education.ts (`expected`).
