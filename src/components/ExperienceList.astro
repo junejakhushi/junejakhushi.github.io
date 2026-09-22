@@ -1,0 +1,100 @@
+---
+// Experience: a compact list. Role, org, dates, one line each. No
+// bullet points. "Now" marks a current role.
+import { experience } from "../data/experience";
+---
+
+<section class="exp section" id="experience" aria-labelledby="exp-heading">
+  <div class="shell">
+    <header class="exp__head" data-reveal>
+      <p class="eyebrow">Experience</p>
+      <h2 id="exp-heading" class="exp__title">Where I have worked</h2>
+    </header>
+
+    <ol class="exp__list">
+      {
+        experience.map((job) => (
+          <li class="exp__row" data-reveal>
+            <div class="exp__main">
+              <h3 class="exp__role">
+                {job.role}
+                {job.current && <span class="exp__now">Now</span>}
+              </h3>
+              <p class="exp__org">{job.org}</p>
+              <p class="exp__line">{job.line}</p>
+            </div>
+            <p class="exp__dates meta">{job.dates}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .exp__head {
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+  .exp__title {
+    font-size: var(--text-h2);
+    margin-top: 0.7rem;
+  }
+
+  .exp__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .exp__row {
+    display: grid;
+    gap: 0.35rem 2rem;
+    padding-block: clamp(1.25rem, 3vw, 1.75rem);
+    border-bottom: 1px solid var(--color-border);
+  }
+  @media (min-width: 720px) {
+    .exp__row {
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+    }
+    .exp__dates {
+      text-align: right;
+      white-space: nowrap;
+    }
+  }
+
+  .exp__role {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .exp__now {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+    border: 1px solid var(--color-accent-border);
+    background: var(--color-accent-tint);
+    border-radius: 999px;
+    padding: 0.15rem 0.45rem;
+  }
+  .exp__org {
+    margin-top: 0.15rem;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+  .exp__line {
+    margin-top: 0.55rem;
+    color: var(--color-ink-2);
+    line-height: 1.55;
+    max-width: 58ch;
+  }
+  .exp__dates {
+    color: var(--color-muted);
+  }
+</style>

@@ -1,51 +1,15 @@
 // ============================================================
 // EDUCATION
-// Coursework is grouped, quantitative first.
-// To change the graduation date, update `expected` here AND
-// `eyebrow` in src/data/profile.ts.
+// Rendered as a compact credential block inside the About section.
+// Facts per the redesign brief. No GPA on the site.
+// If the graduation date changes, update it here.
 // ============================================================
 
 export const education = {
   school: "Carnegie Mellon University",
   location: "Pittsburgh, PA",
   expected: "Expected May 2028",
-  honors: "Dean's List with High Honors",
-
-  degrees: [
-    {
-      type: "B.S.",
-      field: "Mathematical Sciences (Operations Research & Statistics)",
-    },
-    {
-      type: "B.S.",
-      field: "Human-Computer Interaction",
-    },
-  ],
-
-  // Single confirmed minor.
-  minor: "Design for Learning",
-
-  // Grouped coursework — quantitative/computational first.
-  coursework: [
-    {
-      group: "Quantitative & Computational",
-      items: [
-        "Introduction to Machine Learning",
-        "Modern Regression",
-        "Statistical Inference",
-        "Probability",
-        "Linear Algebra for Data Science",
-        "Principles of Imperative Computation",
-        "Systems Thinking and Discrete-Event Simulation",
-      ],
-    },
-    {
-      group: "Design & Learning",
-      items: [
-        "Evidence-Based Educational Design",
-        "E-Learning Design Principles and Methods",
-        "Experience Design",
-      ],
-    },
-  ],
+  degree: "B.S. Mathematical Sciences, Operations Research and Statistics",
+  additionalMajor: "Human-Computer Interaction",
+  minors: ["Robotics", "Design for Learning"],
 } as const;

@@ -1,5 +1,5 @@
 // ============================================================
-// EXPERIENCE — ordered by relevance to learning data science /
+// EXPERIENCE: ordered by relevance to learning data science /
 // research (not strictly reverse-chronological).
 // To add a role: copy one object and place it by relevance.
 // `current: true` adds the "Now" emphasis.
@@ -12,6 +12,10 @@ export interface ExperienceEntry {
   location: string;
   dates: string;
   current?: boolean;
+  /** One line, shown on the homepage. Folds in the number where it
+   *  has context. No em dashes. */
+  line: string;
+  /** Kept for reference; not rendered on the homepage. */
   bullets: string[];
 }
 
@@ -22,6 +26,7 @@ export const experience: ExperienceEntry[] = [
     location: "Pittsburgh, PA",
     dates: "May 2026 – Present",
     current: true,
+    line: "I build the evaluation harnesses that check whether LLM tutoring feedback is any good, benchmarking model output against expert annotation.",
     bullets: [
       "Build evaluation harnesses for LLM-powered educational feedback systems, benchmarking model outputs against expert annotations using inter-rater agreement and error analysis.",
       "Train and evaluate models on labeled teacher and learner interaction data, developing golden datasets and structured scoring pipelines for continuous product evaluation.",
@@ -35,6 +40,7 @@ export const experience: ExperienceEntry[] = [
     location: "Pittsburgh, PA",
     dates: "Jan 2026 – Present",
     current: true,
+    line: "I analyse behavioural traces from an AI Python tutor and build NLP pipelines that score how students reflect.",
     bullets: [
       "Build a scalable NLP pipeline to classify reflection depth, self-explanation quality, and error diagnosis in open-ended learner responses.",
       "Analyze behavioral traces from an AI-assisted Python tutoring experiment, connecting feedback engagement, reflection, practice behavior, and learning outcomes.",
@@ -49,6 +55,7 @@ export const experience: ExperienceEntry[] = [
     location: "Pittsburgh, PA",
     dates: "Jun 2026 – Present",
     current: true,
+    line: "I work on a mathematics-learning game, extending its JavaScript codebase and its tutoring logic.",
     bullets: [
       "Contribute to the development and evaluation of an interactive mathematics-learning game grounded in learning-science principles.",
       "Extend an existing JavaScript codebase and collaborate with researchers and designers on learner interactions, tutoring logic, and experimentation.",
@@ -60,6 +67,7 @@ export const experience: ExperienceEntry[] = [
     org: "Eberly Center for Teaching Excellence & Educational Innovation",
     location: "Pittsburgh, PA",
     dates: "Aug 2025 – May 2026",
+    line: "I ran structured observations across courses serving more than 200 students and turned them into codeable instructional data.",
     bullets: [
       "Conducted structured classroom observations across courses serving more than 200 students.",
       "Built a coding scheme that converted qualitative classroom observations into quantitative, analyzable instructional data.",
@@ -72,6 +80,7 @@ export const experience: ExperienceEntry[] = [
     org: "OH! Lab, Human-Computer Interaction Institute",
     location: "Pittsburgh, PA",
     dates: "Jan 2025 – May 2025",
+    line: "I analysed multilingual STEM learning data from low-resource settings with mixed methods.",
     bullets: [
       "Analyzed multilingual STEM-learning data from low-resource settings using mixed qualitative and quantitative methods.",
       "Fit hierarchical models combining interview codes with midline and endline assessments.",
@@ -84,6 +93,7 @@ export const experience: ExperienceEntry[] = [
     org: "The Unifly Collective (Education Equity Nonprofit)",
     location: "Remote",
     dates: "Jun 2025 – Aug 2025",
+    line: "I ran a pan-India fundraising fellowship that raised over $5,000 in six weeks, and automated operations to cut overhead 30%.",
     bullets: [
       "Designed a literacy and numeracy diagnostic instrument to assess school readiness and enable data-driven program rollout.",
       "Automated core operational workflows (receipt generation, newsletter distribution, CSR reporting), cutting manual overhead by 30%.",
@@ -95,6 +105,7 @@ export const experience: ExperienceEntry[] = [
     org: "Vinsol Pvt Ltd",
     location: "New Delhi, India",
     dates: "May 2025 – Jul 2025",
+    line: "I shipped accessible React workflows from new-hire research and cut support queries 45%.",
     bullets: [
       "Shipped accessible React components and redesigned key workflows from new-hire user research.",
       "Measured post-launch impact: reduced new-hire support queries by 45% and improved onboarding speed.",
@@ -106,6 +117,7 @@ export const experience: ExperienceEntry[] = [
     location: "Pittsburgh, PA",
     dates: "Jan 2026 – Present",
     current: true,
+    line: "I redesign instruction for a 30-student course and TA it every week.",
     bullets: [
       "Redesigning instruction and assessment for a 30-student course: scaffolding, retrieval practice, and misconception diagnosis.",
       "Instrumenting student progression across office hours and small-group sessions to drive iterative course redesign.",
