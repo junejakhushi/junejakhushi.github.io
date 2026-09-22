@@ -1,5 +1,5 @@
 // ============================================================
-// SITE CONFIG — feature flags & shared paths.
+// SITE CONFIG: feature flags & shared paths.
 // Change behaviour here rather than editing components.
 // ============================================================
 

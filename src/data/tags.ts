@@ -1,5 +1,5 @@
 // ============================================================
-// TAGS — one flat, display-ready vocabulary shared by projects.
+// TAGS: one flat, display-ready vocabulary shared by projects.
 // Tags render as plain labels on cards (no filter UI at launch).
 // Adding a tag anywhere else only type-checks if it is listed here.
 // ============================================================

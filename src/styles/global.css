@@ -1,5 +1,5 @@
 /* ============================================================
-   Khushi Juneja — portfolio
+   Khushi Juneja: portfolio
    Editorial-zine design system. Change accent, fonts, scale HERE.
    Colour tokens have a light default and a dark override; every
    component reads var(--color-*), so theming is centralized.
@@ -18,7 +18,7 @@
    exposes them as CSS custom properties for hand-written CSS.
    ------------------------------------------------------------ */
 @theme {
-  /* — Paper & ink (near-white / near-black) — */
+  /*: Paper & ink (near-white / near-black): */
   --color-cream: #faf8f4; /* page background (paper) */
   --color-paper: #ffffff; /* raised surfaces / cards */
   --color-surface-2: #f2efe8; /* subtle inset panels */
@@ -29,22 +29,22 @@
   --color-ink-2: #4a4139; /* secondary text */
   --color-muted: #7c7267; /* meta / muted text (AA on paper) */
 
-  /* — Warm neutral kept for footer/mark surfaces — */
+  /*: Warm neutral kept for footer/mark surfaces: */
   --color-sand: #cdbfa3;
   --color-sand-soft: #ded3bc;
 
-  /* — One disciplined accent: cobalt — */
+  /*: One disciplined accent: cobalt: */
   --color-accent: #2b47ff; /* accent fills / marks */
   --color-accent-strong: #1e34d6; /* link text (AA on paper) / hover */
   --color-accent-ink: #ffffff; /* text on accent fills */
   --color-accent-tint: #eaeeff; /* soft accent background */
   --color-accent-border: #c3ccff;
 
-  /* — Page texture (theme-aware via var swap below) — */
+  /*: Page texture (theme-aware via var swap below): */
   --texture-a: rgba(43, 71, 255, 0.05);
   --texture-b: rgba(205, 191, 163, 0.16);
 
-  /* — Type families — */
+  /*: Type families: */
   --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
   --font-sans:
     "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
@@ -53,15 +53,15 @@
     "Space Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     monospace;
 
-  /* — Fluid type scale (pushed larger for zine headlines) — */
+  /*: Fluid type scale (pushed larger for zine headlines): */
   --text-hero: clamp(3rem, 9vw, 7rem);
   --text-h2: clamp(2rem, 4.5vw, 3.5rem);
   --text-h3: clamp(1.2rem, 2.2vw, 1.6rem);
 
-  /* — Layout — */
+  /*: Layout: */
   --shell: 74rem; /* max content width */
 
-  /* — Motion — */
+  /*: Motion: */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -248,7 +248,7 @@ button {
 }
 
 /* ------------------------------------------------------------
-   DISCLOSURE — native <details>/<summary> "press to expand".
+   DISCLOSURE: native <details>/<summary> "press to expand".
    Kept for any collapsed block (used by detail pages / TODO cards).
    ------------------------------------------------------------ */
 .disc {
@@ -329,7 +329,7 @@ html.js [data-reveal].is-visible {
 }
 
 /* ------------------------------------------------------------
-   REDUCED MOTION — disable all non-essential motion
+   REDUCED MOTION: disable all non-essential motion
    ------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   html {

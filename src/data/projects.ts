@@ -1,5 +1,5 @@
 // ============================================================
-// PROJECTS — the single source of truth for the work.
+// PROJECTS: the single source of truth for the work.
 //
 // Array order IS the homepage order: best and newest first, not
 // chronological. A project with a `story` also renders a page at

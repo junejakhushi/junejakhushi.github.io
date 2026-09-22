@@ -3,7 +3,7 @@
 // HTML + CSS (no chart library, no raster image).
 //
 // Encoding: bars extend RIGHT for an increase and LEFT for a
-// decrease from a zero baseline — direction is carried by position,
+// decrease from a zero baseline: direction is carried by position,
 // not by hue, so one accent is enough. Every bar is directly
 // labeled (secondary encoding), and the "no measurable gain" case
 // is a neutral marker at zero rather than a fabricated 0.0% bar.
@@ -124,7 +124,7 @@ const half = (v: number) => (Math.abs(v) / MAX) * 50; // % of full width
     gap: 0.7rem;
   }
 
-  /* label · plot · value — the value gets its own column so a
+  /* label · plot · value: the value gets its own column so a
      full-length bar can never collide with its own number.
      On phones the label and value share one line, bar beneath. */
   .fc__row {
@@ -195,7 +195,7 @@ const half = (v: number) => (Math.abs(v) / MAX) * 50; // % of full width
     border-radius: 4px 0 0 4px;
   }
 
-  /* "no measurable gain" — a neutral marker at zero, not a fake bar */
+  /* "no measurable gain": a neutral marker at zero, not a fake bar */
   .fc__dot {
     position: absolute;
     left: 50%;
