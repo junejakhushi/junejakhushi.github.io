@@ -1,43 +1,28 @@
 // ============================================================
 // IDENTITY & CONTACT
-// Positioning: learning data scientist working across LLM
-// evaluation, learning analytics, statistical/mixed-methods
-// research, and AI-supported education.
+// A college builder who makes things and brings people together.
+// The research is one kind of work she does, not the whole identity.
+// No em dashes in copy.
 // ============================================================
 
 export const profile = {
   name: "Khushi Juneja",
   pronouns: "she/her",
   location: "Pittsburgh, PA",
-  locationLong: "Pittsburgh, PA · open to remote and international work",
+  locationLong: "Pittsburgh, PA",
 
-  // Shown above the name in the hero. Update the graduation date here
-  // AND in src/data/education.ts (`expected`).
-  eyebrow: "Carnegie Mellon University · Expected May 2028",
-  // Shown on narrow screens to keep the first screen compact.
-  eyebrowShort: "CMU · Expected May 2028",
+  // Shown above the name in the hero. Place first.
+  eyebrow: "Pittsburgh · Carnegie Mellon",
 
-  // Hero headline — specialization first.
-  headline: "Learning data scientist building evidence for AI-powered education.",
+  // Hero headline.
+  headline: "I make things, and the point is usually other people.",
 
-  // Hero supporting copy.
+  // Hero supporting line.
   positioning:
-    "I build and evaluate learning systems using LLM evals, interaction data, statistical modeling, and mixed-methods research. My work turns teacher and learner behavior into evidence that improves products, curriculum, and instruction.",
+    "Apps, games, and the occasional research study. I like building systems that pull people together, and I can measure whether they actually worked.",
 
-  // Three compact credibility indicators shown near the hero.
-  credibility: [
-    "LLM evaluation and human benchmarking",
-    "Interaction and learning analytics",
-    "Experimental and mixed-methods research",
-  ],
-
-  // ── AVAILABILITY ──
-  // `availability` is the full sentence; `availabilityShort` is used on
-  // narrow screens. Update both together.
-  availability:
-    "Open to part-time and contract roles in learning data science, AI evaluation, and education research from Fall 2026, with full-time availability beginning May 2028.",
-  availabilityShort:
-    "Part-time from Fall 2026 · Full-time May 2028",
+  // One line about where she is (hero).
+  place: "Carnegie Mellon, Pittsburgh. Operations research and HCI, graduating 2028.",
 
   email: "kjuneja@andrew.cmu.edu",
   links: {
@@ -52,48 +37,22 @@ export const profile = {
     { name: "German", level: "intermediate" },
   ],
 
-  // Audiences she has actually communicated findings to.
-  // Do NOT add superintendents / publishers / policymakers / funders —
-  // those are not supported by her current work.
-  stakeholders: [
-    {
-      audience: "Faculty and instructors",
-      context: "Classroom observation findings and course-design recommendations (Eberly Center).",
-    },
-    {
-      audience: "Learning scientists",
-      context: "Evaluation results, scoring criteria, and scaffold redesign proposals (OAK Lab).",
-    },
-    {
-      audience: "Product and engineering collaborators",
-      context: "Model failure modes and annotation-protocol changes translated into build decisions.",
-    },
-    {
-      audience: "Education nonprofit leaders",
-      context: "Diagnostic instrument design and program rollout evidence (The Unifly Collective).",
-    },
-    {
-      audience: "Donors and CSR partners",
-      context: "Impact and operations reporting for a fundraising fellowship.",
-    },
-    {
-      audience: "Curriculum and instructional stakeholders",
-      context: "Content segmentation, pacing, and input-design changes from learner evidence (OH! Lab).",
-    },
-  ],
+  // One line for the contact section: what she is looking for.
+  lookingFor:
+    "I am looking for internships and collaborators for 2026 and beyond, on anything at the intersection of building, play, and people.",
 
-  // Topic list for JSON-LD knowsAbout.
+  // Topic list for JSON-LD knowsAbout (SEO only).
   knowsAbout: [
-    "LLM Evaluation",
+    "Software Engineering",
+    "Product Design",
+    "Game Design",
+    "Community Building",
+    "Computer Vision",
+    "Operations Research",
+    "Statistics",
     "Learning Analytics",
-    "Data Science",
-    "Natural Language Processing",
-    "Statistical Modeling",
-    "Mixed-Methods Research",
-    "Experimental Design",
-    "Educational Data Mining",
     "Human-Computer Interaction",
-    "Learning Engineering",
+    "AI Evaluation",
   ],
 } as const;
 

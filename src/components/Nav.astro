@@ -1,14 +1,14 @@
 ---
-// Sticky, auto-hiding top nav with anchor links + a persistent
-// Email affordance (refinement §9 removed the resume affordance).
+// Sticky, auto-hiding top nav: section anchors, an email affordance,
+// and a light/dark toggle. Anchors resolve against the homepage so
+// detail pages link back with "/".
 import { profile } from "../data/profile";
 
-// Anchors resolve against the homepage, so case-study pages link back with "/".
 const links = [
-  { href: "/#featured", label: "Work" },
-  { href: "/#method", label: "Method" },
+  { href: "/#work", label: "Work" },
+  { href: "/#community", label: "People" },
   { href: "/#experience", label: "Experience" },
-  { href: "/#projects", label: "Projects" },
+  { href: "/#about", label: "About" },
   { href: "/#contact", label: "Contact" },
 ];
 ---
@@ -25,13 +25,21 @@ const links = [
     </nav>
 
     <div class="nav__cta">
-      <a
-        class="nav__link-out"
-        href={profile.links.linkedin}
-        target="_blank"
-        rel="noopener">LinkedIn</a
-      >
       <a class="nav__email" href={`mailto:${profile.email}`}>Email</a>
+      <button
+        class="nav__theme"
+        type="button"
+        data-theme-toggle
+        aria-label="Switch colour theme"
+        title="Switch colour theme"
+      >
+        <span class="nav__theme-icon nav__theme-icon--sun" aria-hidden="true"
+          >☀</span
+        >
+        <span class="nav__theme-icon nav__theme-icon--moon" aria-hidden="true"
+          >☾</span
+        >
+      </button>
     </div>
   </div>
 </header>
@@ -49,11 +57,9 @@ const links = [
       border-color 0.3s,
       background 0.3s;
   }
-  /* subtle border appears once scrolled */
   .nav[data-scrolled] {
     border-bottom-color: var(--color-border);
   }
-  /* auto-hide when scrolling down, reveal when scrolling up */
   .nav[data-hidden] {
     transform: translateY(-100%);
   }
@@ -126,34 +132,58 @@ const links = [
   .nav__cta {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-  }
-  .nav__link-out {
-    color: var(--color-ink-2);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-  .nav__link-out:hover {
-    color: var(--color-accent);
+    gap: 0.75rem;
   }
   .nav__email {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
-    padding: 0.45rem 0.9rem;
+    padding: 0.5rem 0.95rem;
     border-radius: 8px;
     line-height: 1;
     background: var(--color-accent);
     color: var(--color-accent-ink);
     border: 1px solid var(--color-accent);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
   .nav__email:hover {
     background: var(--color-accent-strong);
     color: var(--color-accent-ink);
   }
 
-  /* Hide section links on small screens; brand + Email remain */
+  .nav__theme {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-ink-2);
+    font-size: 1rem;
+    line-height: 1;
+    position: relative;
+  }
+  .nav__theme:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent-border);
+  }
+  .nav__theme-icon {
+    grid-area: 1 / 1;
+  }
+  /* Show the icon for the theme you'd switch TO. */
+  .nav__theme-icon--sun {
+    display: none;
+  }
+  :root[data-theme="dark"] .nav__theme-icon--sun {
+    display: block;
+  }
+  :root[data-theme="dark"] .nav__theme-icon--moon {
+    display: none;
+  }
+
   @media (max-width: 940px) {
     .nav__links {
       display: none;
@@ -161,11 +191,6 @@ const links = [
   }
   @media (max-width: 560px) {
     .nav__name {
-      display: none;
-    }
-  }
-  @media (max-width: 380px) {
-    .nav__link-out {
       display: none;
     }
   }
@@ -181,7 +206,6 @@ const links = [
       const y = window.scrollY;
       if (y > 8) nav.setAttribute("data-scrolled", "");
       else nav.removeAttribute("data-scrolled");
-      // only hide well past the hero, and only on meaningful downward movement
       if (y > 240 && y > last + 4) nav.setAttribute("data-hidden", "");
       else if (y < last - 4) nav.removeAttribute("data-hidden");
       last = y;
@@ -198,4 +222,16 @@ const links = [
       { passive: true },
     );
   }
+
+  // Theme toggle: flip data-theme, persist, update the browser chrome colour.
+  const root = document.documentElement;
+  const btn = document.querySelector("[data-theme-toggle]");
+  btn?.addEventListener("click", () => {
+    const next =
+      root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch (e) {}
+  });
 </script>

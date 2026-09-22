@@ -1,134 +1,398 @@
 // ============================================================
-// PROJECTS — the gallery.
+// PROJECTS — the single source of truth for the work.
 //
-// The four featured case studies are NOT duplicated here: they live
-// in src/data/caseStudies.ts and are merged into `galleryItems`
-// below, so their content has exactly one source of truth.
+// Array order IS the homepage order: best and newest first, not
+// chronological. A project with a `story` also renders a page at
+// /projects/<slug>. When `image` is set the card shows a real
+// screenshot from public/projects/<slug>.png; otherwise it renders
+// a typographic placeholder from the project's own `placeholder`
+// palette.
 //
-// This file holds the remaining projects, which open in the modal
-// (they have no dedicated page).
-//
-// To add a project: copy one object into `projects`. It auto-appears
-// in the gallery and in any matching filters.
+// To add a project: copy one object into `projects`. To give it a
+// detail page: add a `story`. To swap in a real image: set `image`.
+// No em dashes in any copy.
 // ============================================================
 
 import type { ProjectTag } from "./tags";
-import { caseStudies } from "./caseStudies";
+
+export interface ProjectLink {
+  label: string;
+  href: string;
+}
+
+/** A card visual, drawn from the project's own palette when there is
+ *  no screenshot yet. `label` defaults to the title's initials. */
+export interface Placeholder {
+  bg: string;
+  fg: string;
+  accent?: string;
+  label?: string;
+  pattern?: "type" | "grid" | "dots" | "arc";
+}
+
+export interface FindingMeasure {
+  label: string;
+  /** Signed magnitude that drives bar length, e.g. 100, -40, 0. */
+  change: number;
+  display: string;
+  kind: "increase" | "decrease" | "none";
+}
+export interface FindingBlock {
+  title: string;
+  measures: FindingMeasure[];
+  caption: string;
+  takeaway: string;
+  note: string;
+}
+
+export interface ProjectStorySection {
+  heading: string;
+  body: string[];
+  /** Marks a section Khushi still needs to fill in. */
+  todo?: boolean;
+}
+export interface ProjectStory {
+  intro: string;
+  sections: ProjectStorySection[];
+  finding?: FindingBlock;
+}
 
 export interface Project {
+  slug: string;
   title: string;
-  /** Optional internal/short name shown under the title (e.g. "LL3"). */
   subtitle?: string;
-  /** Method-first line shown atop the card. */
-  eyebrow: string;
-  summary: string;
-  description: string;
+  /** Display year, also a rough recency signal. */
+  year: string;
+  /** Small honest label, e.g. "Building", "Card game", "OAK Lab". */
+  kind?: string;
+  /** 2 to 4 sentences: what it is, why it exists, what was hard. */
+  blurb: string;
   tags: ProjectTag[];
   tech?: string[];
+  links?: ProjectLink[];
+  /** Real screenshot hook: public/projects/<slug>.png. */
+  image?: { src: string; alt: string };
+  placeholder: Placeholder;
+  /** Present -> a detail page renders at /projects/<slug>. */
+  story?: ProjectStory;
 }
 
 export const projects: Project[] = [
+  // ── 1 · Streakbreaker ───────────────────────────────────────
   {
-    title: "Cognitive Task Analysis & Instructional Redesign",
-    eyebrow: "Study Design · Cognitive Load · Evaluation",
-    summary:
-      "An empirical study comparing video instruction vs. learning-by-doing.",
-    description:
-      "An empirical study comparing video instruction vs. learning-by-doing; applied cognitive task analysis and cognitive-load analysis to redesign the instructional sequence based on learner performance.",
-    tags: ["Study Design", "Mixed Methods", "Learning Design"],
+    slug: "streakbreaker",
+    title: "Streakbreaker",
+    year: "2026",
+    kind: "Building",
+    blurb:
+      "College turns into one long optimisation streak. Streakbreaker hands you small sidequests, you go do them, and the whole point is that other people are doing them too. It is social first, less a habit tracker you grind alone, more a reason to look up. Breaking the streak is the feature.",
+    tags: ["Community", "Product", "Mobile"],
+    placeholder: {
+      bg: "#241a4a",
+      fg: "#f3efff",
+      accent: "#b39cff",
+      label: "SB",
+      pattern: "arc",
+    },
   },
+
+  // ── 2 · Waypoint Wars ───────────────────────────────────────
   {
-    title: "Evidence-Based Math Professional Development",
-    eyebrow: "Study Design · Instructional Research",
-    summary:
-      "A PD program tackling math anxiety with 5th-grade math teachers.",
-    description:
-      "A professional-development program for 5th-grade math teachers addressing student math anxiety, grounded in research on teacher efficacy and formative-feedback design.",
-    tags: ["Study Design", "Learning Design"],
+    slug: "waypoint-wars",
+    title: "Waypoint Wars",
+    year: "2026",
+    kind: "Building",
+    blurb:
+      "AI-built, community-sourced scavenger hunts. Checkpoints are real places you have to physically reach and prove with a photo. Hunts are generated with Gemini and narrated with ElevenLabs, and the community writes and remixes them. The hard parts are the fun ones: checking that a photo actually shows the checkpoint, generating hunts that are hard but not impossible, and making a hunt a stranger wrote feel authored instead of random.",
+    tags: ["AI", "Games", "Geolocation", "Community"],
+    tech: ["Gemini", "ElevenLabs", "JavaScript"],
+    placeholder: {
+      bg: "#123a2e",
+      fg: "#eafff4",
+      accent: "#57e0a0",
+      label: "WW",
+      pattern: "grid",
+    },
+    story: {
+      intro:
+        "Waypoint Wars is a scavenger hunt you play with your feet. Checkpoints are real places, you prove you reached them with a photo, and the hunts themselves are generated by AI and written by other players.",
+      sections: [
+        {
+          heading: "How it works",
+          body: [
+            "You pick a hunt. It sends you to a real location, you take a photo to prove you got there, and it moves you to the next checkpoint. Hunts are generated with Gemini and narrated with ElevenLabs, so each one arrives with a voice and a story instead of a bare list of coordinates.",
+          ],
+        },
+        {
+          heading: "The hard parts",
+          body: [
+            "Three problems make this interesting. Verifying that a photo actually shows the checkpoint, not a screenshot or a lookalike spot down the street. Generating hunts that are hard but still possible, so nobody gets stuck and nobody gets bored. And making a hunt a stranger wrote feel authored, like someone designed it for you, rather than random.",
+          ],
+        },
+        {
+          heading: "Where it is now",
+          todo: true,
+          body: [
+            "TODO: current status, what is built versus planned, and a link once it is live. Drop a screenshot at public/projects/waypoint-wars.png and set the image field to swap out this placeholder.",
+          ],
+        },
+      ],
+    },
   },
+
+  // ── 3 · Lumen ───────────────────────────────────────────────
   {
-    title: "Discrete-Event Simulation of School Funding",
-    eyebrow: "Simulation · Operations Research · Modeling",
-    summary:
-      "Modeling how funding allocation drives outcomes, and where to intervene.",
-    description:
-      "Modeled how funding allocation drives student outcomes and tested interventions to identify high-leverage levers for reducing inequity.",
+    slug: "lumen",
+    title: "Lumen",
+    year: "2026",
+    kind: "Building",
+    blurb:
+      "A virtual jewellery try-on built for a studio in Delhi. They keep their collection as STL files, so the try-on renders their actual pieces on a customer instead of generic stand-ins. The half I care about is behind the mirror: a demand-forecasting layer that tells the studio which pieces are worth manufacturing, so try-on data turns into a production decision instead of a vanity metric.",
+    tags: ["3D", "Computer Vision", "Forecasting", "Commerce"],
+    tech: ["Python", "Computer Vision"],
+    placeholder: {
+      bg: "#1a1622",
+      fg: "#f6ecff",
+      accent: "#e8c766",
+      label: "LU",
+      pattern: "dots",
+    },
+    story: {
+      intro:
+        "Lumen is a virtual jewellery try-on I built for a jewellery studio in Delhi. It renders their actual collection on a customer, and it turns the try-on data into a decision about what to manufacture.",
+      sections: [
+        {
+          heading: "Their pieces, not generic ones",
+          body: [
+            "The studio keeps its collection as STL files. Lumen renders those exact pieces on a customer instead of stand-in assets, so what you try on is what they actually make.",
+          ],
+        },
+        {
+          heading: "The half I care about",
+          body: [
+            "The try-on is the hook. The part I care about sits behind it: a demand-forecasting layer that reads which pieces people try on and linger over, and tells the studio which ones are worth manufacturing for inventory. Try-on interaction becomes a production decision instead of a vanity metric.",
+          ],
+        },
+        {
+          heading: "Where it is now",
+          todo: true,
+          body: [
+            "TODO: current status, the exact rendering and forecasting stack, and results once there are any. Drop a screenshot at public/projects/lumen.png and set the image field to swap out this placeholder.",
+          ],
+        },
+      ],
+    },
+  },
+
+  // ── 4 · Free-Throw Physics Simulator ────────────────────────
+  {
+    slug: "free-throw-physics-simulator",
+    title: "Free-Throw Physics Simulator",
+    year: "2021",
+    kind: "Physical computing",
+    blurb:
+      "A free-throw game that turns Newtonian mechanics into something you can feel. A Raspberry Pi and an OpenCV pipeline track the shot in real time, score it, and feed it back. I started it in 11th grade because the physics textbook was putting me to sleep.",
+    tags: ["Computer Vision", "Games"],
+    tech: ["Raspberry Pi", "OpenCV", "Python"],
+    placeholder: {
+      bg: "#7a2f12",
+      fg: "#fff2e8",
+      accent: "#ff9d4d",
+      label: "FT",
+      pattern: "arc",
+    },
+  },
+
+  // ── 5 · Samvaad ─────────────────────────────────────────────
+  {
+    slug: "samvaad",
+    title: "Samvaad",
+    year: "2024",
+    kind: "Card game",
+    blurb:
+      "A card game I designed to get strangers into real conversation. I tested it at CMU: people who played a single round consistently ended up closer than people who just talked. It is the oldest piece of evidence for the thing this whole site is about.",
+    tags: ["Game Design", "Community"],
+    placeholder: {
+      bg: "#6a1f3a",
+      fg: "#ffeef4",
+      accent: "#ff9ecb",
+      label: "Sv",
+      pattern: "dots",
+    },
+  },
+
+  // ── 6 · OAK reflection study ────────────────────────────────
+  {
+    slug: "reflection-that-did-not-work",
+    title: "The reflection step that did not work",
+    subtitle: "OAK Lab",
+    year: "2026",
+    kind: "OAK Lab",
+    blurb:
+      "I added a reflection step to an AI Python tutor and measured what it did. It roughly doubled the time students spent with feedback and cut their practice attempts by about 40 percent. It did not improve their performance at all. Building the thing was easy. Measuring it honestly, and believing the result, was the work.",
+    tags: ["Research", "Learning Analytics", "Statistics"],
+    tech: ["Python", "NLP", "R"],
+    placeholder: {
+      bg: "#10233f",
+      fg: "#eaf1ff",
+      accent: "#7fb0ff",
+      label: "OAK",
+      pattern: "type",
+    },
+    story: {
+      intro:
+        "For the OAK Lab I added a reflection step to an AI Python tutor and measured what it actually did. The result was not what the intervention assumed, and that is the interesting part.",
+      sections: [
+        {
+          heading: "What I built",
+          body: [
+            "A reflection prompt that runs inside an AI-assisted Python tutoring study, plus an NLP pipeline that scores how deeply students reflect from their open-ended responses: self-explanation quality, error diagnosis, and reflection depth.",
+          ],
+        },
+        {
+          heading: "What happened",
+          body: [
+            "The reflection condition roughly doubled the time students spent with feedback and cut their practice attempts by about 40 percent. Their performance did not improve. Practice iterations predicted final performance better than time on feedback did, which is close to the opposite of what a reflection scaffold is supposed to do.",
+          ],
+        },
+        {
+          heading: "What it taught me",
+          body: [
+            "Building the intervention was the easy half. The real work was measuring it honestly and then believing the result instead of the story I wanted to tell. A scaffold that wins attention is not the same as a scaffold that helps, and you only learn the difference if you are willing to measure the thing you built and report that it did not work.",
+          ],
+        },
+      ],
+      finding: {
+        title: "Reflection changed behaviour. It did not change performance.",
+        measures: [
+          {
+            label: "Time on feedback",
+            change: 100,
+            display: "about 2x",
+            kind: "increase",
+          },
+          {
+            label: "Practice iterations",
+            change: -40,
+            display: "about -40%",
+            kind: "decrease",
+          },
+          {
+            label: "Performance",
+            change: 0,
+            display: "no measurable gain",
+            kind: "none",
+          },
+        ],
+        caption:
+          "Change under the reflection condition versus comparison, in an AI-assisted Python tutoring study. Bars extend right for an increase and left for a decrease. Values are approximate.",
+        takeaway:
+          "Practice iterations predicted final performance better than time spent on feedback, so a reflection scaffold should drive more practice, not just more attention.",
+        note: "A finding within this study and population, not a general causal claim about reflection.",
+      },
+    },
+  },
+
+  // ── 7 · LLM feedback evaluation ─────────────────────────────
+  {
+    slug: "llm-feedback-evaluation",
+    title: "Grading the grader",
+    subtitle: "LLM feedback evaluation",
+    year: "2026",
+    kind: "Research",
+    blurb:
+      "AI writes a lot of feedback for students now. I build the harness that checks whether it is any good, benchmarking model output against expert judgment and finding where it fails on purpose rather than trusting one aggregate score. The useful output is a map of failure modes, not a grade.",
+    tags: ["AI", "Research"],
+    tech: ["Python", "NLP"],
+    placeholder: {
+      bg: "#23203a",
+      fg: "#efeaff",
+      accent: "#9c8cff",
+      label: "EV",
+      pattern: "grid",
+    },
+  },
+
+  // ── 8 · Multilingual STEM analysis ──────────────────────────
+  {
+    slug: "multilingual-stem-analysis",
+    title: "Where multilingual learners hit friction",
+    subtitle: "Mixed-methods analysis",
+    year: "2025",
+    kind: "Research",
+    blurb:
+      "A mixed-methods study of STEM learning in low-literacy, low-technology settings, where the interesting question is not whether learners struggle but exactly where and why. I combined interview codes with assessment data to find the friction points a single metric would have missed.",
+    tags: ["Research", "Mixed Methods", "Statistics"],
+    tech: ["R"],
+    placeholder: {
+      bg: "#123634",
+      fg: "#e9fffb",
+      accent: "#5fd6c4",
+      label: "ML",
+      pattern: "dots",
+    },
+  },
+
+  // ── 9 · Classroom observation to instructional data ─────────
+  {
+    slug: "classroom-observation",
+    title: "Turning a classroom into data without flattening it",
+    subtitle: "Instructional analytics",
+    year: "2025",
+    kind: "Research",
+    blurb:
+      "I ran structured observations across courses serving more than 200 students and built a coding scheme that turns open-ended classroom notes into quantitative instructional data. The trick was doing it without erasing the context that made the observation worth writing down.",
+    tags: ["Research", "Mixed Methods"],
+    placeholder: {
+      bg: "#3a2a12",
+      fg: "#fff4e2",
+      accent: "#e0b25a",
+      label: "OBS",
+      pattern: "grid",
+    },
+  },
+
+  // ── 10 · Discrete-event simulation of school funding ────────
+  {
+    slug: "school-funding-simulation",
+    title: "Simulating school funding",
+    year: "2024",
+    kind: "Simulation",
+    blurb:
+      "A discrete-event simulation of how funding moves through a school system and where it actually changes student outcomes. I built it to test interventions on a model instead of on real kids, and to find the few levers worth pulling.",
     tags: ["Simulation", "Statistics"],
     tech: ["AnyLogic"],
+    placeholder: {
+      bg: "#1c2b1a",
+      fg: "#eefbe9",
+      accent: "#8fd06a",
+      label: "SIM",
+      pattern: "arc",
+    },
   },
+
+  // ── 11 · Cognitive task analysis ────────────────────────────
   {
-    title: "CMU CS Academy Learning Redesign",
-    eyebrow: "Learning Design · UX · Evaluation",
-    summary:
-      "End-to-end redesign of a learning experience, measured for outcome gains.",
-    description:
-      "End-to-end redesign of a learning experience: scoped learning objectives, restructured content flows, and built an evaluation framework to measure problem-solving outcome gains.",
-    tags: ["Learning Design", "Study Design"],
-  },
-  {
-    title: "Free-Throw Physics Simulator",
-    eyebrow: "Computer Vision · Real-Time Systems · Game-Based Design",
-    summary:
-      "A free-throw game that turns Newtonian mechanics into tactile play.",
-    description:
-      "A learning tool for Newtonian mechanics built as a free-throw simulation game. A real-time computer-vision system tracks shot kinematics, with a scoring model and feedback loop that turns abstract physics into tactile play. (Originally started in 11th grade out of frustration with a lifeless physics textbook.)",
-    tags: ["Computer Vision", "Game Design"],
-    tech: ["Raspberry Pi", "OpenCV", "Python"],
-  },
-  {
-    title: "Samvaad",
-    eyebrow: "Game Design · Social Systems · Facilitation",
-    summary: "A card game that builds real social ties among strangers.",
-    description:
-      "A card game designed to facilitate structured dialogue among strangers. Tested at CMU: participants consistently formed stronger social ties through a single session than through standard interaction.",
-    tags: ["Game Design"],
-  },
-  {
-    title: "Pattern-Seeking and Metacognition Study",
-    subtitle: "LL3",
-    eyebrow: "Study Design · Play & Cognition · Behavioral Research",
-    summary:
-      "A study of pattern-seeking cognition and apophenia in teenagers.",
-    description:
-      "A study exploring pattern-seeking cognition and apophenia in teenagers using game-like prompts; designed measurement instruments to observe behavior across repeated trials.",
-    tags: ["Study Design", "Game Design"],
+    slug: "cognitive-task-analysis",
+    title: "Video versus doing",
+    subtitle: "Cognitive task analysis",
+    year: "2024",
+    kind: "Study",
+    blurb:
+      "An empirical study comparing watching an expert on video against learning by doing. I ran the cognitive task analysis, measured performance and cognitive load, and used the results to redesign the instruction so it taught the thing it claimed to teach.",
+    tags: ["Research", "Study Design", "Learning Design"],
+    placeholder: {
+      bg: "#2c1f33",
+      fg: "#f6ecff",
+      accent: "#c79cff",
+      label: "CTA",
+      pattern: "type",
+    },
   },
 ];
 
-// ── Unified gallery model ─────────────────────────────────────
-// Case studies link out to their own page; everything else opens
-// the modal. One shape so the grid renders from a single list.
+export const projectsWithPages = (): Project[] =>
+  projects.filter((p) => p.story);
 
-export interface GalleryItem {
-  title: string;
-  subtitle?: string;
-  eyebrow: string;
-  summary: string;
-  tags: ProjectTag[];
-  tech?: string[];
-  /** Present → the card links to a dedicated case-study page. */
-  href?: string;
-  /** Present → the card opens the modal. */
-  description?: string;
-}
-
-/** Data & research work first, then the broader creative/technical work. */
-export const galleryItems: GalleryItem[] = [
-  ...caseStudies.map((c) => ({
-    title: c.cardTitle,
-    eyebrow: c.eyebrow,
-    summary: c.summary,
-    tags: c.tags,
-    tech: c.tools,
-    href: `/projects/${c.slug}`,
-  })),
-  ...projects.map((p) => ({
-    title: p.title,
-    subtitle: p.subtitle,
-    eyebrow: p.eyebrow,
-    summary: p.summary,
-    tags: p.tags,
-    tech: p.tech,
-    description: p.description,
-  })),
-];
+export const projectBySlug = (slug: string): Project | undefined =>
+  projects.find((p) => p.slug === slug);

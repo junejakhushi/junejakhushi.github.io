@@ -1,0 +1,35 @@
+---
+// The projects section: a flat list, best and newest first. No tiers,
+// no featured/other split, no filter chips. Order comes straight from
+// the `projects` array.
+import { projects } from "../data/projects";
+import ProjectCard from "./ProjectCard.astro";
+---
+
+<section class="section work" id="work" aria-labelledby="work-heading">
+  <div class="shell">
+    <header class="work__head" data-reveal>
+      <p class="eyebrow">Projects</p>
+      <h2 id="work-heading" class="work__title">Things I have made</h2>
+    </header>
+
+    <div class="work__list">
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work__head {
+    margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .work__title {
+    font-size: var(--text-h2);
+    margin-top: 0.7rem;
+    max-width: 16ch;
+  }
+  .work__list {
+    display: grid;
+    gap: clamp(3.5rem, 9vw, 7rem);
+  }
+</style>

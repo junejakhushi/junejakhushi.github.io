@@ -5,27 +5,24 @@
 
 export const site = {
   /**
-   * Application banner.
-   * Set `enabled: false` to hide it site-wide (nothing else to change).
+   * Announcement banner. Off by default; the "what I am looking for"
+   * line lives in the Contact section instead.
    */
   banner: {
-    enabled: true,
-    text: "Currently seeking a part-time learning data science or research role for Fall 2026, with the possibility of transitioning full-time after May 2028.",
-    // Shown instead of `text` on narrow screens, to keep the first
-    // screen compact. Keep the two consistent.
-    textShort: "Seeking a part-time data / research role · Fall 2026",
+    enabled: false,
+    text: "",
+    textShort: "",
   },
 
   /**
-   * Targeted resume.
-   * ⚠️ Place the PDF at `public/Khushi_Juneja_Data_Research_Resume.pdf`.
-   * Until that file exists this link will 404 — set `enabled: false` to hide
-   * every resume button until the PDF is added. See README → "Resume".
+   * Resume link.
+   * Place the PDF at `public/Khushi_Juneja_Resume.pdf`, then flip
+   * `enabled` to true. Until then every resume button stays hidden so
+   * nothing 404s.
    */
   resume: {
-    // OFF until the PDF exists — flip to true once the file is in place.
     enabled: false,
-    path: "/Khushi_Juneja_Data_Research_Resume.pdf",
-    label: "View targeted resume",
+    path: "/Khushi_Juneja_Resume.pdf",
+    label: "Resume (PDF)",
   },
 } as const;

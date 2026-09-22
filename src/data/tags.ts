@@ -1,32 +1,25 @@
 // ============================================================
-// Shared project/case-study tag vocabulary.
-// Lives in its own module so both projects.ts and caseStudies.ts
-// can use it without a circular import.
-// Method-first: a recruiter should see the transferable skill.
+// TAGS — one flat, display-ready vocabulary shared by projects.
+// Tags render as plain labels on cards (no filter UI at launch).
+// Adding a tag anywhere else only type-checks if it is listed here.
 // ============================================================
 
 export type ProjectTag =
-  | "LLM Evaluation"
-  | "Learning Analytics"
-  | "Machine Learning"
+  | "Community"
+  | "Product"
+  | "Mobile"
+  | "AI"
+  | "Games"
+  | "Geolocation"
+  | "3D"
+  | "Computer Vision"
+  | "Forecasting"
+  | "Commerce"
+  | "Research"
   | "Statistics"
+  | "Simulation"
   | "Mixed Methods"
   | "Study Design"
-  | "Simulation"
-  | "Computer Vision"
+  | "Learning Analytics"
   | "Game Design"
   | "Learning Design";
-
-/** Filter order in the UI (only tags actually in use are rendered). */
-export const tagOrder: ProjectTag[] = [
-  "LLM Evaluation",
-  "Learning Analytics",
-  "Machine Learning",
-  "Statistics",
-  "Mixed Methods",
-  "Study Design",
-  "Simulation",
-  "Computer Vision",
-  "Game Design",
-  "Learning Design",
-];

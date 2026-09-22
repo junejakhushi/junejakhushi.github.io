@@ -8,23 +8,23 @@ interface Props {
 }
 
 const {
-  title = "Khushi Juneja | Learning Data Scientist and Education Researcher",
-  description = "Carnegie Mellon learning data scientist working across LLM evaluation, learning analytics, statistical modeling, mixed-methods research, and AI-supported education.",
+  title = "Khushi Juneja",
+  description =
+    "Khushi Juneja builds apps, games, and the occasional research study at Carnegie Mellon. Operations research and HCI, graduating 2028.",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL("/og.png", Astro.site).href;
 
-// JSON-LD Person schema (brief §9)
+// JSON-LD Person schema
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: profile.name,
   url: profile.links.site,
   email: `mailto:${profile.email}`,
-  jobTitle: "Learning Data Scientist · Education Researcher",
-  description:
-    "Carnegie Mellon learning data scientist working across LLM evaluation, learning analytics, statistical modeling, mixed-methods research, and AI-supported education.",
+  jobTitle: "Builder and researcher",
+  description,
   knowsAbout: profile.knowsAbout,
   address: {
     "@type": "PostalAddress",
@@ -37,10 +37,6 @@ const personSchema = {
     name: "Carnegie Mellon University",
   },
   knowsLanguage: profile.languages.map((l) => l.name),
-  seeks: {
-    "@type": "Demand",
-    name: "Part-time and contract roles in learning data science, AI evaluation, and education research (from Fall 2026); full-time from May 2028",
-  },
   sameAs: [profile.links.linkedin, profile.links.github],
 };
 ---
@@ -52,10 +48,39 @@ const personSchema = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href={canonical} />
 
+    <!-- Resolve theme before paint: stored choice, else OS preference.
+         Sets data-theme and the matching browser theme-color (no FOUC). -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var dark =
+            stored === "dark" ||
+            (!stored &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (stored === "light") dark = false;
+          document.documentElement.setAttribute(
+            "data-theme",
+            dark ? "dark" : "light",
+          );
+        } catch (e) {}
+        document.documentElement.classList.add("js");
+      })();
+    </script>
+
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
-    <meta name="theme-color" content="#a8402a" />
+    <meta
+      name="theme-color"
+      content="#faf8f4"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#141310"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -73,11 +98,11 @@ const personSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Favicon (inline SVG monogram, matches her existing mark) -->
+    <!-- Favicon (inline SVG monogram) -->
     <link
       rel="icon"
       type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231c1611'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='15' fill='%23faf6ee'%3EKJ%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316130f'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='15' fill='%23faf8f4'%3EKJ%3C/text%3E%3C/svg%3E"
     />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -87,17 +112,12 @@ const personSchema = {
       type="application/ld+json"
       set:html={JSON.stringify(personSchema)}
     />
-
-    <!-- Mark JS available so reveal animations only apply with JS (no CLS otherwise) -->
-    <script is:inline>
-      document.documentElement.classList.add("js");
-    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
 
-    <!-- Gentle on-scroll reveals via IntersectionObserver (brief §8) -->
+    <!-- Gentle on-scroll reveals via IntersectionObserver -->
     <script>
       const reduce = window.matchMedia(
         "(prefers-reduced-motion: reduce)",

@@ -1,0 +1,117 @@
+---
+// Typographic / geometric project placeholder, drawn from the
+// project's own palette. Purely decorative: it is aria-hidden and
+// the real project title always sits next to it in the DOM. Replace
+// it by setting a project's `image` (a screenshot in public/projects).
+import type { Placeholder } from "../data/projects";
+
+interface Props {
+  placeholder: Placeholder;
+  title: string;
+}
+const { placeholder: p, title } = Astro.props;
+
+const label =
+  p.label ??
+  title
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 3)
+    .toUpperCase();
+
+const accent = p.accent ?? p.fg;
+const pattern = p.pattern ?? "type";
+
+// Deterministic dot grid so the SVG stays static (no layout shift).
+const dots: { x: number; y: number }[] = [];
+if (pattern === "dots") {
+  for (let y = 90; y <= 660; y += 76) {
+    for (let x = 90; x <= 1110; x += 76) dots.push({ x, y });
+  }
+}
+---
+
+<div class="ph" aria-hidden="true">
+  <svg
+    viewBox="0 0 1200 750"
+    preserveAspectRatio="xMidYMid slice"
+    role="presentation"
+  >
+    <rect width="1200" height="750" fill={p.bg}></rect>
+
+    {
+      pattern === "grid" && (
+        <g stroke={accent} stroke-width="1.5" opacity="0.28">
+          {[150, 300, 450, 600, 900, 1050].map((x) => (
+            <line x1={x} y1="0" x2={x} y2="750" />
+          ))}
+          {[150, 300, 450, 600].map((y) => (
+            <line x1="0" y1={y} x2="1200" y2={y} />
+          ))}
+        </g>
+      )
+    }
+
+    {
+      pattern === "dots" && (
+        <g fill={accent} opacity="0.32">
+          {dots.map((d) => (
+            <circle cx={d.x} cy={d.y} r="5" />
+          ))}
+        </g>
+      )
+    }
+
+    {
+      pattern === "arc" && (
+        <g fill="none" stroke={accent} stroke-width="2" opacity="0.32">
+          {[140, 260, 380, 500, 620].map((r) => (
+            <circle cx="200" cy="720" r={r} />
+          ))}
+        </g>
+      )
+    }
+
+    {
+      pattern === "type" && (
+        <text
+          x="1140"
+          y="250"
+          text-anchor="end"
+          font-family="Fraunces Variable, Fraunces, Georgia, serif"
+          font-size="720"
+          font-weight="600"
+          fill={accent}
+          opacity="0.16"
+        >
+          {label.slice(0, 1)}
+        </text>
+      )
+    }
+
+    <text
+      x="80"
+      y="640"
+      font-family="Fraunces Variable, Fraunces, Georgia, serif"
+      font-size="300"
+      font-weight="600"
+      letter-spacing="-8"
+      fill={p.fg}
+    >
+      {label}
+    </text>
+  </svg>
+</div>
+
+<style>
+  .ph {
+    position: absolute;
+    inset: 0;
+  }
+  .ph svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>

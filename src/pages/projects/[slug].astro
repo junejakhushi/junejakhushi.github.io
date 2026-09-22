@@ -1,117 +1,118 @@
 ---
-// Dedicated case-study pages, statically generated from
-// src/data/caseStudies.ts. Every slug renders a complete page —
-// there are no empty project routes.
+// Project detail pages, statically generated for every project that
+// has a `story`. Everything else lives as a single entry on the
+// homepage. No empty routes.
 import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
-import Banner from "../../components/Banner.astro";
 import Footer from "../../components/Footer.astro";
-import EvidenceChain from "../../components/EvidenceChain.astro";
+import Placeholder from "../../components/Placeholder.astro";
 import FindingChart from "../../components/FindingChart.astro";
-import { caseStudies } from "../../data/caseStudies";
+import { projectsWithPages } from "../../data/projects";
 
 export function getStaticPaths() {
-  return caseStudies.map((study) => ({
-    params: { slug: study.slug },
-    props: { study },
+  const paged = projectsWithPages();
+  return paged.map((project, i) => ({
+    params: { slug: project.slug },
+    props: {
+      project,
+      prev: i > 0 ? paged[i - 1] : null,
+      next: i < paged.length - 1 ? paged[i + 1] : null,
+    },
   }));
 }
 
-const { study } = Astro.props;
-const isLoop = study.slug === "llm-evaluation-educational-feedback";
-// The reflection finding belongs to this study only.
-const showFinding = study.slug === "learning-analytics-ai-tutoring";
+const { project: p, prev, next } = Astro.props;
+const story = p.story!;
 ---
 
-<Base title={`${study.title} | Khushi Juneja`} description={study.summary}>
-  <Banner />
+<Base title={`${p.title} | Khushi Juneja`} description={p.blurb}>
   <Nav />
 
   <main id="main">
     <article class="cs">
       <header class="cs__header">
         <div class="shell cs__header-inner">
-          <a class="cs__back" href="/#featured">
+          <a class="cs__back" href="/#work">
             <span aria-hidden="true">←</span> All work
           </a>
 
-          <div class="cs__meta">
-            <span class:list={["cs__status", `cs__status--${study.status.toLowerCase()}`]}>
-              {study.status}
-            </span>
-            {study.scale && <span class="cs__scale">{study.scale}</span>}
-          </div>
+          <p class="meta cs__kicker">
+            <span>{p.year}</span>
+            {p.kind && <span class="cs__kind">{p.kind}</span>}
+          </p>
 
-          <h1 class="cs__title">{study.title}</h1>
-          <p class="cs__summary">{study.summary}</p>
+          <h1 class="cs__title">{p.title}</h1>
+          {p.subtitle && <p class="cs__subtitle">{p.subtitle}</p>}
+          <p class="cs__intro">{story.intro}</p>
 
-          <dl class="cs__facts">
-            <div>
-              <dt>My role</dt>
-              <dd>{study.role}</dd>
-            </div>
-            <div>
-              <dt>Tools</dt>
-              <dd>{study.tools.join(" · ")}</dd>
-            </div>
-          </dl>
+          <ul class="cs__tags" aria-label="Tags">
+            {p.tags.map((t) => <li>{t}</li>)}
+          </ul>
+          {
+            p.tech && (
+              <p class="cs__tech">
+                <span>Built with</span> {p.tech.join(", ")}
+              </p>
+            )
+          }
         </div>
       </header>
 
+      <div class="shell cs__media-wrap">
+        <div class="cs__media">
+          {
+            p.image ? (
+              <img
+                src={p.image.src}
+                alt={p.image.alt}
+                width="1200"
+                height="750"
+              />
+            ) : (
+              <Placeholder placeholder={p.placeholder} title={p.title} />
+            )
+          }
+        </div>
+      </div>
+
       <div class="shell cs__body">
-        <section class="cs__section" aria-labelledby="cs-problem">
-          <h2 id="cs-problem" class="cs__h2">Problem</h2>
-          <p class="cs__prose">{study.problem}</p>
-        </section>
-
-        <section class="cs__section" aria-labelledby="cs-questions">
-          <h2 id="cs-questions" class="cs__h2">Research questions</h2>
-          <ul class="cs__list cs__list--q">
-            {study.researchQuestions.map((q) => <li>{q}</li>)}
-          </ul>
-        </section>
-
-        <section class="cs__section" aria-labelledby="cs-data">
-          <h2 id="cs-data" class="cs__h2">Data</h2>
-          <ul class="cs__list cs__list--chips">
-            {study.data.map((d) => <li>{d}</li>)}
-          </ul>
-        </section>
-
-        <section class="cs__section" aria-labelledby="cs-methods">
-          <h2 id="cs-methods" class="cs__h2">Methods</h2>
-          <ul class="cs__list cs__list--chips">
-            {study.methods.map((m) => <li>{m}</li>)}
-          </ul>
-        </section>
-
-        <section class="cs__section" aria-labelledby="cs-chain">
-          <h2 id="cs-chain" class="cs__h2">How the evidence moves</h2>
-          <EvidenceChain
-            steps={study.diagram}
-            alt={study.diagramAlt}
-            loop={isLoop}
-          />
-        </section>
+        {
+          story.sections.map((s) => (
+            <section class:list={["cs__section", s.todo && "cs__section--todo"]}>
+              <h2 class="cs__h2">
+                {s.todo && <span class="cs__todo-tag">To add</span>}
+                {s.heading}
+              </h2>
+              {s.body.map((para) => (
+                <p class="cs__prose">{para}</p>
+              ))}
+            </section>
+          ))
+        }
 
         {
-          showFinding && (
+          story.finding && (
             <section class="cs__section" aria-label="Headline finding">
-              <FindingChart />
+              <FindingChart finding={story.finding} />
             </section>
           )
         }
 
-        <section class="cs__section" aria-labelledby="cs-outcome">
-          <h2 id="cs-outcome" class="cs__h2">Outcome</h2>
-          <ul class="cs__list cs__list--prose">
-            {study.outcome.map((o) => <li>{o}</li>)}
-          </ul>
-        </section>
-
         <nav class="cs__next" aria-label="More work">
-          <a href="/#featured">← Back to all work</a>
-          <a href="/#contact">Get in touch →</a>
+          {
+            prev ? (
+              <a href={`/projects/${prev.slug}`}>← {prev.title}</a>
+            ) : (
+              <a href="/#work">← All work</a>
+            )
+          }
+          {
+            next ? (
+              <a href={`/projects/${next.slug}`}>{next.title} →</a>
+            ) : (
+              <a href="/#contact">Get in touch →</a>
+            )
+          }
         </nav>
       </div>
     </article>
@@ -122,13 +123,11 @@ const showFinding = study.slug === "learning-analytics-ai-tutoring";
 
 <style>
   .cs__header {
-    padding-block: clamp(2.5rem, 6vw, 4rem) clamp(1.75rem, 4vw, 2.5rem);
-    border-bottom: 1px solid var(--color-border);
+    padding-block: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 4vw, 2.5rem);
   }
   .cs__header-inner {
     max-width: 54rem;
   }
-
   .cs__back {
     display: inline-flex;
     align-items: center;
@@ -141,159 +140,128 @@ const showFinding = study.slug === "learning-analytics-ai-tutoring";
   .cs__back:hover {
     color: var(--color-accent);
   }
-
-  .cs__meta {
+  .cs__kicker {
     display: flex;
+    gap: 0.9rem;
     align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
     margin-top: 1.5rem;
   }
-  .cs__status {
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    padding: 0.14rem 0.55rem;
-    border-radius: 999px;
-    border: 1px solid var(--color-accent-border);
-    color: var(--color-accent);
-    background: var(--color-accent-tint);
+  .cs__kind {
+    color: var(--color-accent-strong);
   }
-  .cs__status--completed {
-    color: var(--color-ink-2);
-    background: transparent;
-    border-color: var(--color-border-strong);
-  }
-  .cs__scale {
-    font-size: 0.76rem;
-    font-weight: 600;
-    color: var(--color-muted);
-  }
-
   .cs__title {
-    margin-top: 0.85rem;
-    font-size: clamp(1.9rem, 5vw, 3.1rem);
-    line-height: 1.06;
-    letter-spacing: -0.02em;
+    margin-top: 0.7rem;
+    font-size: clamp(2.1rem, 6vw, 4rem);
+    line-height: 1;
   }
-  .cs__summary {
-    margin-top: 1.1rem;
-    font-size: clamp(1.02rem, 2vw, 1.2rem);
-    line-height: 1.6;
-    color: var(--color-ink-2);
-    max-width: 56ch;
-  }
-
-  .cs__facts {
-    margin: 1.75rem 0 0;
-    display: grid;
-    gap: 1rem;
-  }
-  @media (min-width: 640px) {
-    .cs__facts {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  .cs__facts dt {
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+  .cs__subtitle {
+    margin-top: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--color-muted);
-    margin-bottom: 0.2rem;
   }
-  .cs__facts dd {
-    margin: 0;
-    font-size: 0.92rem;
-    line-height: 1.5;
+  .cs__intro {
+    margin-top: 1.25rem;
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+    line-height: 1.55;
     color: var(--color-ink-2);
+    max-width: 52ch;
   }
-
-  .cs__body {
-    max-width: 54rem;
-    padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 7vw, 4.5rem);
-  }
-  .cs__section + .cs__section {
-    margin-top: clamp(2rem, 4.5vw, 3rem);
-  }
-
-  .cs__h2 {
-    font-size: clamp(1.25rem, 2.6vw, 1.65rem);
-    margin-bottom: 0.9rem;
-  }
-  .cs__prose {
-    font-size: 1.02rem;
-    line-height: 1.7;
-    color: var(--color-ink-2);
-    max-width: 64ch;
-  }
-
-  .cs__list {
+  .cs__tags {
     list-style: none;
-    margin: 0;
     padding: 0;
-  }
-
-  .cs__list--q {
-    display: grid;
-    gap: 0.6rem;
-    max-width: 64ch;
-  }
-  .cs__list--q li {
-    position: relative;
-    padding-left: 1.6rem;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--color-ink);
-    font-weight: 500;
-  }
-  .cs__list--q li::before {
-    content: "?";
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-family: var(--font-display);
-    font-weight: 600;
-    color: var(--color-accent);
-  }
-
-  .cs__list--chips {
+    margin: 1.5rem 0 0;
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
   }
-  .cs__list--chips li {
-    font-size: 0.88rem;
-    font-weight: 500;
+  .cs__tags li {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     color: var(--color-ink-2);
-    background: var(--color-paper);
     border: 1px solid var(--color-border-strong);
-    padding: 0.35rem 0.75rem;
-    border-radius: 8px;
+    border-radius: 999px;
+    padding: 0.28rem 0.65rem;
+    line-height: 1;
+  }
+  .cs__tech {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--color-muted);
+  }
+  .cs__tech span {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 0.4rem;
   }
 
-  .cs__list--prose {
-    display: grid;
-    gap: 0.75rem;
+  .cs__media-wrap {
+    margin-block: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .cs__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+  }
+  .cs__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cs__body {
+    max-width: 54rem;
+    padding-bottom: clamp(3rem, 7vw, 4.5rem);
+  }
+  .cs__section + .cs__section {
+    margin-top: clamp(2rem, 4.5vw, 3rem);
+  }
+  .cs__h2 {
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .cs__prose {
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: var(--color-ink-2);
     max-width: 64ch;
   }
-  .cs__list--prose li {
-    position: relative;
-    padding-left: 1.1rem;
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--color-ink-2);
+  .cs__prose + .cs__prose {
+    margin-top: 1rem;
   }
-  .cs__list--prose li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.62em;
-    width: 0.4rem;
-    height: 0.4rem;
-    border-radius: 50%;
-    background: var(--color-accent-border);
+
+  .cs__section--todo {
+    border: 1px dashed var(--color-border-strong);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    background: var(--color-surface-2);
+  }
+  .cs__section--todo .cs__prose {
+    color: var(--color-muted);
+    font-style: italic;
+  }
+  .cs__todo-tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+    background: var(--color-accent);
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
   }
 
   .cs__next {

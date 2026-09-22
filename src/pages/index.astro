@@ -1,48 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
-import Banner from "../components/Banner.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
-import StatTiles from "../components/StatTiles.astro";
-import FindingChart from "../components/FindingChart.astro";
-import FeaturedWork from "../components/FeaturedWork.astro";
-import Methods from "../components/Methods.astro";
-import ExperienceTimeline from "../components/ExperienceTimeline.astro";
-import Projects from "../components/Projects.astro";
-import Stakeholders from "../components/Stakeholders.astro";
-import Philosophy from "../components/Philosophy.astro";
-import Skills from "../components/Skills.astro";
-import Education from "../components/Education.astro";
+import ProjectList from "../components/ProjectList.astro";
 import Footer from "../components/Footer.astro";
 ---
 
 <Base>
-  <Banner />
   <Nav />
   <main id="main">
     <Hero />
-    <StatTiles />
-    <section class="section finding-section" aria-label="Headline finding">
-      <div class="shell" data-reveal>
-        <FindingChart />
-      </div>
-    </section>
-    <FeaturedWork />
-    <Methods />
-    <ExperienceTimeline />
-    <Projects />
-    <Stakeholders />
-    <Philosophy />
-    <Skills />
-    <Education />
+    <ProjectList />
+    <!-- Community, Experience, and About sections come next (stage 2). -->
   </main>
   <Footer />
 </Base>
-
-<style>
-  /* The finding sits tight under the stat tiles — part of the
-     dashboard-style first screen, not its own tall section. */
-  .finding-section {
-    padding-block: 0 clamp(2rem, 5vw, 3.5rem);
-  }
-</style>

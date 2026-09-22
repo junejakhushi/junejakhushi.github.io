@@ -1,0 +1,231 @@
+---
+// One project. Large visual (real screenshot when `image` is set,
+// otherwise a palette placeholder) beside the blurb. Cards alternate
+// image side on desktop via :nth-child, and stack image-first on
+// mobile. Only projects with a detail page are clickable.
+import type { Project } from "../data/projects";
+import Placeholder from "./Placeholder.astro";
+
+interface Props {
+  project: Project;
+}
+const { project: p } = Astro.props;
+const href = p.story ? `/projects/${p.slug}` : undefined;
+---
+
+<article class="pcard" data-reveal>
+  <div class="pcard__media">
+    {
+      href ? (
+        <a
+          href={href}
+          class="pcard__media-link"
+          aria-label={`${p.title}, read more`}
+        >
+          {p.image ? (
+            <img
+              src={p.image.src}
+              alt={p.image.alt}
+              width="1200"
+              height="750"
+              loading="lazy"
+            />
+          ) : (
+            <Placeholder placeholder={p.placeholder} title={p.title} />
+          )}
+        </a>
+      ) : p.image ? (
+        <img
+          src={p.image.src}
+          alt={p.image.alt}
+          width="1200"
+          height="750"
+          loading="lazy"
+        />
+      ) : (
+        <Placeholder placeholder={p.placeholder} title={p.title} />
+      )
+    }
+  </div>
+
+  <div class="pcard__body">
+    <p class="meta pcard__meta">
+      <span>{p.year}</span>
+      {p.kind && <span class="pcard__kind">{p.kind}</span>}
+    </p>
+
+    <h3 class="pcard__title">
+      {
+        href ? (
+          <a href={href}>{p.title}</a>
+        ) : (
+          p.title
+        )
+      }
+    </h3>
+
+    <p class="pcard__blurb">{p.blurb}</p>
+
+    <ul class="pcard__tags" aria-label="Tags">
+      {p.tags.map((t) => <li>{t}</li>)}
+    </ul>
+
+    {
+      p.tech && (
+        <p class="pcard__tech">
+          <span>Built with</span> {p.tech.join(", ")}
+        </p>
+      )
+    }
+
+    {
+      href && (
+        <a class="pcard__more" href={href}>
+          Read more <span aria-hidden="true">→</span>
+        </a>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .pcard {
+    display: grid;
+    gap: clamp(1.25rem, 4vw, 3rem);
+    align-items: center;
+  }
+  @media (min-width: 820px) {
+    .pcard {
+      grid-template-columns: 1.05fr 1fr;
+    }
+    /* alternate the image to the right on every other card */
+    .pcard:nth-child(even) .pcard__media {
+      order: 2;
+    }
+  }
+
+  .pcard__media {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+  }
+  .pcard__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .pcard__media-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  /* gentle hover: media lifts a hair, placeholder mark drifts */
+  .pcard__media-link :global(svg),
+  .pcard__media img {
+    transition: transform 0.4s var(--ease-out);
+  }
+  .pcard__media-link:hover :global(svg),
+  .pcard__media-link:hover img {
+    transform: scale(1.03);
+  }
+
+  .pcard__meta {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+  }
+  .pcard__kind {
+    color: var(--color-accent-strong);
+  }
+  .pcard__kind::before {
+    content: "";
+    display: inline-block;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    margin-right: 0.55rem;
+    vertical-align: middle;
+  }
+
+  .pcard__title {
+    font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+    line-height: 1.02;
+    margin-top: 0.7rem;
+  }
+  .pcard__title a {
+    color: var(--color-ink);
+    text-decoration: none;
+    background-image: linear-gradient(var(--color-accent), var(--color-accent));
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.3s var(--ease-out);
+  }
+  .pcard__title a:hover {
+    color: var(--color-ink);
+    background-size: 100% 2px;
+  }
+
+  .pcard__blurb {
+    margin-top: 1rem;
+    color: var(--color-ink-2);
+    font-size: 1.02rem;
+    line-height: 1.65;
+    max-width: 46ch;
+  }
+
+  .pcard__tags {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .pcard__tags li {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    padding: 0.28rem 0.65rem;
+    line-height: 1;
+  }
+
+  .pcard__tech {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--color-muted);
+  }
+  .pcard__tech span {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin-right: 0.4rem;
+  }
+
+  .pcard__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.4rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-accent-strong);
+    text-decoration: none;
+  }
+  .pcard__more span {
+    transition: transform 0.15s var(--ease-out);
+  }
+  .pcard__more:hover span {
+    transform: translateX(4px);
+  }
+</style>
