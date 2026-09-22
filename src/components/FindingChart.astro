@@ -10,15 +10,19 @@
 //
 // The same numbers are also exposed as a plain table for screen
 // readers and anyone who'd rather read the values.
-import { reflectionFinding as f } from "../data/metrics";
+import type { FindingBlock } from "../data/projects";
 
-const MAX = 100; // scale: |change| max is the ≈100% increase
+interface Props {
+  finding: FindingBlock;
+}
+const { finding: f } = Astro.props;
+
+const MAX = 100; // scale: |change| max is the ~100% increase
 const half = (v: number) => (Math.abs(v) / MAX) * 50; // % of full width
 ---
 
 <figure class="fc">
   <figcaption class="fc__head">
-    <p class="fc__eyebrow">{f.eyebrow}</p>
     <h3 class="fc__title">{f.title}</h3>
   </figcaption>
 
