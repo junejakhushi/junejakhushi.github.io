@@ -1,0 +1,26 @@
+[
+  {
+    "label": "Languages",
+    "items": ["Python", "JavaScript", "C", "R", "SQL", "HTML/CSS"]
+  },
+  {
+    "label": "Frameworks & Tools",
+    "items": ["React", "Next.js", "Node.js", "Flask", "Supabase", "Git", "Jupyter", "OpenCV", "AnyLogic", "H5P"]
+  },
+  {
+    "label": "Data & ML",
+    "items": ["pandas", "NumPy", "regression", "hierarchical / mixed-effects models", "experimental design", "A/B testing", "NLP", "LLM evaluation", "inter-rater reliability"]
+  },
+  {
+    "label": "Research Methods",
+    "items": ["mixed methods", "cognitive task analysis", "think-aloud", "survey design", "classroom observation"]
+  },
+  {
+    "label": "Design",
+    "items": ["Figma", "interaction design", "instructional design", "prototyping", "accessibility"]
+  },
+  {
+    "label": "Hardware",
+    "items": ["Raspberry Pi", "Onshape (CAD)", "VEX", "servos & motors", "sensors"]
+  }
+]

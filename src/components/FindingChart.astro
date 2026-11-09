@@ -10,7 +10,19 @@
 //
 // The same numbers are also exposed as a plain table for screen
 // readers and anyone who'd rather read the values.
-import type { FindingBlock } from "../data/projects";
+interface FindingMeasure {
+  label: string;
+  change: number;
+  display: string;
+  kind: "increase" | "decrease" | "none";
+}
+interface FindingBlock {
+  title: string;
+  measures: FindingMeasure[];
+  caption: string;
+  takeaway: string;
+  note: string;
+}
 
 interface Props {
   finding: FindingBlock;

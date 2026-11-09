@@ -1,132 +1,115 @@
 ---
-// Project detail pages, statically generated for every project that
-// has a `story`. Everything else lives as a single entry on the
-// homepage. No empty routes.
+// Project detail pages, one per Markdown file in src/content/projects.
+// The body renders the prose sections; Stack and Links come from
+// frontmatter. The OAK study also renders its diverging-bar finding.
+import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import Placeholder from "../../components/Placeholder.astro";
 import FindingChart from "../../components/FindingChart.astro";
-import { projectsWithPages } from "../../data/projects";
 
-export function getStaticPaths() {
-  const paged = projectsWithPages();
-  return paged.map((project, i) => ({
-    params: { slug: project.slug },
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects")).sort(
+    (a, b) => a.data.order - b.data.order,
+  );
+  return projects.map((entry, i) => ({
+    params: { slug: entry.id },
     props: {
-      project,
-      prev: i > 0 ? paged[i - 1] : null,
-      next: i < paged.length - 1 ? paged[i + 1] : null,
+      entry,
+      prev: i > 0 ? projects[i - 1] : null,
+      next: i < projects.length - 1 ? projects[i + 1] : null,
     },
   }));
 }
 
-const { project: p, prev, next } = Astro.props;
-const story = p.story!;
+const { entry, prev, next } = Astro.props;
+const p = entry.data;
+const { Content } = await render(entry);
 ---
 
-<Base title={`${p.title} | Khushi Juneja`} description={p.blurb}>
+<Base title={`${p.title} | Khushi Juneja`} description={p.summary}>
   <Nav />
-
   <main id="main">
     <article class="cs">
       <header class="cs__header">
-        <div class="shell cs__header-inner">
-          <a class="cs__back" href="/#work">
-            <span aria-hidden="true">←</span> All work
-          </a>
-
+        <div class="shell cs__inner">
+          <a class="cs__back" href="/#work"><span aria-hidden="true">←</span> All work</a>
           <p class="meta cs__kicker">
             <span>{p.year}</span>
-            {p.kind && <span class="cs__kind">{p.kind}</span>}
+            <span class="cs__status">{p.status}</span>
           </p>
-
           <h1 class="cs__title">{p.title}</h1>
-          {p.subtitle && <p class="cs__subtitle">{p.subtitle}</p>}
-          <p class="cs__intro">{story.intro}</p>
-
+          <p class="cs__summary">{p.summary}</p>
           <ul class="cs__tags" aria-label="Tags">
             {p.tags.map((t) => <li>{t}</li>)}
           </ul>
-          {
-            p.tech && (
-              <p class="cs__tech">
-                <span>Built with</span> {p.tech.join(", ")}
-              </p>
-            )
-          }
         </div>
       </header>
 
-      <div class="shell cs__media-wrap">
+      <div class="shell cs__inner">
         <div class="cs__media">
           {
             p.image ? (
-              <img
-                src={p.image.src}
-                alt={p.image.alt}
-                width="1200"
-                height="750"
-              />
+              <img src={p.image.src} alt={p.image.alt} width="1200" height="750" />
             ) : (
-              <Placeholder placeholder={p.placeholder} title={p.title} />
+              <Placeholder label={p.monogram ?? ""} title={p.title} />
             )
           }
         </div>
-      </div>
 
-      <div class="shell cs__body">
-        {
-          story.sections.map((s) => (
-            <section class:list={["cs__section", s.todo && "cs__section--todo"]}>
-              <h2 class="cs__h2">
-                {s.todo && <span class="cs__todo-tag">To add</span>}
-                {s.heading}
-              </h2>
-              {s.body.map((para) => (
-                <p class="cs__prose">{para}</p>
-              ))}
-            </section>
-          ))
-        }
+        <div class="cs__body">
+          <Content />
 
-        {
-          story.finding && (
-            <section class="cs__section" aria-label="Headline finding">
-              <FindingChart finding={story.finding} />
-            </section>
-          )
-        }
+          {p.finding && <FindingChart finding={p.finding} />}
+
+          {
+            p.builtWith.length > 0 && (
+              <section class="cs__section">
+                <h2>Stack</h2>
+                <ul class="cs__stack">
+                  {p.builtWith.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          {
+            p.links.length > 0 && (
+              <section class="cs__section">
+                <h2>Links</h2>
+                <ul class="cs__linklist">
+                  {p.links.map((l) => (
+                    <li>
+                      <a href={l.href} target="_blank" rel="noopener">
+                        {l.label} <span aria-hidden="true">↗</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+        </div>
 
         <nav class="cs__next" aria-label="More work">
-          {
-            prev ? (
-              <a href={`/projects/${prev.slug}`}>← {prev.title}</a>
-            ) : (
-              <a href="/#work">← All work</a>
-            )
-          }
-          {
-            next ? (
-              <a href={`/projects/${next.slug}`}>{next.title} →</a>
-            ) : (
-              <a href="/#contact">Get in touch →</a>
-            )
-          }
+          {prev ? <a href={`/projects/${prev.id}`}>← {prev.data.title}</a> : <a href="/#work">← All work</a>}
+          {next ? <a href={`/projects/${next.id}`}>{next.data.title} →</a> : <a href="/#contact">Get in touch →</a>}
         </nav>
       </div>
     </article>
   </main>
-
   <Footer />
 </Base>
 
 <style>
   .cs__header {
-    padding-block: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 4vw, 2.5rem);
+    padding-block: clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 3vw, 2rem);
   }
-  .cs__header-inner {
-    max-width: 54rem;
+  .cs__inner {
+    max-width: 52rem;
   }
   .cs__back {
     display: inline-flex;
@@ -138,48 +121,39 @@ const story = p.story!;
     text-decoration: none;
   }
   .cs__back:hover {
-    color: var(--color-accent);
+    color: var(--color-accent-strong);
   }
   .cs__kicker {
     display: flex;
     gap: 0.9rem;
-    align-items: center;
     margin-top: 1.5rem;
   }
-  .cs__kind {
+  .cs__status {
     color: var(--color-accent-strong);
   }
   .cs__title {
     margin-top: 0.7rem;
-    font-size: clamp(2.1rem, 6vw, 4rem);
+    font-size: clamp(2rem, 6vw, 3.75rem);
     line-height: 1;
   }
-  .cs__subtitle {
-    margin-top: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-  }
-  .cs__intro {
-    margin-top: 1.25rem;
-    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
-    line-height: 1.55;
+  .cs__summary {
+    margin-top: 1rem;
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    line-height: 1.5;
     color: var(--color-ink-2);
-    max-width: 52ch;
+    max-width: 48ch;
   }
   .cs__tags {
     list-style: none;
-    padding: 0;
-    margin: 1.5rem 0 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.45rem;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 1.5rem 0 0;
   }
   .cs__tags li {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-ink-2);
@@ -188,21 +162,7 @@ const story = p.story!;
     padding: 0.28rem 0.65rem;
     line-height: 1;
   }
-  .cs__tech {
-    margin-top: 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    color: var(--color-muted);
-  }
-  .cs__tech span {
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-right: 0.4rem;
-  }
 
-  .cs__media-wrap {
-    margin-block: clamp(1.5rem, 4vw, 2.5rem);
-  }
   .cs__media {
     position: relative;
     aspect-ratio: 16 / 9;
@@ -210,6 +170,7 @@ const story = p.story!;
     overflow: hidden;
     border: 1px solid var(--color-border);
     background: var(--color-surface-2);
+    margin-bottom: clamp(2rem, 5vw, 3rem);
   }
   .cs__media img {
     width: 100%;
@@ -218,50 +179,60 @@ const story = p.story!;
     display: block;
   }
 
-  .cs__body {
-    max-width: 54rem;
-    padding-bottom: clamp(3rem, 7vw, 4.5rem);
+  /* Rendered Markdown body */
+  .cs__body :global(h2) {
+    font-size: clamp(1.3rem, 2.8vw, 1.7rem);
+    margin-top: clamp(2rem, 4vw, 2.75rem);
+    margin-bottom: 0.75rem;
   }
-  .cs__section + .cs__section {
-    margin-top: clamp(2rem, 4.5vw, 3rem);
+  .cs__body :global(h2:first-child) {
+    margin-top: 0;
   }
-  .cs__h2 {
-    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
-    margin-bottom: 0.9rem;
-    display: flex;
-    align-items: baseline;
-    gap: 0.7rem;
-    flex-wrap: wrap;
-  }
-  .cs__prose {
+  .cs__body :global(p) {
     font-size: 1.05rem;
     line-height: 1.72;
     color: var(--color-ink-2);
     max-width: 64ch;
-  }
-  .cs__prose + .cs__prose {
-    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
-  .cs__section--todo {
-    border: 1px dashed var(--color-border-strong);
-    border-radius: 12px;
-    padding: 1.25rem 1.4rem;
-    background: var(--color-surface-2);
+  .cs__section {
+    margin-top: clamp(2rem, 4vw, 2.75rem);
   }
-  .cs__section--todo .cs__prose {
-    color: var(--color-muted);
-    font-style: italic;
+  .cs__section h2 {
+    font-size: clamp(1.3rem, 2.8vw, 1.7rem);
+    margin-bottom: 0.9rem;
   }
-  .cs__todo-tag {
+  .cs__stack {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+  }
+  .cs__stack li {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-accent-ink);
-    background: var(--color-accent);
-    padding: 0.2rem 0.5rem;
-    border-radius: 999px;
+    font-size: 0.78rem;
+    color: var(--color-ink-2);
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.35rem 0.7rem;
+  }
+  .cs__linklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .cs__linklist a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .cs__linklist a:hover {
+    text-decoration: underline;
   }
 
   .cs__next {
@@ -274,7 +245,7 @@ const story = p.story!;
     flex-wrap: wrap;
   }
   .cs__next a {
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
   }

@@ -1,7 +1,8 @@
 ---
-// Targeted resume link. Path + enable flag live in src/data/site.ts.
-// ⚠️ Requires public/Khushi_Juneja_Data_Research_Resume.pdf to exist.
-import { site } from "../data/site";
+// Resume link. Path and enable flag live in src/data/site.json.
+// Hidden until the PDF exists at public/Khushi_Juneja_Resume.pdf and
+// resume.enabled is set to true.
+import site from "../data/site.json";
 
 interface Props {
   variant?: "solid" | "ghost";
