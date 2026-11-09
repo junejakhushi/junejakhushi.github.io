@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { profile } from "../data/profile";
+import site from "../data/site.json";
 
 interface Props {
   title?: string;
@@ -10,7 +10,7 @@ interface Props {
 const {
   title = "Khushi Juneja",
   description =
-    "Khushi Juneja builds apps, games, and the occasional research study at Carnegie Mellon. Operations research and HCI, graduating 2028.",
+    "Khushi Juneja builds software, runs research, and designs things people use. Operations Research & Statistics and HCI at Carnegie Mellon, graduating 2028.",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -20,12 +20,21 @@ const ogImage = new URL("/og.png", Astro.site).href;
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: profile.name,
-  url: profile.links.site,
-  email: `mailto:${profile.email}`,
+  name: site.name,
+  url: "https://junejakhushi.github.io",
+  email: `mailto:${site.email}`,
   jobTitle: "Builder and researcher",
   description,
-  knowsAbout: profile.knowsAbout,
+  knowsAbout: [
+    "Software Engineering",
+    "Artificial Intelligence",
+    "LLM Evaluation",
+    "Human-Computer Interaction",
+    "Operations Research",
+    "Statistics",
+    "Game Design",
+    "Physical Computing",
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Pittsburgh",
@@ -36,8 +45,8 @@ const personSchema = {
     "@type": "CollegeOrUniversity",
     name: "Carnegie Mellon University",
   },
-  knowsLanguage: profile.languages.map((l) => l.name),
-  sameAs: [profile.links.linkedin, profile.links.github],
+  knowsLanguage: ["English", "Hindi", "German"],
+  sameAs: [site.links.linkedin, site.links.github],
 };
 ---
 
@@ -70,15 +79,15 @@ const personSchema = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="author" content={profile.name} />
+    <meta name="author" content={site.name} />
     <meta
       name="theme-color"
-      content="#faf8f4"
+      content="#faf9f6"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#141310"
+      content="#111110"
       media="(prefers-color-scheme: dark)"
     />
 
@@ -90,7 +99,7 @@ const personSchema = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:site_name" content={site.name} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />

@@ -1,36 +1,28 @@
 ---
-// About: a few short paragraphs in her voice, with a compact
-// education block and the named toolbox alongside.
-import { about } from "../data/about";
-import { education as ed } from "../data/education";
+// About: two short paragraphs, then Education. All copy from site.json.
+import site from "../data/site.json";
+const ed = site.education;
 ---
 
 <section class="about section" id="about" aria-labelledby="about-heading">
   <div class="shell about__grid">
-    <div class="about__prose" data-reveal>
+    <div class="about__prose">
       <p class="eyebrow">About</p>
-      <h2 id="about-heading" class="about__title">A bit more</h2>
-      {about.paragraphs.map((p) => <p class="about__p">{p}</p>)}
+      <h2 id="about-heading" class="about__title">A bit about me</h2>
+      {site.about.map((p) => <p class="about__p">{p}</p>)}
     </div>
 
-    <aside class="about__side" data-reveal>
-      <div class="about__block">
-        <h3 class="about__label">Education</h3>
-        <p class="about__school">{ed.school}</p>
-        <p class="about__edmeta">{ed.location} · {ed.expected}</p>
-        <ul class="about__degrees">
-          <li>{ed.degree}</li>
-          <li>Additional major in {ed.additionalMajor}</li>
-          <li>Minors in {ed.minors.join(" and ")}</li>
-        </ul>
-      </div>
-
-      <div class="about__block">
-        <h3 class="about__label">Tools I reach for</h3>
-        <ul class="about__tools">
-          {about.toolbox.map((t) => <li>{t}</li>)}
-        </ul>
-      </div>
+    <aside class="about__edu" aria-label="Education">
+      <h3 class="about__label">Education</h3>
+      <p class="about__school">{ed.school}</p>
+      <p class="about__edmeta">{ed.location} · {ed.dates}</p>
+      <ul class="about__degrees">
+        <li>{ed.degree}</li>
+        <li>Additional major in {ed.additionalMajor}</li>
+        <li>Minors in {ed.minors.join(" and ")}</li>
+        <li>{ed.honors}</li>
+      </ul>
+      <p class="about__langs">{site.spokenLanguages}</p>
     </aside>
   </div>
 </section>
@@ -43,53 +35,41 @@ import { education as ed } from "../data/education";
   }
   @media (min-width: 860px) {
     .about__grid {
-      grid-template-columns: 1.4fr 1fr;
+      grid-template-columns: 1.5fr 1fr;
     }
   }
 
   .about__title {
     font-size: var(--text-h2);
-    margin-top: 0.7rem;
-    margin-bottom: 1.5rem;
+    margin-top: 0.6rem;
+    margin-bottom: 1.4rem;
   }
   .about__p {
     font-size: 1.08rem;
     line-height: 1.72;
     color: var(--color-ink-2);
-    max-width: 56ch;
+    max-width: 58ch;
   }
   .about__p + .about__p {
     margin-top: 1.15rem;
   }
 
-  .about__side {
-    display: grid;
-    gap: 2rem;
-    position: sticky;
-    top: 6rem;
-  }
-  @media (max-width: 859px) {
-    .about__side {
-      position: static;
-    }
-  }
-
-  .about__block {
+  .about__edu {
     border-top: 2px solid var(--color-ink);
     padding-top: 1rem;
   }
   .about__label {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-ink);
   }
   .about__school {
     margin-top: 0.9rem;
     font-family: var(--font-display);
-    font-size: 1.25rem;
+    font-size: 1.3rem;
+    color: var(--color-ink);
   }
   .about__edmeta {
     margin-top: 0.25rem;
@@ -120,23 +100,9 @@ import { education as ed } from "../data/education";
     border-radius: 50%;
     background: var(--color-accent);
   }
-
-  .about__tools {
-    list-style: none;
-    margin: 0.9rem 0 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-  }
-  .about__tools li {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.03em;
-    color: var(--color-ink-2);
-    border: 1px solid var(--color-border-strong);
-    border-radius: 6px;
-    padding: 0.3rem 0.6rem;
-    line-height: 1;
+  .about__langs {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
   }
 </style>
