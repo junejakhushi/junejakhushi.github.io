@@ -1,19 +1,12 @@
 ---
-title: Turning a classroom into data
+title: Classroom observation coding
 year: 2025
 status: Research
 order: 31
-summary: An observation coding scheme that makes classroom teaching analyzable without flattening it.
+summary: A coding scheme that turns class observations into data.
 categories: ["Research & Data"]
-tags: ["Observation", "Mixed Methods"]
-builtWith: []
-monogram: CL
+builtWith: ["Observation coding"]
+what: A coding scheme that turns classroom observation into quantitative instructional data, at the Eberly Center.
+how: Structured observations encoded to keep context while staying analyzable.
+result: Applied across courses serving 200+ students.
 ---
-
-## Overview
-
-A coding scheme, built at the Eberly Center, that turns open-ended classroom observation into quantitative instructional data.
-
-## What I built
-
-Structured observations across courses serving 200+ students, encoded with a scheme designed to keep the context that made an observation worth writing down while still making it analyzable.

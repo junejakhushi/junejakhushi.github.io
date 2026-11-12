@@ -3,17 +3,10 @@ title: Samvaad
 year: 2024
 status: Shipped
 order: 21
-summary: A card game designed to get strangers into real conversation, playtested at CMU.
-categories: ["Games & Interaction"]
-tags: ["Game Design", "Social"]
+summary: A card game that gets strangers talking.
+categories: ["Games"]
 builtWith: ["Paper prototyping"]
-monogram: Sv
+what: A card game designed to get strangers into real conversation.
+how: A deck and a set of rules tuned through playtests.
+result: Playtested with groups at CMU.
 ---
-
-## Overview
-
-A card game designed to get strangers into real conversation, playtested at CMU.
-
-## What I built
-
-A deck and a set of rules tuned through repeated playtests, so a single round can move a table from small talk to something that actually connects people.

@@ -1,255 +1,82 @@
 ---
-// Project detail pages, one per Markdown file in src/content/projects.
-// The body renders the prose sections; Stack and Links come from
-// frontmatter. The OAK study also renders its diverging-bar finding.
-import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
-import Footer from "../../components/Footer.astro";
-import Placeholder from "../../components/Placeholder.astro";
-import FindingChart from "../../components/FindingChart.astro";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const projects = (await getCollection("projects")).sort(
-    (a, b) => a.data.order - b.data.order,
-  );
-  return projects.map((entry, i) => ({
-    params: { slug: entry.id },
-    props: {
-      entry,
-      prev: i > 0 ? projects[i - 1] : null,
-      next: i < projects.length - 1 ? projects[i + 1] : null,
-    },
-  }));
+  const projects = await getCollection("projects");
+  return projects.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
-const { entry, prev, next } = Astro.props;
+const { entry } = Astro.props;
 const p = entry.data;
-const { Content } = await render(entry);
 ---
 
 <Base title={`${p.title} | Khushi Juneja`} description={p.summary}>
   <Nav />
-  <main id="main">
-    <article class="cs">
-      <header class="cs__header">
-        <div class="shell cs__inner">
-          <a class="cs__back" href="/#work"><span aria-hidden="true">←</span> All work</a>
-          <p class="meta cs__kicker">
-            <span>{p.year}</span>
-            <span class="cs__status">{p.status}</span>
+  <main class="wrap">
+    <article class="detail">
+      <a class="back" href="/#projects">← Projects</a>
+      <h1>{p.title}</h1>
+      <p class="detail__year">{p.year} · {p.status}</p>
+
+      {
+        p.image && (
+          <p class="detail__section">
+            <img src={p.image.src} alt={p.image.alt} />
           </p>
-          <h1 class="cs__title">{p.title}</h1>
-          <p class="cs__summary">{p.summary}</p>
-          <ul class="cs__tags" aria-label="Tags">
-            {p.tags.map((t) => <li>{t}</li>)}
-          </ul>
-        </div>
-      </header>
+        )
+      }
 
-      <div class="shell cs__inner">
-        <div class="cs__media">
-          {
-            p.image ? (
-              <img src={p.image.src} alt={p.image.alt} width="1200" height="750" />
-            ) : (
-              <Placeholder label={p.monogram ?? ""} title={p.title} />
-            )
-          }
-        </div>
+      <section class="detail__section">
+        <h2>What</h2>
+        <p>{p.what}</p>
+      </section>
 
-        <div class="cs__body">
-          <Content />
+      {
+        p.how && (
+          <section class="detail__section">
+            <h2>How</h2>
+            <p>{p.how}</p>
+          </section>
+        )
+      }
 
-          {p.finding && <FindingChart finding={p.finding} />}
+      {
+        p.result && (
+          <section class="detail__section">
+            <h2>Result</h2>
+            <p>{p.result}</p>
+          </section>
+        )
+      }
 
-          {
-            p.builtWith.length > 0 && (
-              <section class="cs__section">
-                <h2>Stack</h2>
-                <ul class="cs__stack">
-                  {p.builtWith.map((t) => (
-                    <li>{t}</li>
-                  ))}
-                </ul>
-              </section>
-            )
-          }
+      {
+        p.builtWith.length > 0 && (
+          <section class="detail__section">
+            <h2>Stack</h2>
+            <p class="muted">{p.builtWith.join(", ")}</p>
+          </section>
+        )
+      }
 
-          {
-            p.links.length > 0 && (
-              <section class="cs__section">
-                <h2>Links</h2>
-                <ul class="cs__linklist">
-                  {p.links.map((l) => (
-                    <li>
-                      <a href={l.href} target="_blank" rel="noopener">
-                        {l.label} <span aria-hidden="true">↗</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )
-          }
-        </div>
+      {
+        p.links.length > 0 && (
+          <section class="detail__section">
+            <h2>Links</h2>
+            <p>
+              {p.links.map((l, i) => (
+                <>
+                  {i > 0 && " · "}
+                  <a href={l.href} target="_blank" rel="noopener">{l.label}</a>
+                </>
+              ))}
+            </p>
+          </section>
+        )
+      }
 
-        <nav class="cs__next" aria-label="More work">
-          {prev ? <a href={`/projects/${prev.id}`}>← {prev.data.title}</a> : <a href="/#work">← All work</a>}
-          {next ? <a href={`/projects/${next.id}`}>{next.data.title} →</a> : <a href="/#contact">Get in touch →</a>}
-        </nav>
-      </div>
+      <p class="detail__section"><a class="back" href="/#projects">← Back to projects</a></p>
     </article>
   </main>
-  <Footer />
 </Base>
-
-<style>
-  .cs__header {
-    padding-block: clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 3vw, 2rem);
-  }
-  .cs__inner {
-    max-width: 52rem;
-  }
-  .cs__back {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.86rem;
-    font-weight: 600;
-    color: var(--color-muted);
-    text-decoration: none;
-  }
-  .cs__back:hover {
-    color: var(--color-accent-strong);
-  }
-  .cs__kicker {
-    display: flex;
-    gap: 0.9rem;
-    margin-top: 1.5rem;
-  }
-  .cs__status {
-    color: var(--color-accent-strong);
-  }
-  .cs__title {
-    margin-top: 0.7rem;
-    font-size: clamp(2rem, 6vw, 3.75rem);
-    line-height: 1;
-  }
-  .cs__summary {
-    margin-top: 1rem;
-    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
-    line-height: 1.5;
-    color: var(--color-ink-2);
-    max-width: 48ch;
-  }
-  .cs__tags {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    padding: 0;
-    margin: 1.5rem 0 0;
-  }
-  .cs__tags li {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--color-ink-2);
-    border: 1px solid var(--color-border-strong);
-    border-radius: 999px;
-    padding: 0.28rem 0.65rem;
-    line-height: 1;
-  }
-
-  .cs__media {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface-2);
-    margin-bottom: clamp(2rem, 5vw, 3rem);
-  }
-  .cs__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* Rendered Markdown body */
-  .cs__body :global(h2) {
-    font-size: clamp(1.3rem, 2.8vw, 1.7rem);
-    margin-top: clamp(2rem, 4vw, 2.75rem);
-    margin-bottom: 0.75rem;
-  }
-  .cs__body :global(h2:first-child) {
-    margin-top: 0;
-  }
-  .cs__body :global(p) {
-    font-size: 1.05rem;
-    line-height: 1.72;
-    color: var(--color-ink-2);
-    max-width: 64ch;
-    margin-bottom: 1rem;
-  }
-
-  .cs__section {
-    margin-top: clamp(2rem, 4vw, 2.75rem);
-  }
-  .cs__section h2 {
-    font-size: clamp(1.3rem, 2.8vw, 1.7rem);
-    margin-bottom: 0.9rem;
-  }
-  .cs__stack {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0;
-    margin: 0;
-  }
-  .cs__stack li {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--color-ink-2);
-    background: var(--color-surface-2);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 0.35rem 0.7rem;
-  }
-  .cs__linklist {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 0.5rem;
-  }
-  .cs__linklist a {
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .cs__linklist a:hover {
-    text-decoration: underline;
-  }
-
-  .cs__next {
-    margin-top: clamp(2.5rem, 6vw, 3.5rem);
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .cs__next a {
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .cs__next a:hover {
-    text-decoration: underline;
-  }
-</style>

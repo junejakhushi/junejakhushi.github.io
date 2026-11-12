@@ -3,17 +3,10 @@ title: Simulating school funding
 year: 2024
 status: Research
 order: 32
-summary: An AnyLogic discrete-event simulation of school resource allocation.
+summary: A simulation of how schools allocate resources.
 categories: ["Research & Data"]
-tags: ["Simulation", "Operations Research"]
 builtWith: ["AnyLogic"]
-monogram: SF
+what: A discrete-event simulation of how a school allocates its resources, in AnyLogic.
+how: A model used to test where funding changes actually land.
+result: Lets you try an intervention on the model before trying it on real students.
 ---
-
-## Overview
-
-A discrete-event simulation, in AnyLogic, of how a school allocates its resources.
-
-## What I built
-
-A model of school resource allocation used to test where funding changes actually land, so you can try an intervention on the model before anyone tries it on real students.

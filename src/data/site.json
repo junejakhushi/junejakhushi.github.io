@@ -1,22 +1,14 @@
 {
   "name": "Khushi Juneja",
+  "tagline": "Math (Operations Research & Statistics) and HCI at Carnegie Mellon",
   "location": "Pittsburgh, PA",
-  "positioning": "Math (Operations Research & Statistics) and HCI at Carnegie Mellon. I build software, run research, and design things people use.",
+  "availability": "Open to Summer 2027 internships",
   "currently": "Interning on CMU's NSF Future of Work project, TA'ing precalculus, and building a trashbot.",
   "email": "kjuneja@andrew.cmu.edu",
   "links": {
     "linkedin": "https://www.linkedin.com/in/kj3010/",
     "github": "https://github.com/junejakhushi"
   },
-  "resume": {
-    "enabled": false,
-    "path": "/Khushi_Juneja_Resume.pdf",
-    "label": "Resume (PDF)"
-  },
-  "about": [
-    "I am a builder and a researcher. I make software, games, and hardware, and most of my research has been in learning-science labs where the job is measuring whether a thing actually worked.",
-    "I care about AI systems and how you evaluate them, human-computer interaction, operations research and statistics, and physical computing."
-  ],
   "education": {
     "school": "Carnegie Mellon University",
     "location": "Pittsburgh, PA",
@@ -25,16 +17,8 @@
     "additionalMajor": "Human-Computer Interaction",
     "minors": ["Robotics", "Design for Learning"],
     "honors": "Dean's List with High Honors",
-    "coursework": [
-      "10-601 Machine Learning",
-      "11-637 Computational Data Science",
-      "36-402 Advanced Data Analysis",
-      "36-410 Probability Modelling",
-      "36-471 Time Series",
-      "21-292 Operations Research",
-      "15-213 Computer Systems",
-      "70-469 End-to-End Business Analytics"
-    ]
+    "coursework": "10-601 Machine Learning, 11-637 Computational Data Science, 36-402 Advanced Data Analysis, 36-410 Probability Modelling, 36-471 Time Series, 21-292 Operations Research, 15-213 Computer Systems, 70-469 End-to-End Business Analytics",
+    "highSchool": "TODO: high school name, location, and years"
   },
   "spokenLanguages": "English and Hindi (fluent), German (intermediate)"
 }
