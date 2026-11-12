@@ -1,7 +1,6 @@
 ---
-// Experience: reverse-chronological timeline. Each role shows a
-// one-line summary and expands to 2 to 3 bullets. Order comes from
-// the JSON array.
+// Experience: reverse-chronological list. Role, org, dates, a one-line
+// summary, and a muted Stack line. Order comes from the JSON array.
 import experience from "../data/experience.json";
 ---
 
@@ -16,24 +15,15 @@ import experience from "../data/experience.json";
       {
         experience.map((job) => (
           <li class="exp__item">
-            <details class="exp__d">
-              <summary class="exp__summary">
-                <span class="exp__text">
-                  <span class="exp__role">{job.role}</span>
-                  <span class="exp__org">{job.org}</span>
-                  <span class="exp__line">{job.summary}</span>
-                </span>
-                <span class="exp__right">
-                  <time class="exp__dates">{job.dates}</time>
-                  <span class="exp__chev" aria-hidden="true" />
-                </span>
-              </summary>
-              <ul class="exp__bullets">
-                {job.bullets.map((b) => (
-                  <li>{b}</li>
-                ))}
-              </ul>
-            </details>
+            <div class="exp__top">
+              <span class="exp__role">{job.role}</span>
+              <time class="exp__dates">{job.dates}</time>
+            </div>
+            <p class="exp__org">{job.org}</p>
+            <p class="exp__line">{job.summary}</p>
+            <p class="exp__stack">
+              <span class="exp__stack-label">Stack:</span> {job.stack}
+            </p>
           </li>
         ))
       }
@@ -57,34 +47,15 @@ import experience from "../data/experience.json";
     border-top: 1px solid var(--color-border);
   }
   .exp__item {
+    padding-block: clamp(1.1rem, 2.5vw, 1.6rem);
     border-bottom: 1px solid var(--color-border);
   }
 
-  .exp__d {
-    width: 100%;
-  }
-  .exp__summary {
+  .exp__top {
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
     align-items: baseline;
-    padding-block: clamp(1.1rem, 2.5vw, 1.6rem);
-    cursor: pointer;
-    list-style: none;
-  }
-  .exp__summary::-webkit-details-marker {
-    display: none;
-  }
-  .exp__summary:focus-visible {
-    outline: 2.5px solid var(--color-accent);
-    outline-offset: 3px;
-    border-radius: 6px;
-  }
-
-  .exp__text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
   }
   .exp__role {
     font-size: 1.15rem;
@@ -92,68 +63,47 @@ import experience from "../data/experience.json";
     letter-spacing: -0.01em;
     color: var(--color-ink);
   }
-  .exp__org {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-  }
-  .exp__line {
-    margin-top: 0.3rem;
-    font-size: 0.95rem;
-    color: var(--color-ink-2);
-    line-height: 1.5;
-    max-width: 60ch;
-  }
-
-  .exp__right {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    flex-shrink: 0;
-  }
   .exp__dates {
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.04em;
     color: var(--color-muted);
     white-space: nowrap;
+    flex-shrink: 0;
   }
-  .exp__chev {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-right: 1.75px solid var(--color-muted);
-    border-bottom: 1.75px solid var(--color-muted);
-    transform: translateY(-2px) rotate(45deg);
-    transition: transform 0.18s var(--ease-out);
+  .exp__org {
+    margin-top: 0.2rem;
+    font-size: 0.9rem;
+    color: var(--color-muted);
   }
-  .exp__d[open] .exp__chev {
-    transform: translateY(2px) rotate(225deg);
-  }
-  .exp__summary:hover .exp__chev {
-    border-color: var(--color-accent);
-  }
-
-  .exp__bullets {
-    margin: 0 0 clamp(1.1rem, 2.5vw, 1.6rem);
-    padding-left: 1.1rem;
-    display: grid;
-    gap: 0.5rem;
-    max-width: 68ch;
-  }
-  .exp__bullets li {
-    font-size: 0.95rem;
-    line-height: 1.6;
+  .exp__line {
+    margin-top: 0.55rem;
+    font-size: 0.97rem;
+    line-height: 1.55;
     color: var(--color-ink-2);
+    max-width: 66ch;
   }
-  .exp__bullets li::marker {
-    color: var(--color-accent);
+  .exp__stack {
+    margin-top: 0.55rem;
+    font-size: 0.82rem;
+    color: var(--color-muted);
+    max-width: 66ch;
+  }
+  .exp__stack-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    margin-right: 0.3rem;
   }
 
   @media (max-width: 560px) {
-    .exp__summary {
+    .exp__top {
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.3rem;
     }
-    .exp__right {
+    .exp__dates {
       order: -1;
     }
   }

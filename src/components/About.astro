@@ -22,6 +22,10 @@ const ed = site.education;
         <li>Minors in {ed.minors.join(" and ")}</li>
         <li>{ed.honors}</li>
       </ul>
+      <p class="about__cw">
+        <span class="about__cw-label">Relevant coursework</span>
+        {ed.coursework.join(", ")}
+      </p>
       <p class="about__langs">{site.spokenLanguages}</p>
     </aside>
   </div>
@@ -99,6 +103,21 @@ const ed = site.education;
     height: 0.35rem;
     border-radius: 50%;
     background: var(--color-accent);
+  }
+  .about__cw {
+    margin-top: 1.25rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+  .about__cw-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    margin-bottom: 0.3rem;
   }
   .about__langs {
     margin-top: 1.25rem;

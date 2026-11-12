@@ -1,83 +1,65 @@
 [
   {
-    "role": "Research & Development Intern",
-    "org": "Personalized Learning & Scalable Tutoring Solutions (PLUS), CMU",
-    "dates": "May 2026 – Present",
-    "summary": "Building and stress-testing the evaluation layer for an AI tutoring system.",
-    "bullets": [
-      "Measured human and LLM annotation agreement with Cohen's kappa and Krippendorff's alpha, down to item-level disagreement analysis.",
-      "Designed an event-mapping schema that aligns multimodal tutoring transcripts with clickstream logs, validated against video.",
-      "Built the gold-standard benchmark for an LLM dialogue-act annotation system, and ran adversarial QA on AI-generated feedback in training lessons."
-    ]
+    "role": "Learning Engineering Intern, Future of Work (NSF)",
+    "org": "Carnegie Mellon University, Heinz College",
+    "dates": "Sep 2026 – Present",
+    "summary": "Mining tutor log data to find where learners stall, and shipping 3 intelligent tutors for CCAC IT and cybersecurity courses.",
+    "stack": "Python, SQL, log/clickstream analysis, CTAT/TutorShop"
   },
   {
     "role": "Teaching Assistant, Precalculus",
     "org": "Carnegie Mellon University",
-    "dates": "January 2026 – Present",
-    "summary": "Teaching precalculus and building the tooling around the course.",
-    "bullets": [
-      "Built an interactive H5P and Edpuzzle course layer with embedded checkpoints and misconception probes.",
-      "Built an instructor dashboard in Next.js and Supabase, drawing on Canvas and Gradescope data.",
-      "Built a course-grounded LLM tutor that diagnoses missing prerequisites."
-    ]
+    "dates": "Jan 2026 – Present",
+    "summary": "Teaching precalculus and building the tooling around the course: interactive checkpoints, an instructor dashboard, and a course-grounded tutor.",
+    "stack": "Next.js, Supabase, H5P, Edpuzzle"
+  },
+  {
+    "role": "Research & Development Intern",
+    "org": "Personalized Learning & Scalable Tutoring Solutions (PLUS), CMU",
+    "dates": "May 2026 – Sep 2026",
+    "summary": "Built the evaluation layer for an AI tutoring system: human vs. LLM annotation agreement, transcript-to-clickstream alignment, and a gold-standard benchmark.",
+    "stack": "Python, LLM evaluation, Cohen's kappa, Krippendorff's alpha"
   },
   {
     "role": "Software Engineering Intern",
     "org": "Decimal Point (McLearn Lab, CMU)",
-    "dates": "June 2026 – September 2026",
-    "summary": "Shipped a reflection intervention into a live math-learning game.",
-    "bullets": [
-      "Implemented a first-attempt reflection intervention in a game built on a cognitive tutor platform.",
-      "Intercepted feedback rendering at the component level in an unfamiliar JavaScript codebase.",
-      "Preserved research-log integrity for a live study."
-    ]
+    "dates": "Jun 2026 – Aug 2026",
+    "summary": "Shipped a reflection intervention into a live math-learning game for a classroom study, without breaking research logging.",
+    "stack": "JavaScript, cognitive tutor platform"
   },
   {
     "role": "Research Assistant",
     "org": "Optimized Algorithms and Knowledge (OAK) Lab, CMU",
-    "dates": "January 2026 – July 2026",
-    "summary": "Analyzed what a reflection step actually does to how students learn from an AI tutor.",
-    "bullets": [
-      "Found that reflection roughly doubled time on feedback and cut practice iterations about 40%, with no performance gain.",
-      "Built an NLP pipeline scoring reflection depth, self-explanation, and error diagnosis against a human-labeled benchmark, with structured JSON output."
-    ]
+    "dates": "Jan 2026 – Jul 2026",
+    "summary": "Analyzed log data from an AI-tutor experiment (reflection ~2x'd time on feedback, cut practice ~40%, no performance gain) and built an NLP pipeline to score open-ended responses.",
+    "stack": "Python, NLP, R"
   },
   {
     "role": "Student Partner",
     "org": "Eberly Center for Teaching Excellence & Educational Innovation, CMU",
-    "dates": "August 2025 – May 2026",
-    "summary": "Turned classroom observation into quantitative instructional data.",
-    "bullets": [
-      "Ran structured observations across courses serving 200+ students, using a coding scheme that converts them into analyzable instructional data."
-    ]
+    "dates": "Aug 2025 – May 2026",
+    "summary": "Turned structured classroom observations across courses serving 200+ students into quantitative instructional data.",
+    "stack": "Structured observation, data coding"
   },
   {
     "role": "Strategy & Impact Intern",
     "org": "The Unifly Collective (education equity nonprofit)",
-    "dates": "June 2025 – August 2025",
-    "summary": "Ran a fundraising fellowship and automated the operations behind it.",
-    "bullets": [
-      "Designed and ran a pan-India fundraising fellowship that raised $5,000+ in six weeks.",
-      "Automated donor and stakeholder operations, cutting admin work about 30%."
-    ]
+    "dates": "Jun 2025 – Aug 2025",
+    "summary": "Ran a pan-India fundraising fellowship that raised $5,000+ in six weeks, and automated donor and stakeholder operations (~30% less admin work).",
+    "stack": "Operations automation"
   },
   {
     "role": "Software Engineering Intern",
-    "org": "Vinsol Pvt. Ltd., New Delhi",
-    "dates": "May 2025 – July 2025",
-    "summary": "Shipped accessible onboarding UI and the research behind it.",
-    "bullets": [
-      "Shipped accessible React components for an internal onboarding platform; support queries fell about 45%.",
-      "Ran user interviews and defined requirements and success metrics."
-    ]
+    "org": "Vinsol | STADIUM",
+    "dates": "May 2025 – Jul 2025",
+    "summary": "Shipped accessible React components for an internal onboarding platform, cutting support queries ~45%, and defined pre/post success metrics.",
+    "stack": "React, accessibility, user research"
   },
   {
     "role": "Data Analysis Research Assistant",
     "org": "OH! Lab, HCII, CMU",
-    "dates": "January 2025 – May 2025",
-    "summary": "Modeled multilingual STEM learning in low-resource settings.",
-    "bullets": [
-      "Fit hierarchical models combining interview codes with assessments to study multilingual STEM learning in low-literacy, low-tech settings."
-    ]
+    "dates": "Jan 2025 – May 2025",
+    "summary": "Fit hierarchical models combining interview codes with assessment data to study multilingual STEM learning in low-literacy, low-tech settings.",
+    "stack": "R, hierarchical models"
   }
 ]

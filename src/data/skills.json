@@ -1,15 +1,15 @@
 [
   {
     "label": "Languages",
-    "items": ["Python", "JavaScript", "C", "R", "SQL", "HTML/CSS"]
+    "items": ["Python", "JavaScript", "TypeScript", "C", "R", "SQL", "HTML/CSS"]
   },
   {
     "label": "Frameworks & Tools",
-    "items": ["React", "Next.js", "Node.js", "Flask", "Supabase", "Git", "Jupyter", "OpenCV", "AnyLogic", "H5P"]
+    "items": ["React", "Vue.js", "Next.js", "Node.js", "Flask", "Supabase", "Git", "Jupyter", "OpenCV", "AnyLogic", "H5P", "CTAT/TutorShop"]
   },
   {
     "label": "Data & ML",
-    "items": ["pandas", "NumPy", "regression", "hierarchical / mixed-effects models", "experimental design", "A/B testing", "NLP", "LLM evaluation", "inter-rater reliability"]
+    "items": ["pandas", "NumPy", "regression", "hierarchical / mixed-effects models", "experimental design", "A/B testing", "NLP", "LLM evaluation", "inter-rater reliability", "Cohen's kappa", "Krippendorff's alpha", "clickstream/log analysis", "event schema design"]
   },
   {
     "label": "Research Methods",
@@ -18,6 +18,10 @@
   {
     "label": "Design",
     "items": ["Figma", "interaction design", "instructional design", "prototyping", "accessibility"]
+  },
+  {
+    "label": "Product",
+    "items": ["product analytics"]
   },
   {
     "label": "Hardware",
