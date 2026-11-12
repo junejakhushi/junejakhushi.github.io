@@ -1,0 +1,478 @@
+/* ============================================================
+   Khushi Juneja - personal site
+   One stylesheet. Black on white, one grey, thin grey lines.
+   Two text sizes, one heading size. System fonts. No animation.
+   ============================================================ */
+
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #666666;
+  --line: #dddddd;
+  --focus: #1a53d0;
+  --maxw: 760px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  --text: 1rem; /* 16px body */
+  --text-sm: 0.875rem; /* 14px secondary */
+  --heading: 1.375rem; /* one size for all headings */
+}
+
+:root[data-theme="dark"] {
+  --bg: #111111;
+  --fg: #ffffff;
+  --muted: #a0a0a0;
+  --line: #333333;
+  --focus: #8db1ff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: var(--text);
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+h1,
+h2,
+h3 {
+  font-size: var(--heading);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+small,
+.small {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.nav__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  height: 3.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.nav__name {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--fg);
+}
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.nav__links {
+  display: flex;
+  gap: 0.25rem;
+}
+.nav__links a {
+  text-decoration: none;
+  color: var(--muted);
+  padding: 0.35rem 0.5rem;
+  border-radius: 3px;
+  font-size: var(--text-sm);
+}
+.nav__links a:hover {
+  color: var(--fg);
+}
+.nav__links a[aria-current="true"] {
+  color: var(--fg);
+  font-weight: 700;
+}
+.nav__toggle,
+.nav__menu-btn {
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+.nav__toggle:hover,
+.nav__menu-btn:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+.nav__menu-btn {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .nav__links {
+    display: none;
+    position: absolute;
+    top: 3.25rem;
+    right: 0;
+    left: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 0.5rem 1.25rem;
+  }
+  .nav__links.open {
+    display: flex;
+  }
+  .nav__links a {
+    padding: 0.6rem 0;
+  }
+  .nav__menu-btn {
+    display: inline-block;
+  }
+}
+
+/* ---------- Sections ---------- */
+main {
+  padding: 2.5rem 0 4rem;
+}
+section {
+  margin-top: 3rem;
+}
+section:first-child {
+  margin-top: 0;
+}
+.section-title {
+  margin-bottom: 1rem;
+}
+
+/* ---------- Header ---------- */
+.header h1 {
+  font-size: 1.75rem;
+}
+.header__line {
+  margin-top: 0.5rem;
+}
+.header__meta {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.header__now {
+  margin-top: 0.75rem;
+}
+.header__now b {
+  font-weight: 700;
+}
+
+/* ---------- Buttons ---------- */
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.btn {
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--fg);
+  border-radius: 3px;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.3;
+}
+.btn:hover,
+.btn:focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+}
+.btn--primary {
+  background: var(--fg);
+  color: var(--bg);
+}
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: var(--bg);
+  color: var(--fg);
+}
+.copied {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  align-self: center;
+}
+
+/* ---------- Experience ---------- */
+.exp {
+  border-top: 1px solid var(--line);
+}
+.exp__toggle-all {
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-bottom: 0.75rem;
+}
+.exp__toggle-all:hover {
+  color: var(--fg);
+}
+.role {
+  border-bottom: 1px solid var(--line);
+}
+.role > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.9rem 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.15rem 1rem;
+  align-items: baseline;
+}
+.role > summary::-webkit-details-marker {
+  display: none;
+}
+.role__title {
+  font-weight: 700;
+}
+.role__org {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  grid-column: 1;
+}
+.role__dates {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  grid-column: 2;
+  grid-row: 1;
+  white-space: nowrap;
+}
+.role__body {
+  padding: 0 0 1rem;
+}
+.role__body p {
+  margin-top: 0.4rem;
+}
+.role__stack {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+/* ---------- Projects ---------- */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.filter {
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.35rem 0.65rem;
+  cursor: pointer;
+}
+.filter:hover {
+  border-color: var(--fg);
+}
+.filter[aria-pressed="true"] {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+.projects {
+  border-top: 1px solid var(--line);
+}
+.proj {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.15rem 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--fg);
+}
+.proj:hover .proj__title {
+  text-decoration: underline;
+}
+.proj__title {
+  font-weight: 700;
+}
+.proj__year {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  grid-column: 2;
+  grid-row: 1;
+  white-space: nowrap;
+}
+.proj__desc {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  grid-column: 1;
+}
+
+/* ---------- Education ---------- */
+.edu p {
+  margin-top: 0.4rem;
+}
+.edu__label {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Skills ---------- */
+.skills__row {
+  display: grid;
+  grid-template-columns: 12rem 1fr;
+  gap: 0.5rem 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.skills__row:first-child {
+  border-top: 1px solid var(--line);
+}
+.skills__label {
+  font-weight: 700;
+}
+.skills__val {
+  color: var(--muted);
+}
+@media (max-width: 560px) {
+  .skills__row {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}
+
+/* ---------- Project detail page ---------- */
+.back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  text-decoration: none;
+}
+.back:hover {
+  color: var(--fg);
+}
+.detail h1 {
+  font-size: 1.75rem;
+}
+.detail__year {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  margin-top: 0.25rem;
+}
+.detail__section {
+  margin-top: 1.75rem;
+}
+.detail__section h2 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+.detail__section p {
+  color: var(--fg);
+}
+.detail__section .muted {
+  color: var(--muted);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Print: a clean resume ---------- */
+@media print {
+  .nav,
+  .btns,
+  .filters,
+  .exp__toggle-all,
+  .nav__menu-btn,
+  .footer__toggle {
+    display: none !important;
+  }
+  :root {
+    --bg: #ffffff;
+    --fg: #000000;
+    --muted: #333333;
+    --line: #999999;
+  }
+  body {
+    font-size: 11pt;
+  }
+  main {
+    padding: 0;
+  }
+  section {
+    margin-top: 1.25rem;
+    break-inside: avoid;
+  }
+  .role__body {
+    display: block !important;
+  }
+  .proj {
+    break-inside: avoid;
+  }
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+}

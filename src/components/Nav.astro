@@ -1,223 +1,77 @@
 ---
-// Sticky top nav with active-section highlighting and a light/dark
-// toggle. Anchors resolve against the homepage so detail pages link back.
+// Sticky nav. Name left; section links + theme toggle right. Links use
+// /#section so they work from the detail pages too. Collapses to a menu
+// button on mobile. All behaviour is progressive: with no JS the links
+// still work and the page is fully usable.
 import site from "../data/site.json";
-
 const links = [
-  { href: "/#work", label: "Work", id: "work" },
   { href: "/#experience", label: "Experience", id: "experience" },
-  { href: "/#about", label: "About", id: "about" },
+  { href: "/#projects", label: "Projects", id: "projects" },
+  { href: "/#education", label: "Education", id: "education" },
+  { href: "/#skills", label: "Skills", id: "skills" },
   { href: "/#contact", label: "Contact", id: "contact" },
 ];
 ---
 
-<header class="nav" data-nav>
-  <div class="shell nav__inner">
-    <a class="nav__brand" href="/" aria-label={`${site.name}, home`}>
-      <span class="nav__mark" aria-hidden="true">KJ</span>
-      <span class="nav__name">{site.name}</span>
-    </a>
-
-    <nav class="nav__links" aria-label="Sections">
-      {links.map((l) => <a href={l.href} data-nav-link={l.id}>{l.label}</a>)}
-    </nav>
-
-    <div class="nav__cta">
-      <a class="nav__email" href={`mailto:${site.email}`}>Email</a>
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__name" href="/">{site.name}</a>
+    <div class="nav__right">
+      <nav class="nav__links" id="nav-links" aria-label="Sections">
+        {links.map((l) => <a href={l.href} data-nav={l.id}>{l.label}</a>)}
+      </nav>
       <button
-        class="nav__theme"
+        class="nav__toggle"
         type="button"
         data-theme-toggle
-        aria-label="Switch colour theme"
-        title="Switch colour theme"
+        aria-label="Toggle dark and light"
       >
-        <span class="nav__theme-icon nav__theme-icon--sun" aria-hidden="true">☀</span>
-        <span class="nav__theme-icon nav__theme-icon--moon" aria-hidden="true">☾</span>
+        Theme
+      </button>
+      <button
+        class="nav__menu-btn"
+        type="button"
+        aria-expanded="false"
+        aria-controls="nav-links"
+        data-menu-btn
+      >
+        Menu
       </button>
     </div>
   </div>
 </header>
 
-<style>
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: color-mix(in srgb, var(--color-cream) 85%, transparent);
-    backdrop-filter: saturate(140%) blur(10px);
-    border-bottom: 1px solid transparent;
-    transition:
-      transform 0.3s var(--ease-out),
-      border-color 0.3s,
-      background 0.3s;
-  }
-  .nav[data-scrolled] {
-    border-bottom-color: var(--color-border);
-  }
-  .nav[data-hidden] {
-    transform: translateY(-100%);
-  }
-  .nav__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    height: 4rem;
-  }
-  .nav__brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    text-decoration: none;
-    color: var(--color-ink);
-    font-weight: 600;
-  }
-  .nav__mark {
-    display: inline-grid;
-    place-items: center;
-    width: 1.85rem;
-    height: 1.85rem;
-    border-radius: 7px;
-    background: var(--color-ink);
-    color: var(--color-cream);
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
-  .nav__name {
-    font-size: 0.95rem;
-    letter-spacing: -0.01em;
-  }
-  .nav__links {
-    display: flex;
-    gap: 1.5rem;
-  }
-  .nav__links a {
-    color: var(--color-ink-2);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    position: relative;
-    padding-block: 0.25rem;
-  }
-  .nav__links a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1.5px;
-    background: var(--color-accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.2s var(--ease-out);
-  }
-  .nav__links a:hover,
-  .nav__links a[aria-current="true"] {
-    color: var(--color-accent-strong);
-  }
-  .nav__links a:hover::after,
-  .nav__links a[aria-current="true"]::after {
-    transform: scaleX(1);
-  }
-
-  .nav__cta {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  .nav__email {
-    text-decoration: none;
-    font-size: 0.88rem;
-    font-weight: 600;
-    padding: 0.5rem 0.9rem;
-    border-radius: 8px;
-    line-height: 1;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
-    border: 1px solid var(--color-accent);
-  }
-  .nav__email:hover {
-    background: var(--color-accent-strong);
-    color: var(--color-accent-ink);
-  }
-  .nav__theme {
-    display: inline-grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 8px;
-    background: transparent;
-    border: 1px solid var(--color-border-strong);
-    color: var(--color-ink-2);
-    font-size: 1rem;
-    line-height: 1;
-  }
-  .nav__theme:hover {
-    color: var(--color-accent);
-    border-color: var(--color-accent-border);
-  }
-  .nav__theme-icon {
-    grid-area: 1 / 1;
-  }
-  .nav__theme-icon--sun {
-    display: none;
-  }
-  :root[data-theme="dark"] .nav__theme-icon--sun {
-    display: block;
-  }
-  :root[data-theme="dark"] .nav__theme-icon--moon {
-    display: none;
-  }
-
-  @media (max-width: 680px) {
-    .nav__links {
-      display: none;
-    }
-  }
-  @media (max-width: 400px) {
-    .nav__name {
-      display: none;
-    }
-  }
-</style>
-
 <script>
-  // Auto-hide on scroll down, reveal on scroll up; border once scrolled.
-  const nav = document.querySelector<HTMLElement>("[data-nav]");
-  if (nav) {
-    let last = window.scrollY;
-    let ticking = false;
-    const update = () => {
-      const y = window.scrollY;
-      if (y > 8) nav.setAttribute("data-scrolled", "");
-      else nav.removeAttribute("data-scrolled");
-      if (y > 300 && y > last + 4) nav.setAttribute("data-hidden", "");
-      else if (y < last - 4) nav.removeAttribute("data-hidden");
-      last = y;
-      ticking = false;
-    };
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          requestAnimationFrame(update);
-          ticking = true;
-        }
-      },
-      { passive: true },
-    );
-  }
+  // Theme toggle (persisted).
+  const root = document.documentElement;
+  document.querySelector("[data-theme-toggle]")?.addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch (e) {}
+  });
 
-  // Active-section highlighting.
+  // Mobile menu.
+  const menuBtn = document.querySelector<HTMLButtonElement>("[data-menu-btn]");
+  const linksEl = document.getElementById("nav-links");
+  menuBtn?.addEventListener("click", () => {
+    const open = linksEl?.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  linksEl?.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).tagName === "A") {
+      linksEl.classList.remove("open");
+      menuBtn?.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  // Active-section highlight (home page only; a no-op elsewhere).
   const navLinks = Array.from(
-    document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"),
+    document.querySelectorAll<HTMLAnchorElement>("[data-nav]"),
   );
   const sections = navLinks
-    .map((l) => document.getElementById(l.dataset.navLink || ""))
+    .map((l) => document.getElementById(l.dataset.nav || ""))
     .filter((s): s is HTMLElement => Boolean(s));
   if (sections.length && "IntersectionObserver" in window) {
     const spy = new IntersectionObserver(
@@ -227,24 +81,14 @@ const links = [
             navLinks.forEach((l) =>
               l.setAttribute(
                 "aria-current",
-                l.dataset.navLink === entry.target.id ? "true" : "false",
+                l.dataset.nav === entry.target.id ? "true" : "false",
               ),
             );
           }
         });
       },
-      { rootMargin: "-45% 0px -50% 0px" },
+      { rootMargin: "-40% 0px -55% 0px" },
     );
     sections.forEach((s) => spy.observe(s));
   }
-
-  // Theme toggle: flip data-theme and persist.
-  const root = document.documentElement;
-  document.querySelector("[data-theme-toggle]")?.addEventListener("click", () => {
-    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-    try {
-      localStorage.setItem("theme", next);
-    } catch (e) {}
-  });
 </script>

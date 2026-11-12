@@ -1,19 +1,12 @@
 ---
-title: Where multilingual learners hit friction
+title: Multilingual STEM learning study
 year: 2025
 status: Research
 order: 30
-summary: A mixed-methods study of STEM learning in low-literacy, low-tech settings.
+summary: A study of where multilingual learners struggle in STEM.
 categories: ["Research & Data"]
-tags: ["Mixed Methods", "Statistics"]
 builtWith: ["R"]
-monogram: ML
+what: A study of where multilingual learners hit friction in low-literacy, low-tech STEM settings, at the OH! Lab.
+how: I fit hierarchical models combining interview codes with assessment data.
+result: Located the friction points where the qualitative and quantitative evidence agreed.
 ---
-
-## Overview
-
-A mixed-methods study, at the OH! Lab, of where multilingual learners hit friction in low-literacy, low-technology STEM settings. The useful question was not whether they struggle but exactly where and why.
-
-## What I built
-
-I fit hierarchical models that combine interview codes with assessment data, so the friction points a single metric would miss show up where the qualitative and quantitative evidence agree.

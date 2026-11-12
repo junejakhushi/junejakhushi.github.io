@@ -1,30 +1,24 @@
 {
   "name": "Khushi Juneja",
+  "tagline": "Math (Operations Research & Statistics) and HCI at Carnegie Mellon",
   "location": "Pittsburgh, PA",
-  "positioning": "Math (Operations Research & Statistics) and HCI at Carnegie Mellon. I build software, run research, and design things people use.",
-  "currently": "Interning at PLUS, TA'ing precalculus, and building a trashbot.",
+  "availability": "Open to Summer 2027 internships",
+  "currently": "Interning on CMU's NSF Future of Work project, TA'ing precalculus, and building a trashbot.",
   "email": "kjuneja@andrew.cmu.edu",
   "links": {
     "linkedin": "https://www.linkedin.com/in/kj3010/",
     "github": "https://github.com/junejakhushi"
   },
-  "resume": {
-    "enabled": false,
-    "path": "/Khushi_Juneja_Resume.pdf",
-    "label": "Resume (PDF)"
-  },
-  "about": [
-    "I am a builder and a researcher. I make software, games, and hardware, and I like the stretch between them: a scavenger-hunt app one month, a claw-armed robot the next.",
-    "Most of my research has been in learning-science labs, where the real job is measuring whether a thing actually worked, not whether it looked good in a demo. That habit follows me into everything I build. I care about AI systems and how you evaluate them, human-computer interaction, operations research and statistics, game design, and physical computing. The thread tying them together is making something people use, then being honest about how well it did."
-  ],
   "education": {
     "school": "Carnegie Mellon University",
     "location": "Pittsburgh, PA",
-    "dates": "Expected May 2028",
+    "dates": "Aug 2024 – May 2028",
     "degree": "B.S. Mathematical Sciences (Operations Research & Statistics)",
     "additionalMajor": "Human-Computer Interaction",
     "minors": ["Robotics", "Design for Learning"],
-    "honors": "Dean's List with High Honors"
+    "honors": "Dean's List with High Honors",
+    "coursework": "10-601 Machine Learning, 11-637 Computational Data Science, 36-402 Advanced Data Analysis, 36-410 Probability Modelling, 36-471 Time Series, 21-292 Operations Research, 15-213 Computer Systems, 70-469 End-to-End Business Analytics",
+    "highSchool": "TODO: high school name, location, and years"
   },
   "spokenLanguages": "English and Hindi (fluent), German (intermediate)"
 }

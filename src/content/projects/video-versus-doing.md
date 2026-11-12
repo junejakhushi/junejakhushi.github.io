@@ -1,19 +1,12 @@
 ---
-title: Video versus doing
+title: Video vs. hands-on learning
 year: 2024
 status: Research
 order: 33
-summary: An AP Psychology module redesign comparing video instruction with learning by doing.
+summary: A study comparing watching a video to doing.
 categories: ["Research & Data"]
-tags: ["Cognitive Task Analysis", "Study Design"]
-builtWith: []
-monogram: VD
+builtWith: ["Cognitive task analysis"]
+what: An AP Psychology module redesign comparing video instruction with learning by doing.
+how: I used cognitive task analysis and think-alouds to compare the two.
+result: Redesigned the module around what actually taught the skill.
 ---
-
-## Overview
-
-An AP Psychology module redesign built around an empirical comparison of video instruction versus learning by doing.
-
-## What I built
-
-I used cognitive task analysis and think-alouds to compare the two formats, then redesigned the module around what actually taught the skill rather than what looked like teaching.

@@ -1,22 +1,200 @@
 ---
 import Base from "../layouts/Base.astro";
 import Nav from "../components/Nav.astro";
-import Hero from "../components/Hero.astro";
-import Work from "../components/Work.astro";
-import Experience from "../components/Experience.astro";
-import About from "../components/About.astro";
-import Skills from "../components/Skills.astro";
-import Footer from "../components/Footer.astro";
+import { getCollection } from "astro:content";
+import { CATEGORIES } from "../content.config";
+import site from "../data/site.json";
+import experience from "../data/experience.json";
+import skills from "../data/skills.json";
+
+const ed = site.education;
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const filters = ["All", ...CATEGORIES];
+const countFor = (cat: string) =>
+  cat === "All"
+    ? projects.length
+    : projects.filter((p) => (p.data.categories as readonly string[]).includes(cat)).length;
+
+const year = new Date().getFullYear();
+const updated = new Date().toLocaleDateString("en-US", {
+  month: "long",
+  year: "numeric",
+});
 ---
 
 <Base>
   <Nav />
-  <main id="main">
-    <Hero />
-    <Work />
-    <Experience />
-    <About />
-    <Skills />
+  <main class="wrap">
+    <!-- Header -->
+    <section class="header" id="top">
+      <h1>{site.name}</h1>
+      <p class="header__line">{site.tagline}</p>
+      <p class="header__meta">{site.location} · {site.availability}</p>
+      <p class="header__now"><b>Now:</b> {site.currently}</p>
+      <div class="btns">
+        <a class="btn btn--primary" href={`mailto:${site.email}`}>Email</a>
+        <button class="btn" type="button" data-copy-email data-email={site.email}>
+          Copy email
+        </button>
+        <span class="copied" data-copied hidden>Copied</span>
+        <a class="btn" href={site.links.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href={site.links.github} target="_blank" rel="noopener">GitHub</a>
+        <button class="btn" type="button" data-print>Save as PDF</button>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+      <h2 class="section-title">Experience</h2>
+      <button class="exp__toggle-all" type="button" data-toggle-all>Expand all</button>
+      <div class="exp">
+        {
+          experience.map((job, i) => (
+            <details class="role" open={i === 0}>
+              <summary>
+                <span class="role__title">{job.role}</span>
+                <span class="role__dates">{job.dates}</span>
+                <span class="role__org">{job.org}</span>
+              </summary>
+              <div class="role__body">
+                <p>{job.summary}</p>
+                <p class="role__stack">Stack: {job.stack}</p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2 class="section-title">Projects</h2>
+      <div class="filters" role="group" aria-label="Filter projects">
+        {
+          filters.map((f, i) => (
+            <button
+              class="filter"
+              type="button"
+              data-filter={f}
+              aria-pressed={i === 0 ? "true" : "false"}
+            >
+              {f} ({countFor(f)})
+            </button>
+          ))
+        }
+      </div>
+      <div class="projects" id="project-list">
+        {
+          projects.map((p) => (
+            <a
+              class="proj"
+              href={`/projects/${p.id}`}
+              data-cats={p.data.categories.join("|")}
+            >
+              <span class="proj__title">{p.data.title}</span>
+              <span class="proj__year">{p.data.year}</span>
+              <span class="proj__desc">{p.data.summary}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="edu">
+      <h2 class="section-title">Education</h2>
+      <p><b>{ed.school}</b> <span class="edu__label">· {ed.dates}</span></p>
+      <p>{ed.degree}</p>
+      <p>Additional major in {ed.additionalMajor}</p>
+      <p>Minors in {ed.minors.join(" and ")}</p>
+      <p>{ed.honors}</p>
+      <p class="edu__label">Coursework: {ed.coursework}</p>
+      <p class="edu__label">High school: {ed.highSchool}</p>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills">
+        {
+          skills.map((g) => (
+            <div class="skills__row">
+              <div class="skills__label">{g.label}</div>
+              <div class="skills__val">{g.items.join(", ")}</div>
+            </div>
+          ))
+        }
+        <div class="skills__row">
+          <div class="skills__label">Spoken languages</div>
+          <div class="skills__val">{site.spokenLanguages}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="btns">
+        <a class="btn btn--primary" href={`mailto:${site.email}`}>Email</a>
+        <a class="btn" href={site.links.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href={site.links.github} target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <p class="footer">© {year} {site.name}. Last updated {updated}.</p>
+    </section>
   </main>
-  <Footer />
 </Base>
+
+<script>
+  // Copy email.
+  const copyBtn = document.querySelector<HTMLButtonElement>("[data-copy-email]");
+  const copiedMsg = document.querySelector<HTMLElement>("[data-copied]");
+  copyBtn?.addEventListener("click", async () => {
+    const email = copyBtn.dataset.email || "";
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch (e) {
+      /* clipboard blocked; ignore */
+    }
+    if (copiedMsg) {
+      copiedMsg.hidden = false;
+      setTimeout(() => (copiedMsg.hidden = true), 2000);
+    }
+  });
+
+  // Expand all / collapse all.
+  const toggleAll = document.querySelector<HTMLButtonElement>("[data-toggle-all]");
+  const roles = Array.from(document.querySelectorAll<HTMLDetailsElement>(".role"));
+  toggleAll?.addEventListener("click", () => {
+    const anyClosed = roles.some((r) => !r.open);
+    roles.forEach((r) => (r.open = anyClosed));
+    toggleAll.textContent = anyClosed ? "Collapse all" : "Expand all";
+  });
+
+  // Project filters.
+  const filterBar = document.querySelector<HTMLElement>(".filters");
+  const rows = Array.from(document.querySelectorAll<HTMLElement>(".proj"));
+  filterBar?.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>("[data-filter]");
+    if (!btn) return;
+    const filter = btn.dataset.filter || "All";
+    filterBar
+      .querySelectorAll("[data-filter]")
+      .forEach((b) => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+    rows.forEach((row) => {
+      const cats = (row.dataset.cats || "").split("|");
+      row.hidden = !(filter === "All" || cats.includes(filter));
+    });
+  });
+
+  // Save as PDF.
+  document.querySelector("[data-print]")?.addEventListener("click", () => window.print());
+
+  // Before printing: open every role and show every project.
+  window.addEventListener("beforeprint", () => {
+    roles.forEach((r) => (r.open = true));
+    rows.forEach((row) => (row.hidden = false));
+  });
+</script>
